@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="logo">
+    <file>UI/Resources/client_blank.png</file>
+    <file>UI/Resources/logo.png</file>
+    <file>UI/Resources/logo.ico</file>
+  </qresource>
+</RCC>
