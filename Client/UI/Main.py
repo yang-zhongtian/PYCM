@@ -1,5 +1,5 @@
-from PyQt5.QtWidgets import QWidget, QSystemTrayIcon, QAction, QMenu, QMessageBox
-from PyQt5.QtCore import Qt, QPoint, QCoreApplication, QTimer
+from PyQt5.QtWidgets import QWidget, QSystemTrayIcon, QAction, QMenu, QMessageBox, QApplication
+from PyQt5.QtCore import Qt, QPoint, QTimer
 from PyQt5.QtGui import QMouseEvent, QIcon
 from .MainUI import Ui_MainForm
 
@@ -72,7 +72,7 @@ class MainForm(QWidget):
             if self.tray_icon.isVisible():
                 self.tray_icon.hide()
             self.tray_icon = None
-            event.accept()
+            QApplication.instance().quit()
         else:
             event.ignore()
             self.hide()

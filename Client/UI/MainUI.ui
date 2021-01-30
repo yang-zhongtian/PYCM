@@ -173,10 +173,29 @@ color: rgb(255, 255, 255);</string>
      <y>53</y>
     </hint>
     <hint type="destinationlabel">
-     <x>273</x>
-     <y>40</y>
+     <x>284</x>
+     <y>31</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>send_file_button</sender>
+   <signal>clicked()</signal>
+   <receiver>MainForm</receiver>
+   <slot>show_file_send_window()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>123</x>
+     <y>67</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>130</x>
+     <y>10</y>
     </hint>
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>show_file_send_window()</slot>
+ </slots>
 </ui>

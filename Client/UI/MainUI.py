@@ -87,6 +87,7 @@ class Ui_MainForm(object):
 
         self.retranslateUi(MainForm)
         self.hide_button.clicked.connect(MainForm.hide)
+        self.send_file_button.clicked.connect(MainForm.show_file_send_window)
         QtCore.QMetaObject.connectSlotsByName(MainForm)
 
     def retranslateUi(self, MainForm):
