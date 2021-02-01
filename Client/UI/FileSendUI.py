@@ -39,6 +39,22 @@ class Ui_FileSendForm(object):
         self.add_folder_button.setSizePolicy(sizePolicy)
         self.add_folder_button.setObjectName("add_folder_button")
         self.horizontalLayout.addWidget(self.add_folder_button)
+        self.delete_file_button = QtWidgets.QPushButton(FileSendForm)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.delete_file_button.sizePolicy().hasHeightForWidth())
+        self.delete_file_button.setSizePolicy(sizePolicy)
+        self.delete_file_button.setObjectName("delete_file_button")
+        self.horizontalLayout.addWidget(self.delete_file_button)
+        self.submit_file_button = QtWidgets.QPushButton(FileSendForm)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.submit_file_button.sizePolicy().hasHeightForWidth())
+        self.submit_file_button.setSizePolicy(sizePolicy)
+        self.submit_file_button.setObjectName("submit_file_button")
+        self.horizontalLayout.addWidget(self.submit_file_button)
         self.verticalLayout.addLayout(self.horizontalLayout)
         self.widget = QtWidgets.QWidget(FileSendForm)
         self.widget.setObjectName("widget")
@@ -54,6 +70,7 @@ class Ui_FileSendForm(object):
         self.verticalLayout.addWidget(self.widget)
 
         self.retranslateUi(FileSendForm)
+        self.delete_file_button.clicked.connect(FileSendForm.delete_selected_files)
         QtCore.QMetaObject.connectSlotsByName(FileSendForm)
 
     def retranslateUi(self, FileSendForm):
@@ -61,4 +78,6 @@ class Ui_FileSendForm(object):
         FileSendForm.setWindowTitle(_translate("FileSendForm", "发送文件"))
         self.add_file_button.setText(_translate("FileSendForm", "添加文件"))
         self.add_folder_button.setText(_translate("FileSendForm", "添加目录"))
+        self.delete_file_button.setText(_translate("FileSendForm", "删除选择的文件"))
+        self.submit_file_button.setText(_translate("FileSendForm", "提交所有文件"))
 import Resources_rc

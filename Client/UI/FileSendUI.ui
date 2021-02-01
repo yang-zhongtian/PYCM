@@ -61,6 +61,32 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="delete_file_button">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>删除选择的文件</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="submit_file_button">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>提交所有文件</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -93,5 +119,25 @@
  <resources>
   <include location="../Resources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>delete_file_button</sender>
+   <signal>clicked()</signal>
+   <receiver>FileSendForm</receiver>
+   <slot>delete_selected_files()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>402</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>389</x>
+     <y>87</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>delete_selected_files()</slot>
+ </slots>
 </ui>

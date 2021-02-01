@@ -1,5 +1,7 @@
-from PyQt5.QtWidgets import QWidget, QTableWidget, QTableWidgetItem, QAbstractItemView, QHeaderView
+from PyQt5.QtWidgets import QWidget, QTableWidget, QTableWidgetItem, QAbstractItemView, QHeaderView, \
+    QFileIconProvider, QApplication
 from PyQt5.QtCore import Qt, QFileInfo
+from PyQt5.QtGui import QIcon
 from .FileSendUI import Ui_FileSendForm
 
 
@@ -35,8 +37,11 @@ class DraggableQListWidget(QTableWidget):
     def batch_add_files(self, files):
         for file_info in files:
             current_row = self.rowCount()
+            icon = QIcon(QFileIconProvider().icon(file_info))
+            file_name_and_icon = QTableWidgetItem(file_info.absoluteFilePath())
+            file_name_and_icon.setIcon(icon)
             self.setRowCount(current_row + 1)
-            self.setItem(current_row, 0, QTableWidgetItem(file_info.absoluteFilePath()))
+            self.setItem(current_row, 0, file_name_and_icon)
             self.setItem(current_row, 1, QTableWidgetItem('文件' if file_info.isFile() else '目录'))
             self.setItem(current_row, 2, QTableWidgetItem(self.parse_file_size(file_info.size()) if file_info.isFile()
                                                           else '-'))
@@ -77,6 +82,12 @@ class FileSendForm(QWidget):
         self.ui.file_list.deleteLater()
         self.ui.file_list = DraggableQListWidget()
         self.ui.file_list_container.addWidget(self.ui.file_list)
+
+    def delete_selected_files(self):
+        selected_rows = list({item.row() for item in self.ui.file_list.selectedItems()})
+        selected_rows.sort(reverse=True)
+        for row in selected_rows:
+            self.ui.file_list.removeRow(row)
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasUrls:
