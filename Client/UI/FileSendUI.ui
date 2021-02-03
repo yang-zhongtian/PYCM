@@ -17,7 +17,7 @@
    <iconset resource="../Resources.qrc">
     <normaloff>:/logo/UI/Resources/logo.png</normaloff>:/logo/UI/Resources/logo.png</iconset>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <property name="spacing">
@@ -45,19 +45,6 @@
        </property>
        <property name="text">
         <string>添加文件</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="add_folder_button">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>添加目录</string>
        </property>
       </widget>
      </item>
@@ -114,6 +101,19 @@
      </layout>
     </widget>
    </item>
+   <item>
+    <widget class="QProgressBar" name="file_send_progress_bar">
+     <property name="value">
+      <number>0</number>
+     </property>
+     <property name="textVisible">
+      <bool>true</bool>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources>
@@ -127,17 +127,51 @@
    <slot>delete_selected_files()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>402</x>
-     <y>21</y>
+     <x>293</x>
+     <y>40</y>
     </hint>
     <hint type="destinationlabel">
-     <x>389</x>
-     <y>87</y>
+     <x>299</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>add_file_button</sender>
+   <signal>clicked()</signal>
+   <receiver>FileSendForm</receiver>
+   <slot>show_add_file_dialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>165</x>
+     <y>38</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>189</x>
+     <y>271</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>submit_file_button</sender>
+   <signal>clicked()</signal>
+   <receiver>FileSendForm</receiver>
+   <slot>send_all()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>493</x>
+     <y>31</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>458</x>
+     <y>134</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>delete_selected_files()</slot>
+  <slot>show_add_file_dialog()</slot>
+  <slot>send_all()</slot>
  </slots>
 </ui>

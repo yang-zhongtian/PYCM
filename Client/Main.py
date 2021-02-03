@@ -29,11 +29,19 @@ class MainWindow(MainForm):
     def show_file_send_window():
         file_send_window.show()
 
+    @staticmethod
+    def file_send_progress_update(progress):
+        file_send_window.update_send_status(progress)
+
 
 class FileSendWindow(FileSendForm):
 
     def __init__(self):
         super(FileSendWindow, self).__init__()
+
+    @staticmethod
+    def send_file_slot(file_buffer):
+        main_window.packed_file_buffer.emit(file_buffer)
 
 
 main_window = MainWindow()

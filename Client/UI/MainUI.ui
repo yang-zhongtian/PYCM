@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>322</width>
-    <height>95</height>
+    <height>70</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>322</width>
-    <height>95</height>
+    <height>70</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>397</width>
-    <height>95</height>
+    <height>75</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -29,7 +29,7 @@
    <iconset resource="../Resources.qrc">
     <normaloff>:/logo/UI/Resources/logo.png</normaloff>:/logo/UI/Resources/logo.png</iconset>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,1,4">
+  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,3">
    <property name="spacing">
     <number>2</number>
    </property>
@@ -58,7 +58,7 @@
 color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
-      <string>PYCM Client</string>
+      <string>PYCM Client - Offline</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -67,26 +67,6 @@ color: rgb(255, 255, 255);</string>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLabel" name="status_label">
-       <property name="font">
-        <font>
-         <family>微软雅黑 Light</family>
-         <pointsize>9</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>服务端未连接</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
      <property name="spacing">
       <number>5</number>
      </property>

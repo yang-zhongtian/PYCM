@@ -19,6 +19,7 @@ class DashboardForm(QMainWindow):
     def init_connections(self):
         self.private_message_thread.client_login_logout.connect(self.__logger)
         self.private_message_thread.client_desktop_recieved.connect(self.__update_client_desktop)
+        self.private_message_thread.client_file_recieved.connect(partial(self.__logger, 'file_recieved'))
 
     def __mark_status(self, name, status):
         obj = getattr(self.ui, name)
@@ -36,11 +37,15 @@ class DashboardForm(QMainWindow):
         elif type_ == 'offline':
             self.__log_append(f'{data}已离线')
             self.__remove_client_desktop(data)
+        elif type_ == 'file_recieved':
+            self.__log_append(f'已收到来自 {data} 的文件')
 
     def __log_append(self, message):
         self.ui.log_area.append(f'[{time.strftime("%H:%M", time.localtime(time.time()))}] {message}')
 
     def __add_client_desktop(self, client_ip):
+        if client_ip in self.clients.keys():
+            return
         desktop = QListWidgetItem(client_ip)
         desktop.setIcon(QIcon(':/logo/UI/Resources/client_blank.png'))
         desktop.setTextAlignment(Qt.AlignHCenter)
@@ -76,8 +81,3 @@ class DashboardForm(QMainWindow):
             thread.started.connect(partial(self.__mark_status, thread_status_name, 'online'))
             thread.finished.connect(partial(self.__mark_status, thread_status_name, 'offline'))
             thread.start()
-
-        self.__add_client_desktop('1.1.1.1')
-        self.__add_client_desktop('1.1.1.2')
-        self.__add_client_desktop('1.1.1.3')
-        self.__add_client_desktop('1.1.1.4')

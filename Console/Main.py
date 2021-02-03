@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QWidget, QApplication
 import sys
 import os
 
-from LoadConfig import NetworkConfig
+from LoadConfig import NetworkConfig, ClientConfig
 
 from UI.Login import LoginForm
 from UI.Dashboard import DashboardForm
@@ -10,7 +10,8 @@ from UI.Dashboard import DashboardForm
 from Threadings import NetworkDiscoverThread, PrivateMessageThread
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
-config = NetworkConfig(base_dir)
+network_config = NetworkConfig(base_dir)
+client_config = ClientConfig(base_dir)
 app = QApplication(sys.argv)
 
 
@@ -28,12 +29,13 @@ class LoginWindow(LoginForm):
 
 class DashboardWindow(DashboardForm):
     base_dir = base_dir
-    config = config
+    network_config = network_config
+    client_config = client_config
 
     def __init__(self):
         super(DashboardWindow, self).__init__()
-        self.net_discover_thread = NetworkDiscoverThread(config)
-        self.private_message_thread = PrivateMessageThread(config)
+        self.net_discover_thread = NetworkDiscoverThread(network_config)
+        self.private_message_thread = PrivateMessageThread(network_config, client_config)
         self.init_connections()
 
 

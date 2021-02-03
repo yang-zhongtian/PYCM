@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QWidget, QSystemTrayIcon, QAction, QMenu, QMessageBox, QApplication
-from PyQt5.QtCore import Qt, QPoint, QTimer
+from PyQt5.QtCore import Qt, QPoint, QTimer, pyqtSignal
 from PyQt5.QtGui import QMouseEvent, QIcon
 from .MainUI import Ui_MainForm
 
@@ -8,6 +8,7 @@ from .MainUI import Ui_MainForm
 class MainForm(QWidget):
     server_ip = None
     screen_spy_timer = QTimer()
+    packed_file_buffer = pyqtSignal(bytes)
     _start_pos = None
     _end_pos = None
     _is_tracking = False
@@ -17,7 +18,9 @@ class MainForm(QWidget):
         self.ui = Ui_MainForm()
         self.ui.setupUi(self)
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
-        self.setFixedSize(322, 95)
+        self.setFixedSize(322, 70)
+        desktop = QApplication.desktop()
+        self.move(int(desktop.width() - 422), 65)
         self.init_tray()
 
     def init_connections(self):
@@ -40,7 +43,9 @@ class MainForm(QWidget):
                                                                   config.get('PrivateMessage').get('Port'),
                                                                   config.get('PrivateMessage').get('Buffer'))
         self.private_message_object.online_notify()
-        self.ui.status_label.setText('服务端已连接')
+        self.packed_file_buffer.connect(self.private_message_object.send_file)
+        self.private_message_object.file_send_progress.connect(self.file_send_progress_update)
+        self.ui.title_label.setText('PYCM Client - Online')
         self.screen_spy_timer.start(3000)
 
     def mouseMoveEvent(self, e: QMouseEvent):

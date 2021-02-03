@@ -1,3 +1,4 @@
+from PyQt5.QtCore import pyqtSignal, QObject
 import socket
 import struct
 from threading import Thread
@@ -5,17 +6,21 @@ from mss import mss
 from PIL import Image
 import zlib
 from io import BytesIO
+from math import ceil
+import time
 from Packages import NetworkDiscoverFlag, PrivateMessageFlag
 
 
-class PrivateMessage(object):
+class PrivateMessage(QObject):
     current_ip = None
     socket_ip = None
     socket_port = None
     socket_buffer_size = None
     socket_obj = None
+    file_send_progress = pyqtSignal(float)
 
     def __init__(self, current_ip, socket_ip, socket_port, socket_buffer_size):
+        super(PrivateMessage, self).__init__()
         self.current_ip = current_ip
         self.socket_ip = socket_ip
         self.socket_port = socket_port
@@ -27,8 +32,8 @@ class PrivateMessage(object):
         self.socket_obj.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
     def send_data(self, flag, data):
-        payload_size = self.socket_buffer_size - struct.calcsize('!i')
-        socket_data = struct.pack(f'!i{payload_size}s', flag, data)
+        payload_size = self.socket_buffer_size - struct.calcsize('!2i')
+        socket_data = struct.pack(f'!2i{payload_size}s', flag, len(data), data)
         self.socket_obj.sendto(socket_data, (self.socket_ip, self.socket_port))
 
     def online_notify(self):
@@ -46,6 +51,19 @@ class PrivateMessage(object):
             img.save(img_bytes, format='JPEG')
             img_compressed = zlib.compress(img_bytes.getvalue())
             self.send_data(PrivateMessageFlag.ClientScreen, img_compressed)
+
+    def send_file(self, file_buffer):
+        chuck_size = self.socket_buffer_size - struct.calcsize('!5i')  # 包标志，包载荷长度，当前块编号，当前块实际载荷长度，总包数
+        chuck_count = ceil(len(file_buffer) / chuck_size)
+        for index in range(chuck_count):
+            if index < chuck_count - 1:
+                file_payload = file_buffer[index * chuck_size: (index + 1) * chuck_size]
+            else:
+                file_payload = file_buffer[index * chuck_size:]
+            chuck_pack = struct.pack(f'!3i{chuck_size}s', index, len(file_payload), chuck_count, file_payload)
+            self.send_data(PrivateMessageFlag.ClientFile, chuck_pack)
+            self.file_send_progress.emit((index + 1) / chuck_count)
+            time.sleep(0.01)
 
 
 if __name__ == '__main__':

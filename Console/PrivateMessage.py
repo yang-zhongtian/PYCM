@@ -7,7 +7,33 @@ from PIL import Image
 from PIL.ImageQt import ImageQt
 from io import BytesIO
 import zlib
+import numpy as np
+import time
+import os
 from Packages import NetworkDiscoverFlag, PrivateMessageFlag
+
+
+class FileMerger(object):
+    file_buffer = None
+    file_upload_path = None
+
+    def __init__(self, file_upload_path):
+        self.chuck_count = None
+        self.file_buffer = {}
+        self.file_upload_path = file_upload_path
+
+    def update_chuck(self, ip, index, amount, buffer):
+        if ip not in self.file_buffer.keys():
+            self.file_buffer[ip] = {'chuck_count': amount, 'buffers': []}
+        self.file_buffer[ip]['buffers'].append((index, buffer))
+        if len(self.file_buffer[ip]['buffers']) >= self.file_buffer[ip]['chuck_count']:
+            file_buffer_sorted = sorted(self.file_buffer[ip]['buffers'], key=lambda x: x[0])
+            file_data = b''.join(map(lambda x: x[1], file_buffer_sorted))
+            file_name = f'{ip} - {time.strftime("%Y%m%d-%H.%M.%S", time.localtime(time.time()))}.zip'
+            open(os.path.join(self.file_upload_path, file_name), 'wb').write(file_data)
+            self.file_buffer.pop(ip)
+            return True
+        return False
 
 
 class PrivateMessage(object):
@@ -29,12 +55,14 @@ class PrivateMessage(object):
         self.socket_obj.bind(('', self.socket_port))
 
     def start(self):
-        payload_size = self.socket_buffer_size - struct.calcsize('!i')
+        payload_size = self.socket_buffer_size - struct.calcsize('!2i')
+        chuck_size = self.socket_buffer_size - struct.calcsize('!5i')
+        file_merger = FileMerger(self.parent.file_upload_path)
         while True:
             try:
                 socket_data, socket_addr = self.socket_obj.recvfrom(self.socket_buffer_size)
-                unpacked_flag, unpacked_data = struct.unpack(f'!i{payload_size}s', socket_data)
-                unpacked_data = unpacked_data.strip(b'\x00')
+                unpacked_flag, unpacked_length, unpacked_data = struct.unpack(f'!2i{payload_size}s', socket_data)
+                unpacked_data = unpacked_data[:unpacked_length]
                 if unpacked_flag == PrivateMessageFlag.ClientLogin:
                     client_ip = socket.inet_ntoa(unpacked_data)
                     self.parent.client_login_logout.emit('online', client_ip)
@@ -45,13 +73,16 @@ class PrivateMessage(object):
                     unpacked_data = zlib.decompress(unpacked_data)
                     image = Image.open(BytesIO(unpacked_data)).toqpixmap()
                     self.parent.client_desktop_recieved.emit(socket_addr[0], image)
+                elif unpacked_flag == PrivateMessageFlag.ClientFile:
+                    file_index, file_buffer_length, file_amount, file_buffer = struct.unpack(f'!3i{chuck_size}s',
+                                                                                             unpacked_data)
+                    status = file_merger.update_chuck(socket_addr[0], file_index, file_amount,
+                                                      file_buffer[:file_buffer_length])
+                    if status:
+                        self.parent.client_file_recieved.emit(socket_addr[0])
 
             except KeyboardInterrupt:
                 self.socket_obj.close()
                 return None
             except Exception as e:
                 print(e)
-
-
-if __name__ == '__main__':
-    A = PrivateMessage('192.168.1.8', 4089, 32768)

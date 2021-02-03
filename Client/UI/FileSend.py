@@ -1,8 +1,31 @@
 from PyQt5.QtWidgets import QWidget, QTableWidget, QTableWidgetItem, QAbstractItemView, QHeaderView, \
-    QFileIconProvider, QApplication
-from PyQt5.QtCore import Qt, QFileInfo
+    QFileIconProvider, QApplication, QFileDialog, QMessageBox
+from PyQt5.QtCore import Qt, QFileInfo, QThread, pyqtSignal
 from PyQt5.QtGui import QIcon
+import os
+import zipfile
+from io import BytesIO
+from functools import partial
 from .FileSendUI import Ui_FileSendForm
+
+
+class FileCompressThread(QThread):
+    file_buffer = pyqtSignal(bytes)
+    file_finished = pyqtSignal(int)
+    file_list = None
+
+    def __init__(self, file_list):
+        super(FileCompressThread, self).__init__()
+        self.file_list = file_list
+
+    def run(self):
+        buffer = BytesIO()
+        with zipfile.ZipFile(buffer, 'w', zipfile.ZIP_DEFLATED) as zfile:
+            for index, file_path in enumerate(self.file_list):
+                file_name = os.path.basename(file_path)
+                zfile.write(file_path, file_name)
+                self.file_finished.emit(index)
+        self.file_buffer.emit(buffer.getvalue())
 
 
 class DraggableQListWidget(QTableWidget):
@@ -11,8 +34,8 @@ class DraggableQListWidget(QTableWidget):
         super(DraggableQListWidget, self).__init__()
         self.setAcceptDrops(True)
         self.setSelectionBehavior(QAbstractItemView.SelectRows)
-        self.setColumnCount(4)
-        self.setHorizontalHeaderLabels(['文件名', '文件类型', '文件大小', '发送状态'])
+        self.setColumnCount(3)
+        self.setHorizontalHeaderLabels(['文件名', '文件大小', '发送状态'])
         self.verticalHeader().setVisible(False)
         self.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
         self.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
@@ -36,16 +59,16 @@ class DraggableQListWidget(QTableWidget):
 
     def batch_add_files(self, files):
         for file_info in files:
+            if not file_info.isFile():
+                continue
             current_row = self.rowCount()
             icon = QIcon(QFileIconProvider().icon(file_info))
             file_name_and_icon = QTableWidgetItem(file_info.absoluteFilePath())
             file_name_and_icon.setIcon(icon)
             self.setRowCount(current_row + 1)
             self.setItem(current_row, 0, file_name_and_icon)
-            self.setItem(current_row, 1, QTableWidgetItem('文件' if file_info.isFile() else '目录'))
-            self.setItem(current_row, 2, QTableWidgetItem(self.parse_file_size(file_info.size()) if file_info.isFile()
-                                                          else '-'))
-            self.setItem(current_row, 3, QTableWidgetItem('就绪'))
+            self.setItem(current_row, 1, QTableWidgetItem(self.parse_file_size(file_info.size())))
+            self.setItem(current_row, 2, QTableWidgetItem('就绪'))
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasUrls:
@@ -70,6 +93,7 @@ class DraggableQListWidget(QTableWidget):
 
 class FileSendForm(QWidget):
     is_sending = False
+    __compress_thread = None
 
     def __init__(self, parent=None):
         super(FileSendForm, self).__init__(parent)
@@ -83,11 +107,36 @@ class FileSendForm(QWidget):
         self.ui.file_list = DraggableQListWidget()
         self.ui.file_list_container.addWidget(self.ui.file_list)
 
+    def show_add_file_dialog(self):
+        files, _ = QFileDialog.getOpenFileNames(self, '选择添加的文件', os.path.expanduser('~'), 'All Files (*)')
+        if files:
+            self.ui.file_list.batch_add_files(list(map(QFileInfo, files)))
+
     def delete_selected_files(self):
         selected_rows = list({item.row() for item in self.ui.file_list.selectedItems()})
         selected_rows.sort(reverse=True)
         for row in selected_rows:
             self.ui.file_list.removeRow(row)
+
+    def send_all(self):
+        file_list = [self.ui.file_list.item(row, 0).text() for row in range(self.ui.file_list.rowCount())]
+        self.__compress_thread = FileCompressThread(file_list)
+        self.__compress_thread.file_finished.connect(partial(self.update_status, '已压缩'))
+        self.__compress_thread.file_buffer.connect(self.emit_compressed_file)
+        self.is_sending = True
+        self.__compress_thread.start()
+
+    def emit_compressed_file(self, file_buffer):
+        self.send_file_slot(file_buffer)
+        self.is_sending = False
+
+    def update_status(self, label, index):
+        self.ui.file_list.item(index, 2).setText(label)
+
+    def update_send_status(self, progress):
+        self.ui.file_send_progress_bar.setValue(int(progress * 100))
+        if progress >= 1:
+            QMessageBox.information(self, '提示', '发送成功！')
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasUrls:
@@ -99,4 +148,7 @@ class FileSendForm(QWidget):
         if self.is_sending:
             event.ignore()
         else:
+            self.ui.file_list.clearContents()
+            self.ui.file_list.setRowCount(0)
+            self.ui.file_send_progress_bar.setValue(0)
             event.accept()
