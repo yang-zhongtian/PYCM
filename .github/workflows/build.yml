@@ -41,7 +41,7 @@ jobs:
       - name: Zip binary for Windows
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
-          xcopy ${{ matrix.program }}\dist\Main .\Builded /s /e /y
+          xcopy .\${{ matrix.program }}\dist\Main .\Builded /s /e /y
           zip -r Builded.zip Builded
           ls
  
