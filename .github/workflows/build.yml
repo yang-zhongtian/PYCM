@@ -9,13 +9,24 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-18.04, macos-latest, windows-latest]
+        os: [ubuntu-18.04]
         program: [Console]
     steps:
       - uses: actions/checkout@v2
       
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      
       - name: DEBUG
-        run: python -c "print('${{ github.sha }} ${{ github.ref }}')"
+        run: python -c "print('${{ steps.create_release.outputs.upload_url }}')"
       
       - name: Set up Python 3.7
         uses: actions/setup-python@v2
