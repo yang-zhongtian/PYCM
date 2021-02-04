@@ -29,7 +29,7 @@ jobs:
         if: ${{ matrix.program == 'Console' }}
         run: |
           cd ${{ matrix.program }}
-          pyinstaller Main.py -p LoadConfig.py -p NetworkDiscover.py -p Packages.py -p PrivateMessage.py -p Resources_rc.py -p Threadings.py -p UI/Dashboard.py -p UI/DashboardUI.py -p UI/Login.py -p UI/LoginUI.py -F -w -i UI/Resources/logo.ico --clean -y
+          pyinstaller -F Main.spec --clean -y
           cd dist
           ls
       
@@ -43,7 +43,7 @@ jobs:
       - name: Zip binary for Windows
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
-          xcopy .\${{ matrix.program }}\dist\Main .\Builded /s /e /y
+          xcopy ${{ matrix.program }}\dist\Main .\Builded /s /e /y
           zip -r Builded.zip Builded
           ls
  
