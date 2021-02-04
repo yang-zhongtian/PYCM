@@ -35,8 +35,7 @@ jobs:
         if: ${{ matrix.os != 'windows-latest' }}
         run: |
           cp -R ${{ matrix.program }}/dist/Main ./Builded
-          ls
-          zip -r Builded.zip Builded/*
+          zip -r Builded.zip Builded
           ls
       
       - name: Zip binary for Windows
