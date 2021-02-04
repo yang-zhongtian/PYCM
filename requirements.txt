@@ -1,0 +1,7 @@
+mss==6.0.0
+numpy==1.16.6
+Pillow==7.0.0
+psutil==5.8.0
+PyInstaller==3.6
+PyQt5==5.13.0
+ujson==4.0.1
