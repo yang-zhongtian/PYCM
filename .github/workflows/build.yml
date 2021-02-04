@@ -1,6 +1,8 @@
 name: PYCM-Build
 
-on: [push]
+on:
+  release:
+    types: [published]
 
 jobs:
   build:
@@ -11,6 +13,9 @@ jobs:
         program: [Console]
     steps:
       - uses: actions/checkout@v2
+      
+      - name: DEBUG
+        run: python -c "print('${{ GITHUB_SHA }} ${{ GITHUB_REF }}')"
       
       - name: Set up Python 3.7
         uses: actions/setup-python@v2
@@ -24,6 +29,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install requests
       
       - name: Build Console
         if: ${{ matrix.program == 'Console' }}
@@ -44,4 +50,3 @@ jobs:
           xcopy ${{ matrix.program }}\dist\Main .\Builded\ /s /e /y
           .\zip.exe -r Builded.zip Builded
           ls
- 
