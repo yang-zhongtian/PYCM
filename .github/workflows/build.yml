@@ -30,5 +30,6 @@ jobs:
         run: |
           cd ${{ matrix.program }}
           pyinstaller Main.py -p LoadConfig.py -p NetworkDiscover.py -p Packages.py -p PrivateMessage.py -p Resources_rc.py -p Threadings.py -p UI/Dashboard.py -p UI/DashboardUI.py -p UI/Login.py -p UI/LoginUI.py -F -w -i UI/Resources/logo.ico --clean -y
+          cd dist
           ls
  
