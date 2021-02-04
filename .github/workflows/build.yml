@@ -41,7 +41,7 @@ jobs:
       - name: Zip binary for Windows
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
-          $client = new-object System.Net.WebClient
-          $client.DownloadFile('http://www.stahlworks.com/dev/zip.exe', '.')
+          xcopy ${{ matrix.program }}\dist\Main .\Builded /s /e /y
+          zip -r Builded.zip Builded
           ls
  
