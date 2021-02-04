@@ -30,6 +30,18 @@ jobs:
         run: |
           cd ${{ matrix.program }}
           pyinstaller Main.py -p LoadConfig.py -p NetworkDiscover.py -p Packages.py -p PrivateMessage.py -p Resources_rc.py -p Threadings.py -p UI/Dashboard.py -p UI/DashboardUI.py -p UI/Login.py -p UI/LoginUI.py -F -w -i UI/Resources/logo.ico --clean -y
-          cd dist
+      
+      - name: Zip binary for Mac and Linux
+        if: ${{ matrix.os != 'windows-latest' }}
+        run: |
+          mv ${{ matrix.program }}/dist/Main ./Builded
+          zip Builded.zip Builded/*
+          ls
+      
+      - name: Zip binary for Windows
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: |
+          $client = new-object System.Net.WebClient
+          $client.DownloadFile('http://www.stahlworks.com/dev/zip.exe', '.')
           ls
  
