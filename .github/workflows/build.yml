@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: DEBUG
-        run: python -c "print('${{ GITHUB_SHA }} ${{ GITHUB_REF }}')"
+        run: python -c "print('${{ github.sha }} ${{ github.ref }}')"
       
       - name: Set up Python 3.7
         uses: actions/setup-python@v2
