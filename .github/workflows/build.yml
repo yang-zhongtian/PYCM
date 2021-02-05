@@ -26,7 +26,7 @@ jobs:
           prerelease: false
       
       - name: DEBUG
-        run: python -c "print('${{ steps.create_release.outputs.upload_url }}')"
+        run: python -c "print('${{ steps.create_release.output }}')"
       
       - name: Set up Python 3.7
         uses: actions/setup-python@v2
