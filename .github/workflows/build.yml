@@ -13,21 +13,7 @@ jobs:
         program: [Console]
     steps:
       - uses: actions/checkout@v2
-      
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: test123
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-      
-      - name: DEBUG
-        run: python -c "print('${{ steps.create_release.output }}')"
-      
+
       - name: Set up Python 3.7
         uses: actions/setup-python@v2
         with:
@@ -53,11 +39,18 @@ jobs:
         run: |
           cp -R ${{ matrix.program }}/dist/Main ./Builded
           zip -r Builded.zip Builded
-          ls
       
       - name: Zip binary for Windows
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
           xcopy ${{ matrix.program }}\dist\Main .\Builded\ /s /e /y
           .\zip.exe -r Builded.zip Builded
-          ls
+      
+      - name: Fetch Upload URL
+        id: fetch
+        run: |
+          py_output=$(python -c "import requests; print(requests.get('https://api.github.com/repos/yangzhongtian001/PYCM/releases/tags/$${{ github.ref }}').json().get('upload_url'))")
+          echo "::set-output name=upload_url::$py_output"
+      
+      - name: DEBUG
+        run: echo "${{ steps.fetch.outputs.upload_url }}"
