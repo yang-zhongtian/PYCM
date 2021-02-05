@@ -1,8 +1,6 @@
 name: PYCM-Build
 
-on:
-  release:
-    types: [published]
+on: [push]
 
 jobs:
   build:
@@ -46,11 +44,16 @@ jobs:
           xcopy ${{ matrix.program }}\dist\Main .\Builded\ /s /e /y
           .\zip.exe -r Builded.zip Builded
       
-      - name: Fetch Upload URL
-        id: fetchupload
-        uses: yangzhongtian001/pycm-docker-action@v1
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          refs: '${{ github.ref }}'
+          tag_name: ${{ github.ref }}
+          release_name: ${{ matrix.program }} Release ${{ github.ref }} For ${{ matrix.os }}
+          draft: false
+          prerelease: true
 
       - name: Upload Release Asset
         id: upload-release-asset
@@ -58,7 +61,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.fetchupload.outputs.upload_url }}
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ github.workspace }}/Builded.zip
           asset_name: ${{ matrix.os }}-${{ matrix.program }}.zip
           asset_content_type: application/zip
