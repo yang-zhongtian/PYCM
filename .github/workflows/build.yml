@@ -50,7 +50,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
+          tag_name: ${{ github.sha }}
           release_name: ${{ matrix.program }} Release ${{ github.ref }} For ${{ matrix.os }}
           draft: false
           prerelease: true
