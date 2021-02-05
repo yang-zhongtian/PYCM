@@ -48,7 +48,7 @@ jobs:
       
       - name: Fetch Upload URL
         id: fetchupload
-        uses: actions/docker-actions@v1
+        uses: yangzhongtian001/pycm-docker-action@v1
         with:
           refs: '${{ github.ref }}'
 
