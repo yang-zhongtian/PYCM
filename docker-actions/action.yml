@@ -1,0 +1,14 @@
+name: 'get upload url'
+description: 'Get release upload url'
+inputs:
+  refs:
+    description: 'Actions GITHUB_REFS'
+    required: true
+outputs:
+  upload_url:
+    description: 'Upload URL'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.refs }}
