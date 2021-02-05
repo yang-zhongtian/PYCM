@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import QWidget, QApplication
+from qt_material import apply_stylesheet
 import sys
 import os
 
@@ -13,6 +14,8 @@ base_dir = os.path.dirname(os.path.abspath(__file__))
 network_config = NetworkConfig(base_dir)
 client_config = ClientConfig(base_dir)
 app = QApplication(sys.argv)
+
+apply_stylesheet(app, theme='dark_blue.xml')
 
 
 class LoginWindow(LoginForm):

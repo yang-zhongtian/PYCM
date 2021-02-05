@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import QWidget, QApplication
+from qt_material import apply_stylesheet
 import sys
 import os
 
@@ -13,6 +14,8 @@ from PrivateMessage import PrivateMessage
 base_dir = os.path.dirname(os.path.abspath(__file__))
 config = NetworkConfig(base_dir)
 app = QApplication(sys.argv)
+
+apply_stylesheet(app, theme='light_blue.xml', invert_secondary=True)
 
 
 class MainWindow(MainForm):

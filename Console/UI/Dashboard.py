@@ -11,10 +11,14 @@ class DashboardForm(QMainWindow):
     def __init__(self, parent=None):
         super(DashboardForm, self).__init__(parent)
         self.ui = Ui_DashboardForm()
-        self.threadings = {'net_discover_thread': 'network_discover_status',
-                           'private_message_thread': 'private_message_status'}
+        self.threadings = {'net_discover_thread': False,
+                           'private_message_thread': False}
         self.clients = {}
         self.ui.setupUi(self)
+        self.ui.toggle_broadcast.setProperty('class', 'big_button')
+        self.ui.remote_spy.setProperty('class', 'big_button')
+        self.ui.file_transfer.setProperty('class', 'big_button')
+        self.ui.toggle_black_screen.setProperty('class', 'big_button')
 
     def init_connections(self):
         self.private_message_thread.client_login_logout.connect(self.__logger)
@@ -22,13 +26,7 @@ class DashboardForm(QMainWindow):
         self.private_message_thread.client_file_recieved.connect(partial(self.__logger, 'file_recieved'))
 
     def __mark_status(self, name, status):
-        obj = getattr(self.ui, name)
-        if status == 'online':
-            obj.setStyleSheet('color: green')
-        elif status == 'offline':
-            obj.setStyleSheet('color: red')
-        elif status == 'unknown':
-            obj.setStyleSheet('color: black')
+        self.threadings[name] = status
 
     def __logger(self, type_, data):
         if type_ == 'online':
@@ -77,7 +75,6 @@ class DashboardForm(QMainWindow):
     def start_all_threadings(self):
         for thread_name in self.threadings.keys():
             thread = getattr(self, thread_name)
-            thread_status_name = self.threadings.get(thread_name)
-            thread.started.connect(partial(self.__mark_status, thread_status_name, 'online'))
-            thread.finished.connect(partial(self.__mark_status, thread_status_name, 'offline'))
+            thread.started.connect(partial(self.__mark_status, thread_name, 'online'))
+            thread.finished.connect(partial(self.__mark_status, thread_name, 'offline'))
             thread.start()

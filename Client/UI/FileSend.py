@@ -37,8 +37,10 @@ class DraggableQListWidget(QTableWidget):
         self.setColumnCount(3)
         self.setHorizontalHeaderLabels(['文件名', '文件大小', '发送状态'])
         self.verticalHeader().setVisible(False)
-        self.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
+        self.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
         self.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+        self.setColumnWidth(1, 120)
+        self.setColumnWidth(2, 120)
 
     @staticmethod
     def parse_file_size(file_size):
@@ -134,8 +136,11 @@ class FileSendForm(QWidget):
         self.ui.file_list.item(index, 2).setText(label)
 
     def update_send_status(self, progress):
-        self.ui.file_send_progress_bar.setValue(int(progress * 100))
-        if progress >= 1:
+        progress = int(progress * 100)
+        if progress - self.ui.file_send_progress_bar.value() > 5:
+            self.ui.file_send_progress_bar.setValue(progress)
+        if progress >= 100:
+            self.ui.file_send_progress_bar.setValue(progress)
             QMessageBox.information(self, '提示', '发送成功！')
 
     def dragEnterEvent(self, event):
