@@ -36,32 +36,16 @@ jobs:
         if: ${{ matrix.os != 'windows-latest' }}
         run: |
           cp -R ${{ matrix.program }}/dist/Main ./Builded
-          zip -r Builded.zip Builded
+          zip -r ${{ matrix.os }}-${{ matrix.program }}.zip Builded
       
       - name: Zip binary for Windows
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
           xcopy ${{ matrix.program }}\dist\Main .\Builded\ /s /e /y
-          .\zip.exe -r Builded.zip Builded
+          .\zip.exe -r ${{ matrix.os }}-${{ matrix.program }}.zip Builded
       
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v2
         with:
-          tag_name: ${{ github.sha }}
-          release_name: ${{ matrix.program }} Release ${{ github.ref }} For ${{ matrix.os }}
-          draft: false
-          prerelease: true
-
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ github.workspace }}/Builded.zip
-          asset_name: ${{ matrix.os }}-${{ matrix.program }}.zip
-          asset_content_type: application/zip
+         name: ${{ matrix.os }}-${{ matrix.program }}-builded
+         path: ${{ github.workspace }}/${{ matrix.os }}-${{ matrix.program }}.zip
