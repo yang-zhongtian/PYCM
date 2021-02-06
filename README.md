@@ -18,15 +18,60 @@
 
 ![client-file-send.png](https://i.loli.net/2021/02/05/CsAuZKvIcgXVBok.png)
 
+## Config file
+### Admin.json@console
+This file is used for console login authentication
+```json
+{
+  "username": "username for logging in Console",
+  "password": "MD5 of password for logging in Console"
+}
+```
+
+### Client.json@console
+This file is used to store all client configurations.
+```json
+{
+  "FileUploadPath": "The directory for storing client uploaded files"
+}
+```
+
+### Network.json@console&client
+This file is used to store network configurations for both console and client.
+```json
+{
+  "Local": {
+    "IP": "Current IP address",
+    "MAC": "Current MAC address"
+  },
+  /* The settings bellow is not adviced to be modified. */
+  "NetworkDiscover": {
+    "IP": "224.50.50.50",
+    "Port": 4088,
+    "Interval": 5
+  },
+  "ClassBroadcast": {
+    "IP": "225.2.2.19",
+    "Port": 4089
+  },
+  "PrivateMessage": {
+    "Port": 4091,
+    "Buffer": 32768
+  }
+}
+```
+
+
 ## Download
 See all downloads at [Github Release](https://github.com/yangzhongtian001/PYCM/releases). Please notice that all pre-releases are not tested fully and may contain unknown problems.
 
+## Install Guide
+* Download zipped file from RELEASE page & extract.
+* Edit *.json.example file for configuration & remove the .example extention.
+* Enjoy
 
 ## Contact
 * Author: Richard Yang
 * Email: zhongtian.yang@qq.com
 * School: China Beijing National Day School
-
-
-> By Richard Yang, HCC Computer Community
-> Enjoy :)
+* Club: HCC Computer Community
