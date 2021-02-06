@@ -1,0 +1,19 @@
+{
+  "Local": {
+    "IP": "",
+    "MAC": ""
+  },
+  "NetworkDiscover": {
+    "IP": "224.50.50.50",
+    "Port": 4088,
+    "Interval": 5
+  },
+  "ClassBroadcast": {
+    "IP": "225.2.2.19",
+    "Port": 4089
+  },
+  "PrivateMessage": {
+    "Port": 4091,
+    "Buffer": 32768
+  }
+}

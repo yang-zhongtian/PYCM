@@ -18,7 +18,7 @@ a = Analysis([
              ],
              pathex=[os.getcwd()],
              binaries=[],
-             datas=[],
+             datas=[('*.json.example', '.')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
