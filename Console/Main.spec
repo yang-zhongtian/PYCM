@@ -14,14 +14,11 @@ a = Analysis([
                 'UI/Dashboard.py',
                 'UI/DashboardUI.py',
                 'UI/Login.py',
-                'UI/LoginUI.py',
-				'qt_material/resources/generate.py',
-				'qt_material/resources/logos_pyqt5_rc.py',
-				'qt_material/resources/resource_pyqt5_rc.py'
+                'UI/LoginUI.py'
              ],
              pathex=[os.getcwd()],
              binaries=[],
-             datas=[('*.json.example', '.'), ('qt_material/fonts', 'qt_material/fonts'), ('qt_material/themes', 'qt_material/themes'), ('qt_material/dock_theme.ui', 'qt_material/dock_theme.ui'), ('qt_material/material.css.template', 'qt_material/material.css.template')],
+             datas=[('*.json.example', '.'), ('qt_material', 'qt_material')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
