@@ -58,14 +58,14 @@ jobs:
       - name: Zip binary for Mac and Linux
         if: ${{ matrix.os != 'windows-latest' }}
         run: |
-          cp -R ${{ matrix.program }}/dist/Main ./Builded
-          zip -r ${{ matrix.os }}-${{ matrix.program }}.zip Builded
+          cp -R ${{ matrix.program }}/dist/Main ./${{ matrix.program }}-Builded
+          zip -r ${{ matrix.os }}-${{ matrix.program }}.zip ${{ matrix.program }}-Builded
       
       - name: Zip binary for Windows
         if: ${{ matrix.os == 'windows-latest' }}
         run: |
-          xcopy ${{ matrix.program }}\dist\Main .\Builded\ /s /e /y
-          .\zip.exe -r ${{ matrix.os }}-${{ matrix.program }}.zip Builded
+          xcopy ${{ matrix.program }}\dist\Main .\${{ matrix.program }}-Builded\ /s /e /y
+          .\zip.exe -r ${{ matrix.os }}-${{ matrix.program }}.zip ${{ matrix.program }}-Builded
       
       - name: Upload assets
         id: upload-release-asset
