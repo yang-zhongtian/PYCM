@@ -31,7 +31,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        program: [Console]
+        program: [Console, Client]
     steps:
       - uses: actions/checkout@v2
 
@@ -49,8 +49,7 @@ jobs:
           pip install -r requirements.txt
           pip install requests
       
-      - name: Build Console
-        if: ${{ matrix.program == 'Console' }}
+      - name: Build
         run: |
           cd ${{ matrix.program }}
           pyinstaller -F Main.spec --clean -y
