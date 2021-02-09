@@ -28,6 +28,21 @@ class FileCompressThread(QThread):
         self.file_buffer.emit(buffer.getvalue())
 
 
+class FileSendThread(QThread):
+    private_message_object = None
+    buffer = None
+    file_send_progress = pyqtSignal(float)
+
+    def __init__(self, private_message_object, buffer):
+        super(FileSendThread, self).__init__()
+        self.private_message_object = private_message_object
+        self.private_message_object.file_send_progress.connect(lambda x: self.file_send_progress.emit(x))
+        self.buffer = buffer
+
+    def run(self):
+        self.private_message_object.send_file(self.buffer)
+
+
 class DraggableQListWidget(QTableWidget):
 
     def __init__(self):
@@ -96,9 +111,12 @@ class DraggableQListWidget(QTableWidget):
 class FileSendForm(QWidget):
     is_sending = False
     __compress_thread = None
+    __file_send_thread = None
+    parent = None
 
     def __init__(self, parent=None):
-        super(FileSendForm, self).__init__(parent)
+        super(FileSendForm, self).__init__()
+        self.parent = parent
         self.ui = Ui_FileSendForm()
         self.ui.setupUi(self)
         self.setWindowModality(Qt.ApplicationModal)
@@ -124,24 +142,33 @@ class FileSendForm(QWidget):
         file_list = [self.ui.file_list.item(row, 0).text() for row in range(self.ui.file_list.rowCount())]
         self.__compress_thread = FileCompressThread(file_list)
         self.__compress_thread.file_finished.connect(partial(self.update_status, '已压缩'))
-        self.__compress_thread.file_buffer.connect(self.emit_compressed_file)
+        self.__compress_thread.file_buffer.connect(self.submit_compressed_file)
         self.is_sending = True
+        self.ui.file_send_progress_label.setText('压缩中')
         self.__compress_thread.start()
 
-    def emit_compressed_file(self, file_buffer):
-        self.send_file_slot(file_buffer)
+    def submit_compressed_file(self, file_buffer):
         self.is_sending = False
+        self.__file_send_thread = FileSendThread(self.parent.get_main_window().private_message_object, file_buffer)
+        self.__file_send_thread.file_send_progress.connect(self.update_send_status)
+        self.__file_send_thread.start()
 
     def update_status(self, label, index):
         self.ui.file_list.item(index, 2).setText(label)
+        current_row_count = self.ui.file_list.rowCount()
+        if index + 1 < current_row_count:
+            self.update_send_status((index + 1) / current_row_count)
+        else:
+            self.ui.file_send_progress_label.setText('发送中')
+            self.update_send_status(0)
 
     def update_send_status(self, progress):
         progress = int(progress * 100)
-        if progress - self.ui.file_send_progress_bar.value() > 5:
-            self.ui.file_send_progress_bar.setValue(progress)
+        self.ui.file_send_progress_bar.setValue(progress)
         if progress >= 100:
-            self.ui.file_send_progress_bar.setValue(progress)
             QMessageBox.information(self, '提示', '发送成功！')
+            self.ui.file_send_progress_bar.setValue(0)
+            self.ui.file_send_progress_label.setText('就绪')
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasUrls:

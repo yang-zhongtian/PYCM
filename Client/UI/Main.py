@@ -8,13 +8,12 @@ from .MainUI import Ui_MainForm
 class MainForm(QWidget):
     server_ip = None
     screen_spy_timer = QTimer()
-    packed_file_buffer = pyqtSignal(bytes)
     _start_pos = None
     _end_pos = None
     _is_tracking = False
 
     def __init__(self, parent=None):
-        super(MainForm, self).__init__(parent)
+        super(MainForm, self).__init__()
         self.ui = Ui_MainForm()
         self.ui.setupUi(self)
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
@@ -43,8 +42,6 @@ class MainForm(QWidget):
                                                                   config.get('PrivateMessage').get('Port'),
                                                                   config.get('PrivateMessage').get('Buffer'))
         self.private_message_object.online_notify()
-        self.packed_file_buffer.connect(self.private_message_object.send_file)
-        self.private_message_object.file_send_progress.connect(self.file_send_progress_update)
         self.ui.title_label.setText('PYCM Client - Online')
         self.screen_spy_timer.start(3000)
 
