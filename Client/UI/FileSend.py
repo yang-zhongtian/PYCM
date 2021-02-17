@@ -149,7 +149,7 @@ class FileSendForm(QWidget):
 
     def submit_compressed_file(self, file_buffer):
         self.is_sending = False
-        self.__file_send_thread = FileSendThread(self.parent.get_main_window().private_message_object, file_buffer)
+        self.__file_send_thread = FileSendThread(self.parent.private_message_object, file_buffer)
         self.__file_send_thread.file_send_progress.connect(self.update_send_status)
         self.__file_send_thread.start()
 

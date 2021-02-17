@@ -15,5 +15,10 @@
   "PrivateMessage": {
     "Port": 4091,
     "Buffer": 32768
+  },
+  "ScreenBroadcast": {
+    "IP": "225.2.2.21",
+    "Port": 4092,
+    "Buffer": 65500
   }
 }

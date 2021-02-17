@@ -7,8 +7,10 @@ from LoadConfig import NetworkConfig, ClientConfig
 
 from UI.Login import LoginForm
 from UI.Dashboard import DashboardForm
+from UI.SendMessageGroup import SendMessageGroupForm
 
-from Threadings import NetworkDiscoverThread, PrivateMessageThread
+from Threadings import NetworkDiscoverThread, PrivateMessageThread, ScreenBroadcastThread
+from ClassBroadcast import ClassBroadcast
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 network_config = NetworkConfig(base_dir)
@@ -38,7 +40,13 @@ class DashboardWindow(DashboardForm):
     def __init__(self):
         super(DashboardWindow, self).__init__()
         self.net_discover_thread = NetworkDiscoverThread(network_config)
+        self.class_broadcast_object = ClassBroadcast(network_config.get('Local').get('IP'),
+                                                     network_config.get('ClassBroadcast').get('IP'),
+                                                     network_config.get('ClassBroadcast').get('Port'),
+                                                     network_config.get('ClassBroadcast').get('Buffer'))
         self.private_message_thread = PrivateMessageThread(network_config, client_config)
+        self.screen_broadcast_thread = ScreenBroadcastThread(network_config)
+        self.send_message_group_dialog = SendMessageGroupForm(self)
         self.init_connections()
 
 

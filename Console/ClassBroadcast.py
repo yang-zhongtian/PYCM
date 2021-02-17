@@ -1,59 +1,55 @@
+from PyQt5.QtCore import pyqtSignal, QObject
 import socket
 import struct
-from threading import Thread
-from Packages import NetworkDiscoverFlag
+import base64
+from Packages import ClassBroadcastFlag
 
 
-class ClassBroadcast(object):
+class ClassBroadcast(QObject):
     current_ip = None
     socket_ip = None
     socket_port = None
-    socket_client = None
+    socket_buffer_size = None
+    socket_obj = None
 
-    def __init__(self, current_ip, socket_ip, socket_port):
+    def __init__(self, current_ip, socket_ip, socket_port, socket_buffer_size):
+        super(ClassBroadcast, self).__init__()
         self.current_ip = current_ip
         self.socket_ip = socket_ip
         self.socket_port = socket_port
-        self.__init_socket_client()
+        self.socket_buffer_size = socket_buffer_size
+        self.__init_socket_obj()
 
-    def __init_socket_client(self):
-        self.socket_client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
-        self.socket_client.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 255)
-        self.socket_client.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.socket_client.bind(('', self.socket_port))
-        self.socket_client.setsockopt(
+    def __init_socket_obj(self):
+        self.socket_obj = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+        self.socket_obj.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 255)
+        self.socket_obj.setsockopt(
             socket.IPPROTO_IP,
             socket.IP_ADD_MEMBERSHIP,
             socket.inet_aton(self.socket_ip) + socket.inet_aton(self.current_ip)
         )
 
-    def __client_found_handler(self, client_name, client_ip, client_mac):
-        print(client_name, client_ip, client_mac)
+    def send_data(self, flag, data):
+        payload_size = self.socket_buffer_size - struct.calcsize('!2i')
+        socket_data = struct.pack(f'!2i{payload_size}s', flag, len(data), data)
+        self.socket_obj.sendto(socket_data, (self.socket_ip, self.socket_port))
 
-    def start_waiting(self):
-        Thread(target=self.wait_for_client, daemon=True).start()
+    def send_public_text(self, text):
+        text = base64.b64encode(str(text).encode('utf-8'))
+        self.send_data(ClassBroadcastFlag.PublicMessage, text)
 
-    def wait_for_client(self):
-        try:
-            while True:
-                try:
-                    socket_data, socket_addr = self.socket_client.recvfrom(1024)
-                    client_flag, client_name, client_ip, client_mac = struct.unpack('!i20s4s12s', socket_data)
-                    if client_flag == NetworkDiscoverFlag.ClientFlag:
-                        client_name = client_name.strip(b'\x00').decode()
-                        client_ip = socket.inet_ntoa(client_ip)
-                        client_mac = client_mac.decode()
-                        if client_ip == socket_addr[0]:
-                            self.__client_found_handler(client_name, client_ip, client_mac)
-                except Exception as e:
-                    print(e)
-        except KeyboardInterrupt:
-            self.socket_server.close()
-            return None
+    def send_private_text(self, address, text):
+        targets = b'\x00'.join([socket.inet_aton(ip) for ip in address])
+        text = base64.b64encode(str(text).encode('utf-8'))
+        payload_data = struct.pack(f'!i{len(targets)}s{len(text)}s', len(targets), targets, text)
+        self.send_data(ClassBroadcastFlag.PrivateMessage, payload_data)
 
+    def console_quit_notify(self):
+        self.send_data(ClassBroadcastFlag.ConsoleQuit, b'')
 
-if __name__ == '__main__':
-    A = ClassBroadcast('192.168.1.8', '225.2.2.19', 4089)
-    A.start_waiting()
-    while True:
-        input()
+    def screen_broadcast_nodity(self, working, frame_size=None):
+        if working:
+            packed_frame_size = struct.pack('!2i', frame_size[0], frame_size[1])
+            self.send_data(ClassBroadcastFlag.StartScreenBroadcast, packed_frame_size)
+        else:
+            self.send_data(ClassBroadcastFlag.StopScreenBroadcast, b'')

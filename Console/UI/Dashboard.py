@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication, QListWidgetItem, QLabel
+from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication, QDialog, QListWidgetItem, QLabel
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QIcon
 import ujson
@@ -78,3 +78,34 @@ class DashboardForm(QMainWindow):
             thread.started.connect(partial(self.__mark_status, thread_name, 'online'))
             thread.finished.connect(partial(self.__mark_status, thread_name, 'offline'))
             thread.start()
+
+    def send_message(self):
+        self.send_message_group_dialog.ui.send_to_selected.setChecked(True)
+        self.send_message_group_dialog.ui.target_select.show()
+        self.send_message_group_dialog.ui.send_message_input.clear()
+        self.send_message_group_dialog.ui.target_list.clear()
+        self.send_message_group_dialog.ui.target_list.addItems(self.clients.keys())
+        result = self.send_message_group_dialog.exec_()
+        if result:
+            message = self.send_message_group_dialog.ui.send_message_input.toPlainText()
+            if self.send_message_group_dialog.ui.send_to_all.isChecked():
+                self.class_broadcast_object.send_public_text(message)
+                self.__log_append(f'广播消息：{message}')
+            elif self.send_message_group_dialog.ui.send_to_selected.isChecked():
+                targets = list(map(lambda x: x.text(), self.send_message_group_dialog.ui.target_list.selectedItems()))
+                self.class_broadcast_object.send_private_text(targets, message)
+                self.__log_append(f'私人消息({",".join(targets)})：{message}')
+
+    def toggle_broadcast(self, working):
+        if working:
+            self.screen_broadcast_thread.start()
+            screen_width = self.screen_broadcast_thread.socket.screen_width
+            screen_height = self.screen_broadcast_thread.socket.screen_height
+            self.class_broadcast_object.screen_broadcast_nodity(True, (screen_width, screen_height))
+        else:
+            self.screen_broadcast_thread.safe_stop()
+            self.class_broadcast_object.screen_broadcast_nodity(False)
+
+    def closeEvent(self, event):
+        self.class_broadcast_object.console_quit_notify()
+        event.accept()

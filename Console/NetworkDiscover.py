@@ -5,12 +5,14 @@ from Packages import NetworkDiscoverFlag
 
 
 class NetworkDiscover(object):
+    current_ip = None
     socket_ip = None
     socket_port = None
     socket_obj = None
     discover_interval = None
 
-    def __init__(self, socket_ip, socket_port, discover_interval=5):
+    def __init__(self, current_ip, socket_ip, socket_port, discover_interval=5):
+        self.current_ip = current_ip
         self.socket_ip = socket_ip
         self.socket_port = socket_port
         self.discover_interval = discover_interval
@@ -22,7 +24,7 @@ class NetworkDiscover(object):
         self.socket_obj.setsockopt(
             socket.IPPROTO_IP,
             socket.IP_ADD_MEMBERSHIP,
-            socket.inet_aton(self.socket_ip) + socket.inet_aton('0.0.0.0')
+            socket.inet_aton(self.socket_ip) + socket.inet_aton(self.current_ip)
         )
 
     def start(self):

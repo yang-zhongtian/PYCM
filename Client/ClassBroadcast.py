@@ -1,49 +1,69 @@
+from PyQt5.QtCore import QObject
 import socket
 import time
 import struct
-from Public.Packages import NetworkDiscoverFlag
+import base64
+from Packages import ClassBroadcastFlag
 
 
-class ClassBroadcast(object):
+class ClassBroadcast(QObject):
+    parent = None
+    current_ip = None
     socket_ip = None
     socket_port = None
-    socket_server = None
-    discover_interval = None
+    socket_buffer_size = None
+    socket_obj = None
 
-    def __init__(self, socket_ip, socket_port, client_name, client_ip, client_mac):
+    def __init__(self, parent, current_ip, socket_ip, socket_port, socket_buffer_size):
+        super(ClassBroadcast, self).__init__(parent)
+        self.parent = parent
+        self.current_ip = current_ip
         self.socket_ip = socket_ip
         self.socket_port = socket_port
-        self.client_name = str(client_name)
-        self.client_ip = client_ip
-        self.client_mac = str(client_mac)
-        self.__init_socket_server()
+        self.socket_buffer_size = socket_buffer_size
+        self.__init_socket_obj()
 
-    def __init_socket_server(self):
-        self.socket_server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
-        self.socket_server.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 255)
-        self.socket_server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.socket_server.bind(('', self.socket_port))
-        self.socket_server.setsockopt(
+    def __init_socket_obj(self):
+        self.socket_obj = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+        self.socket_obj.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 255)
+        self.socket_obj.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.socket_obj.bind(('', self.socket_port))
+        self.socket_obj.setsockopt(
             socket.IPPROTO_IP,
             socket.IP_ADD_MEMBERSHIP,
-            socket.inet_aton(self.socket_ip) + socket.inet_aton(self.client_ip)
+            socket.inet_aton(self.socket_ip) + socket.inet_aton(self.current_ip)
         )
 
-    def notify(self):
-        try:
-            socket_packet = struct.pack(
-                '!i20s4s12s', NetworkDiscoverFlag.ClientFlag, self.client_name.encode(),
-                socket.inet_aton(self.client_ip), self.client_mac.encode()
-            )
-            self.socket_server.sendto(socket_packet, (self.socket_ip, self.socket_port))
-            return True
-        except KeyboardInterrupt:
-            self.socket_server.close()
-            return False
-        except:
-            return False
+    def start(self):
+        payload_size = self.socket_buffer_size - struct.calcsize('!2i')
+        while True:
+            try:
+                socket_data, socket_addr = self.socket_obj.recvfrom(self.socket_buffer_size)
+                unpacked_flag, unpacked_length, unpacked_data = struct.unpack(f'!2i{payload_size}s', socket_data)
+                unpacked_data = unpacked_data[:unpacked_length]
+                if unpacked_flag == ClassBroadcastFlag.PublicMessage:
+                    unpacked_data = base64.b64decode(unpacked_data).decode('utf-8')
+                    self.parent.message_recieved.emit('public', str(unpacked_data))
+                elif unpacked_flag == ClassBroadcastFlag.PrivateMessage:
+                    integer_length = struct.calcsize('!i')
+                    targets_length = struct.unpack('!i', unpacked_data[:integer_length])[0]
+                    targets = unpacked_data[integer_length:integer_length + targets_length].split(b'\x00')
+                    targets = [socket.inet_ntoa(item) for item in targets]
+                    if self.current_ip in targets:
+                        message = unpacked_data[integer_length + targets_length:]
+                        message = base64.b64decode(message).decode('utf-8')
+                        self.parent.message_recieved.emit('private', str(message))
+                elif unpacked_flag == ClassBroadcastFlag.StartScreenBroadcast:
+                    screen_width, screen_height = struct.unpack('!2i', unpacked_data)
+                    self.parent.toggle_screen_broadcats.emit(True, (screen_width, screen_height))
+                elif unpacked_flag == ClassBroadcastFlag.StopScreenBroadcast:
+                    self.parent.toggle_screen_broadcats.emit(False, ())
+                elif unpacked_flag == ClassBroadcastFlag.ConsoleQuit:
+                    self.parent.reset_all.emit()
+                    return None
 
-
-if __name__ == '__main__':
-    A = ClassBroadcast('225.2.2.19', 4089, 'C1', '192.168.1.8', '6C0B84A4ED61')
-    print(A.notify())
+            except KeyboardInterrupt:
+                self.socket_obj.close()
+                return None
+            except Exception as e:
+                print(e)

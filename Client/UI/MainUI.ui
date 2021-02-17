@@ -84,6 +84,9 @@ color: rgb(255, 255, 255);</string>
      </property>
      <item>
       <widget class="QPushButton" name="notify_button">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
          <horstretch>0</horstretch>
@@ -97,6 +100,9 @@ color: rgb(255, 255, 255);</string>
      </item>
      <item>
       <widget class="QPushButton" name="send_file_button">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
          <horstretch>0</horstretch>
@@ -110,6 +116,9 @@ color: rgb(255, 255, 255);</string>
      </item>
      <item>
       <widget class="QPushButton" name="private_message_button">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
          <horstretch>0</horstretch>

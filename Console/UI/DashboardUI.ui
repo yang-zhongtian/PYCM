@@ -273,6 +273,25 @@
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QPushButton" name="send_message_button">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>发送消息</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>
@@ -489,10 +508,44 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>send_message_button</sender>
+   <signal>clicked()</signal>
+   <receiver>DashboardForm</receiver>
+   <slot>send_message()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1117</x>
+     <y>724</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1145</x>
+     <y>745</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toggle_broadcast</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>DashboardForm</receiver>
+   <slot>toggle_broadcast(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>168</x>
+     <y>55</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>651</x>
+     <y>389</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>clear_client_selection()</slot>
   <slot>client_scroll_in()</slot>
   <slot>client_scroll_out()</slot>
+  <slot>send_message()</slot>
+  <slot>toggle_broadcast(bool)</slot>
  </slots>
 </ui>

@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import time
 from PIL import Image
 
 
@@ -56,12 +57,14 @@ class ScreenDiff(object):
             self.__update(current)
             result.append((np.array([np.array([0, 0]), np.array(
                 [current.shape[0], current.shape[1]])]), current))
+            print(sum(list(map(lambda x: len(x[1].tobytes()), result))))
             return result
         else:
             compare_result = self.__compare(current)
             for pair in compare_result:
                 result.append(
                     (pair, current[pair[0][0]:pair[1][0], pair[0][1]:pair[1][1]]))
+            print(sum(list(map(lambda x: len(x[1].tobytes()), result))))
             self.__update(current)
             return result
 
@@ -81,7 +84,9 @@ def DEBUG(result):
 
 if __name__ == '__main__':
     A = ScreenDiff()
-    DEBUG(A.diff(np.array(Image.open('1.bmp'))))
-    # plt.show()
-    DEBUG(A.diff(np.array(Image.open('2.bmp'))))
-    # plt.show()
+    s = time.time()
+    for _ in range(50):
+        A.diff(np.array(Image.open('1.bmp')))
+        A.diff(np.array(Image.open('2.bmp')))
+    print(time.time()-s)
+    

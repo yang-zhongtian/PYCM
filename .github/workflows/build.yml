@@ -1,6 +1,6 @@
 name: PYCM-Build
 
-on: [push]
+on: repository_dispatch
 
 jobs:
   release:

@@ -44,7 +44,7 @@ This file is used to store network configurations for both console and client.
     "IP": "Current IP address",
     "MAC": "Current MAC address"
   },
-  /* The settings bellow is not adviced to be modified. */
+  /* The settings bellow is not adviced to be modified. This note SHOULD be REMOVED in config file*/
   "NetworkDiscover": {
     "IP": "224.50.50.50",
     "Port": 4088,
@@ -57,18 +57,24 @@ This file is used to store network configurations for both console and client.
   "PrivateMessage": {
     "Port": 4091,
     "Buffer": 32768
+  },
+  "ScreenBroadcast": {
+    "IP": "225.2.2.21",
+    "Port": 4092,
+    "Buffer": 65500
   }
 }
 ```
 
 
 ## Download
-See all downloads at [Github Release](https://github.com/yangzhongtian001/PYCM/releases). Please notice that all pre-releases are not tested fully and may contain unknown problems.
+Clone this repo or download zipped code by clicking [HERE](https://github.com/yangzhongtian001/PYCM/archive/master.zip)
 
 ## Install Guide
-* Download zipped file from RELEASE page & extract.
+* Download or clone code.
+* Run pip install -r requirements.txt to install required libraries.
 * Edit *.json.example file for configuration & remove the .example extention.
-* Enjoy
+* Run python Main.py to start application.
 
 ## Contact
 * Author: Richard Yang
