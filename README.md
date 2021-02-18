@@ -7,6 +7,19 @@
 * [Gitlab(Mirror)](https://gitlab.com/yangzhongtian/PYCM)
 * [Coding(Mirror)](https://yangzhongtian.coding.net/public/PYCM/PYCM/git/files)
 
+## Introduction
+This program is a e-classroom management system written by python. It contains both client(student side) and console(teacher size). GUI written by PyQt5, supporting all platforms.
+
+## Features
+* [x] Auto LAN discover
+* [x] Console screen broadcasting
+* [ ] Cient screen remote control by Console
+* [ ] Console side file handout
+* [ ] Screen locking
+* [x] Client side file submitting
+* [x] Console side message sending. Supporting both private & public messages.
+* [ ] Client notify
+
 
 ## Structure
 ```
