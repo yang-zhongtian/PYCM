@@ -1,6 +1,12 @@
 # Python Class Management System
 [![Github Build](https://github.com/yangzhongtian001/PYCM/workflows/PYCM-Build/badge.svg)](https://github.com/yangzhongtian001/PYCM/releases) [![GitHub issues](https://img.shields.io/github/issues/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/issues) [![GitHub forks](https://img.shields.io/github/forks/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/network) [![GitHub stars](https://img.shields.io/github/stars/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/stargazers) [![GitHub license](https://img.shields.io/github/license/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/yangzhongtian001/PYCM)
 
+## Mirror Repository
+* [Github(Master)](https://github.com/yangzhongtian001/PYCM)
+* [Gitee(Master)](https://gitee.com/yangzhongtian/PYCM)
+* [Gitlab(Mirror)](https://gitlab.com/yangzhongtian/PYCM)
+* [Coding(Mirror)](https://yangzhongtian.coding.net/public/PYCM/PYCM/git/files)
+
 
 ## Structure
 ```
@@ -38,13 +44,13 @@ This file is used to store all client configurations.
 
 ### Network.json@console&client
 This file is used to store network configurations for both console and client.
+**The settings bellow "NetworkDiscover" is not adviced to be modified.**
 ```json
 {
   "Local": {
     "IP": "Current IP address",
     "MAC": "Current MAC address"
   },
-  /* The settings bellow is not adviced to be modified. This note SHOULD be REMOVED in config file*/
   "NetworkDiscover": {
     "IP": "224.50.50.50",
     "Port": 4088,
@@ -66,12 +72,8 @@ This file is used to store network configurations for both console and client.
 }
 ```
 
-
-## Download
-Clone this repo or download zipped code by clicking [HERE](https://github.com/yangzhongtian001/PYCM/archive/master.zip)
-
 ## Install Guide
-* Download or clone code.
+* Clone repository.
 * Run pip install -r requirements.txt to install required libraries.
 * Edit *.json.example file for configuration & remove the .example extention.
 * Run python Main.py to start application.
