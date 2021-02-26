@@ -8,3 +8,4 @@ ujson~=4.0.1
 qt-material==2.7
 matplotlib~=3.2.2
 opencv-python~=4.2.0.34
+proxy.py==2.3.1

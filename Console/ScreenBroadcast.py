@@ -11,7 +11,7 @@ from ScreenPacker import ScreenPacker
 
 
 class ScreenBroadcast(QObject):
-    def __init__(self, parent, current_ip, socket_ip, socket_port, packer_sleep=0.02, frame_sleep=0.19,
+    def __init__(self, parent, current_ip, socket_ip, socket_port, packer_sleep=0.02, frame_sleep=0.2,
                  socket_buffer_size=40960):
         super(ScreenBroadcast, self).__init__()
         self.parent = parent

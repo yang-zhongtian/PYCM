@@ -4,7 +4,6 @@ import time
 import struct
 import cv2
 import numpy
-from matplotlib import pyplot as plt
 
 
 class ScreenPacker(object):
