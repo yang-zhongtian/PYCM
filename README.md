@@ -72,7 +72,7 @@ This file is used to store network configurations for both console and client.
   "ClassBroadcast": {
     "IP": "225.2.2.19",
     "Port": 4089,
-	"Buffer": 65500
+    "Buffer": 65500
   },
   "PrivateMessage": {
     "Port": 4091,
