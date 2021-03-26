@@ -1,12 +1,14 @@
 from PyQt5.QtCore import QObject
-from threading import Thread
-from queue import Queue, PriorityQueue
+from threading import Thread, Lock
+from queue import Queue
 import socket
 import time
 import struct
 import numpy as np
 import cv2
 from PIL import Image
+from copy import deepcopy
+import traceback
 
 
 class PiecePack(object):
@@ -23,21 +25,9 @@ class PiecePack(object):
         return f'<PiecePack stamp={self.stamp} index={self.index}>'
 
 
-class PeekablePriorityQueue(PriorityQueue):
-    def peek(self):
-        try:
-            with self.mutex:
-                return self.queue[0]
-        except IndexError:
-            return None
-
-    def pop(self):
-        self.get()
-
-
 class ScreenBroadcast(QObject):
-    def __init__(self, parent, current_ip, socket_ip, socket_port, socket_buffer_size, reciever_sleep=0.001,
-                 max_queue_size=50):
+    def __init__(self, parent, current_ip, socket_ip, socket_port, socket_buffer_size, reciever_sleep=0,
+                 max_queue_size=50, piece_buffer_size=3, pieces_amount=6):
         super(ScreenBroadcast, self).__init__()
         self.parent = parent
         self.current_ip = current_ip
@@ -47,11 +37,18 @@ class ScreenBroadcast(QObject):
         self.position_size = struct.calcsize('!Q5i')  # 时间戳 idx 两个坐标
         self.payload_size = socket_buffer_size - struct.calcsize('!Q6i')
         self.reciever_sleep = reciever_sleep
-        self.pieces_queue_limit = max_queue_size - 20
+        self.max_queue_size = max_queue_size
         self.screen_width = None
         self.screen_height = None
-        self.pieces_queue = PeekablePriorityQueue(maxsize=max_queue_size)
+        self.pieces_queue = Queue(maxsize=max_queue_size)
+        self.piece_buffer_size = piece_buffer_size * 10
+        self.pieces_amount = pieces_amount
         self.frames_queue = Queue()
+        self.frames_list = None
+        self.pieces_used = [np.zeros(self.pieces_amount, dtype=bool) for _ in range(self.piece_buffer_size)]
+        self.pieces_time = np.zeros(self.piece_buffer_size, dtype=np.uint64)
+        self.fps = 0
+        self.fps_lock = Lock()
         self.working = True
 
     def __init_socket_object(self):
@@ -69,6 +66,8 @@ class ScreenBroadcast(QObject):
     def set_screen_size(self, screen_width, screen_height):
         self.screen_width = screen_width
         self.screen_height = screen_height
+        self.frames_list = [np.zeros(self.screen_width * self.screen_height * 3, dtype=np.uint8).reshape(
+            (self.screen_height, self.screen_width, 3)) for _ in range(self.piece_buffer_size)]
 
     def __recieve_thread(self):
         socket_object = self.__init_socket_object()
@@ -83,69 +82,60 @@ class ScreenBroadcast(QObject):
                     piece_data = cv2.imdecode(piece_data, cv2.IMREAD_COLOR)
                     self.pieces_queue.put(PiecePack(stamp, index, (x1, y1, x2, y2), piece_data))
                 except Exception as e:
-                    print(e)
+                    print(repr(e))
+                    print(traceback.format_exc())
             else:
                 time.sleep(self.reciever_sleep)
 
     def __rebuild_thread(self):
-        frame = np.zeros(self.screen_width * self.screen_height * 3, dtype=np.uint8).reshape(
-            (self.screen_height, self.screen_width, 3))
-        pieces_used_flag = np.zeros(6, dtype=bool)
-        current_stamp = 0
-        stamp_limit = 0
-        failure_count = 0
-        last_time = None
-        fps = 0
         while self.working:
-            if self.pieces_queue.qsize() > self.pieces_queue_limit:
-                self.pieces_queue = PeekablePriorityQueue()
+            if self.pieces_queue.qsize() > self.max_queue_size:
+                self.pieces_queue = Queue()
                 if self.pieces_queue.mutex:
                     self.pieces_queue.queue.clear()
             try:
-                if failure_count >= 6:
-                    self.pieces_queue.pop()
-                    stamp_limit = current_stamp
-                    current_stamp = 0
-                    failure_count = 0
-                    pieces_used_flag.fill(0)
-                top = self.pieces_queue.peek()
-                if top is not None:
-                    stamp = top.stamp
-                    if ((current_stamp == 0) or (stamp == current_stamp)) and (stamp > stamp_limit):
-                        pack = self.pieces_queue.get()
-                        x1, y1, x2, y2 = pack.position
-                        data = pack.data
-                        frame[x1:x2, y1:y2] = data
-                        pieces_used_flag[pack.index] = True
-                        current_stamp = pack.stamp
-                        failure_count = 0
-                    elif stamp < current_stamp:
-                        self.pieces_queue.pop()
-                    else:
-                        failure_count += 1
+                piece = self.pieces_queue.get()
+                time_stamp = piece.stamp
+                index = piece.index
+                x1, y1, x2, y2 = piece.position
+                data = piece.data
+                piece_list_index = time_stamp % self.piece_buffer_size
+                piece_time_stamp = self.pieces_time[piece_list_index]
+                piece_used = self.pieces_used[piece_list_index]
+                frame = self.frames_list[piece_list_index]
+                if piece_time_stamp > time_stamp:
+                    continue
+                elif piece_time_stamp < time_stamp:
+                    piece_used.fill(0)
+                    self.pieces_time[piece_list_index] = time_stamp
+                if piece_used[index]:
+                    continue
+                frame[x1:x2, y1:y2] = data
+                piece_used[index] = True
+                if np.all(piece_used):
+                    new_frame = deepcopy(frame)
+                    self.frames_queue.put(new_frame)
+                    frame.fill(0)
+                    with self.fps_lock:
+                        self.fps += 1
+
             except Exception as e:
-                print(e)
-            if pieces_used_flag.all():
-                self.frames_queue.put(frame)
-                failure_count = 0
-                stamp_limit = current_stamp
-                current_stamp = 0
-                pieces_used_flag.fill(0)
-                current_time = time.time()
-                if last_time is None:
-                    fps += 1
-                    last_time = current_time
-                elif (current_time - last_time) < 1:
-                    fps += 1
-                else:
-                    self.parent.fps_update.emit(fps)
-                    fps = 0
-                    last_time = current_time
+                print(repr(e))
+                print(traceback.format_exc())
+
+    def __fps_statistics(self):
+        while self.working:
+            with self.fps_lock:
+                fps = self.fps
+                self.fps = 0
+            self.parent.fps_update.emit(fps)
+            time.sleep(1)
 
     def start(self):
         for _ in range(4):
             Thread(target=self.__recieve_thread, daemon=True).start()
         Thread(target=self.__rebuild_thread, daemon=True).start()
+        Thread(target=self.__fps_statistics, daemon=True).start()
         while self.working:
             frame = self.frames_queue.get()
             qpixmap = Image.fromarray(frame).toqpixmap()

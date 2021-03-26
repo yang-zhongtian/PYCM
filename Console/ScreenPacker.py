@@ -8,7 +8,7 @@ import numpy
 
 class ScreenPacker(object):
     def __init__(self, screen_width, screen_height, buffer_size=40960):
-        self.encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 80]
+        self.encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 60]
         self.screen_width = screen_width
         self.screen_height = screen_height
         self.buffer_size = buffer_size

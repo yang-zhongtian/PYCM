@@ -4,3 +4,4 @@ node_modules
 venv
 Console/*.json
 Client/*.json
+/Console/Build-Windows

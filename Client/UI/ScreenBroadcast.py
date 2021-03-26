@@ -18,7 +18,7 @@ class ScreenBroadcastForm(QWidget):
         screen_display_object = self.ui.screen_display
         frame = frame.scaled(screen_display_object.width(), screen_display_object.height(), Qt.KeepAspectRatio,
                              Qt.SmoothTransformation)
-        self.ui.screen_display.setPixmap(frame)
+        screen_display_object.setPixmap(frame)
 
     def update_fps(self, fps):
         self.setWindowTitle(f'{self.window_title} fps: {fps}')
