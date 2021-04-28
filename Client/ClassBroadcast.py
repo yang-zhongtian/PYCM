@@ -54,10 +54,9 @@ class ClassBroadcast(QObject):
                         message = base64.b64decode(message).decode('utf-8')
                         self.parent.message_recieved.emit('private', str(message))
                 elif unpacked_flag == ClassBroadcastFlag.StartScreenBroadcast:
-                    screen_width, screen_height = struct.unpack('!2i', unpacked_data)
-                    self.parent.toggle_screen_broadcats.emit(True, (screen_width, screen_height))
+                    self.parent.toggle_screen_broadcats.emit(True)
                 elif unpacked_flag == ClassBroadcastFlag.StopScreenBroadcast:
-                    self.parent.toggle_screen_broadcats.emit(False, ())
+                    self.parent.toggle_screen_broadcats.emit(False)
                 elif unpacked_flag == ClassBroadcastFlag.ConsoleQuit:
                     self.parent.reset_all.emit()
                     return None

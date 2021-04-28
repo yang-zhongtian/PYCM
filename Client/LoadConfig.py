@@ -8,4 +8,7 @@ class NetworkConfig(object):
         self.config = ujson.loads(self.config)
 
     def get(self, key):
-        return self.config.get(key)
+        return self.config.get(key, {})
+
+    def set(self, key, value):
+        self.config[key] = value

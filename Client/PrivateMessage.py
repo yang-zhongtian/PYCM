@@ -19,9 +19,10 @@ class PrivateMessage(QObject):
     socket_obj = None
     file_send_progress = pyqtSignal(float)
 
-    def __init__(self, current_ip, socket_ip, socket_port, socket_buffer_size):
+    def __init__(self, current_ip, current_mac, socket_ip, socket_port, socket_buffer_size):
         super(PrivateMessage, self).__init__()
         self.current_ip = current_ip
+        self.current_mac = current_mac
         self.socket_ip = socket_ip
         self.socket_port = socket_port
         self.socket_buffer_size = socket_buffer_size
@@ -37,10 +38,10 @@ class PrivateMessage(QObject):
         self.socket_obj.sendto(socket_data, (self.socket_ip, self.socket_port))
 
     def online_notify(self):
-        self.send_data(PrivateMessageFlag.ClientLogin, socket.inet_aton(self.current_ip))
+        self.send_data(PrivateMessageFlag.ClientLogin, str(self.current_mac).encode())
 
     def offline_notify(self):
-        self.send_data(PrivateMessageFlag.ClientLogout, socket.inet_aton(self.current_ip))
+        self.send_data(PrivateMessageFlag.ClientLogout, str(self.current_mac).encode())
 
     def screen_spy_send(self):
         with mss() as sct:

@@ -8,7 +8,7 @@ from ScreenBroadcast import ScreenBroadcast
 class ClassBroadcastThread(QThread):
     message_recieved = pyqtSignal(str, str)
     reset_all = pyqtSignal()
-    toggle_screen_broadcats = pyqtSignal(bool, tuple)
+    toggle_screen_broadcats = pyqtSignal(bool)
 
     def __init__(self, config):
         super(ClassBroadcastThread, self).__init__()
@@ -47,8 +47,7 @@ class ScreenBroadcastThread(QThread):
         self.current_ip = config.get('Local').get('IP')
         self.socket_ip = config.get('ScreenBroadcast').get('IP')
         self.socket_port = config.get('ScreenBroadcast').get('Port')
-        self.socket_buffer_size = config.get('ScreenBroadcast').get('Buffer')
-        self.socket = ScreenBroadcast(self, self.current_ip, self.socket_ip, self.socket_port, self.socket_buffer_size)
+        self.socket = ScreenBroadcast(self, self.current_ip, self.socket_ip, self.socket_port)
 
     def run(self):
         self.socket.start()

@@ -8,6 +8,7 @@ from LoadConfig import NetworkConfig, ClientConfig
 from UI.Login import LoginForm
 from UI.Dashboard import DashboardForm
 from UI.SendMessageGroup import SendMessageGroupForm
+from UI.NetworkDeviceSelect import NetworkDeviceSelectForm
 
 from Threadings import NetworkDiscoverThread, PrivateMessageThread, ScreenBroadcastThread
 from ClassBroadcast import ClassBroadcast
@@ -20,39 +21,43 @@ app = QApplication(sys.argv)
 apply_stylesheet(app, theme='dark_blue.xml')
 
 
-class LoginWindow(LoginForm):
-    base_dir = base_dir
-
-    def __init__(self):
-        super(LoginWindow, self).__init__()
-
-    def show_dashboard_window(self):
-        self.hide()
-        dashboard_window.show()
-        dashboard_window.start_all_threadings()
-
-
 class DashboardWindow(DashboardForm):
     base_dir = base_dir
     network_config = network_config
     client_config = client_config
+    net_discover_thread = None
+    class_broadcast_object = None
+    private_message_thread = None
+    screen_broadcast_thread = None
+    send_message_group_dialog = None
+    network_devices_select_dialog = None
 
     def __init__(self):
         super(DashboardWindow, self).__init__()
-        self.net_discover_thread = NetworkDiscoverThread(network_config)
-        self.class_broadcast_object = ClassBroadcast(network_config.get('Local').get('IP'),
-                                                     network_config.get('ClassBroadcast').get('IP'),
-                                                     network_config.get('ClassBroadcast').get('Port'),
-                                                     network_config.get('ClassBroadcast').get('Buffer'))
-        self.private_message_thread = PrivateMessageThread(network_config, client_config)
-        self.screen_broadcast_thread = ScreenBroadcastThread(network_config)
+        login_result = LoginForm(self).exec_()
+        if not login_result:
+            sys.exit(0)
+        network_devices_select_dialog = NetworkDeviceSelectForm(self)
+        network_devices_select_dialog.exec_()
+        network_device = network_devices_select_dialog.get_selected_device()
+        self.network_config.set('Local', network_device)
+        self.init_threads()
+        self.show()
+        self.start_all_threadings()
+
+    def init_threads(self):
+        self.net_discover_thread = NetworkDiscoverThread(self.network_config)
+        self.class_broadcast_object = ClassBroadcast(self.network_config.get('Local').get('IP'),
+                                                     self.network_config.get('ClassBroadcast').get('IP'),
+                                                     self.network_config.get('ClassBroadcast').get('Port'),
+                                                     self.network_config.get('ClassBroadcast').get('Buffer'))
+        self.private_message_thread = PrivateMessageThread(self.network_config, self.client_config, self)
+        self.screen_broadcast_thread = ScreenBroadcastThread(self.network_config)
         self.send_message_group_dialog = SendMessageGroupForm(self)
         self.init_connections()
 
 
-login_window = LoginWindow()
 dashboard_window = DashboardWindow()
 
 if __name__ == '__main__':
-    login_window.show()
     sys.exit(app.exec_())

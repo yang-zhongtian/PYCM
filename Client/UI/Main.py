@@ -1,6 +1,8 @@
 from PyQt5.QtWidgets import QWidget, QSystemTrayIcon, QAction, QMenu, QMessageBox, QApplication
 from PyQt5.QtCore import Qt, QPoint, QTimer, pyqtSignal
 from PyQt5.QtGui import QMouseEvent, QIcon
+import psutil
+import socket
 from .MainUI import Ui_MainForm
 from .FileSend import FileSendForm
 from .ScreenBroadcast import ScreenBroadcastForm
@@ -17,6 +19,7 @@ class MainForm(QWidget):
     def __init__(self, parent=None):
         super(MainForm, self).__init__()
         self.ui = Ui_MainForm()
+        self.parent = parent
         self.ui.setupUi(self)
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         self.setFixedSize(322, 70)
@@ -25,6 +28,21 @@ class MainForm(QWidget):
         self.file_send_window = FileSendForm(self)
         self.screen_broadcast_window = ScreenBroadcastForm(self)
         self.init_tray()
+
+    def load_network_device(self):
+        network_devices = psutil.net_if_addrs()
+        devices = {}
+        for device in network_devices.keys():
+            af_inet4 = []
+            af_link = []
+            for item in network_devices[device]:
+                if item.family == socket.AF_INET:
+                    af_inet4.append(item.address)
+                elif item.family == psutil.AF_LINK:
+                    af_link.append(item.address)
+            if len(af_inet4) == 1 and len(af_link) == 1:
+                devices[device] = {'IP': af_inet4[0], 'MAC': af_link[0]}
+        return devices.get(self.parent.config.get('Local').get('Device'))
 
     def init_connections(self):
         self.net_discover_thread.server_info.connect(self.server_found)
@@ -58,10 +76,11 @@ class MainForm(QWidget):
     def server_found(self, server_ip, config):
         self.server_ip = server_ip
         local_ip = config.get('Local').get('IP')
+        local_mac = config.get('Local').get('MAC')
         private_message_port = config.get('PrivateMessage').get('Port')
         private_message_buffer = config.get('PrivateMessage').get('Buffer')
-        self.private_message_object = self.private_message_object(local_ip, self.server_ip, private_message_port
-                                                                  , private_message_buffer)
+        self.private_message_object = self.private_message_object(local_ip, local_mac, self.server_ip,
+                                                                  private_message_port, private_message_buffer)
         self.private_message_object.online_notify()
         self.class_broadcast_thread.start()
         self.ui.title_label.setText('PYCM Client - Online')
@@ -70,9 +89,8 @@ class MainForm(QWidget):
         self.ui.private_message_button.setEnabled(True)
         self.screen_spy_timer.start(3000)
 
-    def __toggle_screen_broadcast(self, work, screen_info):
+    def __toggle_screen_broadcast(self, work):
         if work:
-            self.screen_broadcast_thread.socket.set_screen_size(*screen_info)
             self.screen_broadcast_thread.socket.working = True
             self.screen_broadcast_thread.start()
             self.screen_broadcast_window.show()

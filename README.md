@@ -51,7 +51,11 @@ This file is used for console login authentication
 This file is used to store all client configurations.
 ```json
 {
-  "FileUploadPath": "The directory for storing client uploaded files"
+  "FileUploadPath": "The directory for storing client uploaded files",
+  "ClientLabel": {
+    "A client mac address": "the label to show in console dashboard",
+    "Another client mac address": "the label to show in console dashboard"
+  }
 }
 ```
 
@@ -61,8 +65,7 @@ This file is used to store network configurations for both console and client.
 ```json
 {
   "Local": {
-    "IP": "Current IP address",
-    "MAC": "Current MAC address"
+    "Device": "The name of default network device"
   },
   "NetworkDiscover": {
     "IP": "224.50.50.50",
@@ -81,7 +84,8 @@ This file is used to store network configurations for both console and client.
   "ScreenBroadcast": {
     "IP": "225.2.2.21",
     "Port": 4092,
-    "Buffer": 65500
+    "FFMpegPath": "ffmpeg",
+    "FFMpegQuality": 6
   }
 }
 ```

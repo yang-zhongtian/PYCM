@@ -47,9 +47,8 @@ class ClassBroadcast(QObject):
     def console_quit_notify(self):
         self.send_data(ClassBroadcastFlag.ConsoleQuit, b'')
 
-    def screen_broadcast_nodity(self, working, frame_size=None):
+    def screen_broadcast_nodity(self, working):
         if working:
-            packed_frame_size = struct.pack('!2i', frame_size[0], frame_size[1])
-            self.send_data(ClassBroadcastFlag.StartScreenBroadcast, packed_frame_size)
+            self.send_data(ClassBroadcastFlag.StartScreenBroadcast, b'')
         else:
             self.send_data(ClassBroadcastFlag.StopScreenBroadcast, b'')

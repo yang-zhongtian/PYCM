@@ -1,7 +1,6 @@
 {
   "Local": {
-    "IP": "",
-    "MAC": ""
+    "Device": "WLAN"
   },
   "NetworkDiscover": {
     "IP": "224.50.50.50",
@@ -19,6 +18,7 @@
   "ScreenBroadcast": {
     "IP": "225.2.2.21",
     "Port": 4092,
-    "Buffer": 65500
+    "FFMpegPath": "ffmpeg",
+    "FFMpegQuality": 6
   }
 }

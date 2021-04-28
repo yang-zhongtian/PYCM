@@ -14,6 +14,7 @@ class DashboardForm(QMainWindow):
         self.threadings = {'net_discover_thread': False,
                            'private_message_thread': False}
         self.clients = {}
+        self.mac_binding = {}
         self.ui.setupUi(self)
         self.ui.toggle_broadcast.setProperty('class', 'big_button')
         self.ui.remote_spy.setProperty('class', 'big_button')
@@ -28,15 +29,16 @@ class DashboardForm(QMainWindow):
     def __mark_status(self, name, status):
         self.threadings[name] = status
 
-    def __logger(self, type_, data):
+    def __logger(self, type_, ip, mac=None):
         if type_ == 'online':
-            self.__log_append(f'{data}已上线')
-            self.__add_client_desktop(data)
+            self.mac_binding[ip] = mac
+            self.__log_append(f'{self.get_client_label_by_ip(ip)}已上线')
+            self.__add_client_desktop(ip)
         elif type_ == 'offline':
-            self.__log_append(f'{data}已离线')
-            self.__remove_client_desktop(data)
+            self.__log_append(f'{self.get_client_label_by_ip(ip)}已离线')
+            self.__remove_client_desktop(ip)
         elif type_ == 'file_recieved':
-            self.__log_append(f'已收到来自 {data} 的文件')
+            self.__log_append(f'已收到来自 {self.get_client_label_by_ip(ip)} 的文件')
 
     def __log_append(self, message):
         self.ui.log_area.append(f'[{time.strftime("%H:%M", time.localtime(time.time()))}] {message}')
@@ -44,7 +46,7 @@ class DashboardForm(QMainWindow):
     def __add_client_desktop(self, client_ip):
         if client_ip in self.clients.keys():
             return
-        desktop = QListWidgetItem(client_ip)
+        desktop = QListWidgetItem(self.get_client_label_by_ip(client_ip))
         desktop.setIcon(QIcon(':/logo/UI/Resources/client_blank.png'))
         desktop.setTextAlignment(Qt.AlignHCenter)
         desktop.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled | Qt.ItemIsEditable)
@@ -52,6 +54,8 @@ class DashboardForm(QMainWindow):
         self.ui.desktop_layout.addItem(self.clients[client_ip])
 
     def __remove_client_desktop(self, client_ip):
+        if client_ip in self.mac_binding.keys():
+            self.mac_binding.pop(client_ip)
         if client_ip in self.clients.keys():
             index = self.ui.desktop_layout.row(self.clients[client_ip])
             self.ui.desktop_layout.removeItemWidget(self.ui.desktop_layout.takeItem(index))
@@ -60,6 +64,12 @@ class DashboardForm(QMainWindow):
     def __update_client_desktop(self, client_ip, client_desktop):
         if client_ip in self.clients.keys():
             self.clients[client_ip].setIcon(QIcon(client_desktop))
+
+    def get_client_label_by_ip(self, ip):
+        label = self.client_config.get('ClientLabel').get(self.mac_binding.get(ip))
+        if not label:
+            return ip
+        return label
 
     def clear_client_selection(self):
         self.ui.desktop_layout.clearSelection()
@@ -99,9 +109,7 @@ class DashboardForm(QMainWindow):
     def toggle_broadcast(self, working):
         if working:
             self.screen_broadcast_thread.start()
-            screen_width = self.screen_broadcast_thread.socket.screen_width
-            screen_height = self.screen_broadcast_thread.socket.screen_height
-            self.class_broadcast_object.screen_broadcast_nodity(True, (screen_width, screen_height))
+            self.class_broadcast_object.screen_broadcast_nodity(True)
         else:
             self.screen_broadcast_thread.safe_stop()
             self.class_broadcast_object.screen_broadcast_nodity(False)

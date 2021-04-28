@@ -20,17 +20,24 @@ class NetworkDiscoverThread(QThread):
 
 
 class PrivateMessageThread(QThread):
-    client_login_logout = pyqtSignal(str, str)
+    client_login_logout = pyqtSignal(str, str, str)
     client_desktop_recieved = pyqtSignal(str, object)
     client_file_recieved = pyqtSignal(str)
 
-    def __init__(self, network_config, client_config):
+    def __init__(self, network_config, client_config, parent=None):
         super(PrivateMessageThread, self).__init__()
         self.socket_ip = network_config.get('Local').get('IP')
         self.socket_port = network_config.get('PrivateMessage').get('Port')
         self.socket_buffer_size = network_config.get('PrivateMessage').get('Buffer')
         self.file_upload_path = client_config.get('FileUploadPath')
-        self.socket = PrivateMessage(self, self.socket_ip, self.socket_port, self.socket_buffer_size)
+        self.root_parent = parent
+        self.socket = PrivateMessage(self, self.root_parent, self.socket_ip, self.socket_port, self.socket_buffer_size)
+
+    def get_client_label_by_ip(self, ip):
+        label = self.client_config.get('ClientLabel').get(self.mac_binding.get(ip))
+        if not label:
+            return ip
+        return label
 
     def run(self):
         self.socket.start()
@@ -42,9 +49,10 @@ class ScreenBroadcastThread(QThread):
         self.current_ip = network_config.get('Local').get('IP')
         self.socket_ip = network_config.get('ScreenBroadcast').get('IP')
         self.socket_port = network_config.get('ScreenBroadcast').get('Port')
-        self.socket_buffer_size = network_config.get('ScreenBroadcast').get('Buffer')
-        self.socket = ScreenBroadcast(self, self.current_ip, self.socket_ip, self.socket_port,
-                                      socket_buffer_size=self.socket_buffer_size)
+        self.ffmpeg_path = network_config.get('ScreenBroadcast').get('FFMpegPath')
+        self.ffmpeg_quality = network_config.get('ScreenBroadcast').get('FFMpegQuality', 6)
+        self.socket = ScreenBroadcast(self, self.current_ip, self.socket_ip, self.socket_port, self.ffmpeg_path,
+                                      self.ffmpeg_quality)
 
     def safe_stop(self):
         self.socket.working = False

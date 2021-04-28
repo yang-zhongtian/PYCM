@@ -1,3 +1,6 @@
 {
-  "FileUploadPath": ""
+  "FileUploadPath": "",
+  "ClientLabel": {
+    "XX-XX-XX-XX-XX-XX": "ClientName"
+  }
 }

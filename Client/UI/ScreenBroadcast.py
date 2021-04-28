@@ -5,30 +5,33 @@ from .ScreenBroadcastUI import Ui_ScreenBroadcast
 
 class ScreenBroadcastForm(QWidget):
     parent = None
+    freeze = False
 
     def __init__(self, parent=None):
         super(ScreenBroadcastForm, self).__init__()
         self.parent = parent
         self.ui = Ui_ScreenBroadcast()
         self.ui.setupUi(self)
+        self.ui.screen_display.move(0, 0)
         self.setWindowFlags(Qt.WindowMinMaxButtonsHint)
         self.window_title = self.windowTitle()
 
     def update_frame(self, frame):
-        screen_display_object = self.ui.screen_display
-        frame = frame.scaled(screen_display_object.width(), screen_display_object.height(), Qt.KeepAspectRatio,
-                             Qt.SmoothTransformation)
-        screen_display_object.setPixmap(frame)
+        if not self.freeze:
+            screen_display_object = self.ui.screen_display
+            screen_display_object.setPixmap(frame)
+
+    def freeze_frame(self, freeze=True):
+        self.freeze = freeze
+
+    def show_full_screen(self, fullscreen=True):
+        self.showFullScreen() if fullscreen else self.showNormal()
 
     def update_fps(self, fps):
         self.setWindowTitle(f'{self.window_title} fps: {fps}')
 
-    def resizeEvent(self, event):
-        frame = self.ui.screen_display.pixmap()
-        if frame:
-            frame = frame.scaled(self.ui.screen_display.width(), self.ui.screen_display.height(), Qt.KeepAspectRatio,
-                                 Qt.SmoothTransformation)
-            self.ui.screen_display.setPixmap(frame)
+    def paintEvent(self, event):
+        self.ui.screen_display.resize(self.ui.screen_widget.size())
 
-        def closeEvent(self, event):
-            event.ignore()
+    def closeEvent(self, event):
+        event.ignore()

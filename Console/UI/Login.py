@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QApplication, QMessageBox
+from PyQt5.QtWidgets import QDialog, QApplication, QMessageBox
 import ujson
 import os
 import hashlib
@@ -9,14 +9,16 @@ def encode_password(password):
     return hashlib.md5(str(password).encode()).hexdigest()
 
 
-class LoginForm(QWidget):
+class LoginForm(QDialog):
     def __init__(self, parent=None):
         super(LoginForm, self).__init__(parent)
         self.ui = Ui_LoginForm()
+        self.parent = parent
         self.ui.setupUi(self)
 
     def login(self):
-        real_admin_user = ujson.loads(open(os.path.join(self.base_dir, 'Admin.json'), 'r', encoding='utf8').read())
+        real_admin_user = ujson.loads(
+            open(os.path.join(self.parent.base_dir, 'Admin.json'), 'r', encoding='utf8').read())
         username = self.ui.username.text()
         password = self.ui.password.text()
         if not all([username, password]):
@@ -24,8 +26,10 @@ class LoginForm(QWidget):
             return
         if self.ui.username.text() == real_admin_user['username']:
             if encode_password(self.ui.password.text()) == real_admin_user['password']:
-                self.show_dashboard_window()
+                self.accept()
+                self.close()
             else:
                 QMessageBox.critical(self, '提示', '密码错误')
         else:
             QMessageBox.critical(self, '提示', '用户名错误')
+

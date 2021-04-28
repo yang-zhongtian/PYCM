@@ -326,7 +326,15 @@
     <addaction name="services_operation_menu"/>
     <addaction name="exit_menu"/>
    </widget>
+   <widget class="QMenu" name="remote_operation_menu">
+    <property name="title">
+     <string>远程命令</string>
+    </property>
+    <addaction name="remote_shutdown_menu"/>
+    <addaction name="remote_reboot_menu"/>
+   </widget>
    <addaction name="menu"/>
+   <addaction name="remote_operation_menu"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="sizePolicy">
@@ -421,6 +429,16 @@
    </property>
    <property name="toolTip">
     <string>缩小客户端图标</string>
+   </property>
+  </action>
+  <action name="remote_shutdown_menu">
+   <property name="text">
+    <string>远程关机</string>
+   </property>
+  </action>
+  <action name="remote_reboot_menu">
+   <property name="text">
+    <string>远程重启</string>
    </property>
   </action>
  </widget>

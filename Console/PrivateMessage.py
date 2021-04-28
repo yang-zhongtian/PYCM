@@ -17,10 +17,11 @@ class FileMerger(object):
     file_buffer = None
     file_upload_path = None
 
-    def __init__(self, file_upload_path):
+    def __init__(self, file_upload_path, parent=None):
         self.chuck_count = None
         self.file_buffer = {}
         self.file_upload_path = file_upload_path
+        self.parent = parent
 
     def update_chuck(self, ip, index, amount, buffer):
         if ip not in self.file_buffer.keys():
@@ -29,7 +30,8 @@ class FileMerger(object):
         if len(self.file_buffer[ip]['buffers']) >= self.file_buffer[ip]['chuck_count']:
             file_buffer_sorted = sorted(self.file_buffer[ip]['buffers'], key=lambda x: x[0])
             file_data = b''.join(map(lambda x: x[1], file_buffer_sorted))
-            file_name = f'{ip} - {time.strftime("%Y%m%d-%H.%M.%S", time.localtime(time.time()))}.zip'
+            file_timestamp = time.strftime("%Y%m%d-%H.%M.%S", time.localtime(time.time()))
+            file_name = f'[{file_timestamp}] {self.parent.get_client_label_by_ip(ip)}.zip'
             open(os.path.join(self.file_upload_path, file_name), 'wb').write(file_data)
             self.file_buffer.pop(ip)
             return True
@@ -42,8 +44,9 @@ class PrivateMessage(object):
     socket_buffer_size = None
     socket_obj = None
 
-    def __init__(self, parent, socket_ip, socket_port, socket_buffer_size):
+    def __init__(self, parent, root_parent, socket_ip, socket_port, socket_buffer_size):
         self.parent = parent
+        self.root_parent = root_parent
         self.socket_ip = socket_ip
         self.socket_port = socket_port
         self.socket_buffer_size = socket_buffer_size
@@ -57,18 +60,18 @@ class PrivateMessage(object):
     def start(self):
         payload_size = self.socket_buffer_size - struct.calcsize('!2i')
         chuck_size = self.socket_buffer_size - struct.calcsize('!5i')
-        file_merger = FileMerger(self.parent.file_upload_path)
+        file_merger = FileMerger(self.parent.file_upload_path, self.root_parent)
         while True:
             try:
                 socket_data, socket_addr = self.socket_obj.recvfrom(self.socket_buffer_size)
                 unpacked_flag, unpacked_length, unpacked_data = struct.unpack(f'!2i{payload_size}s', socket_data)
                 unpacked_data = unpacked_data[:unpacked_length]
                 if unpacked_flag == PrivateMessageFlag.ClientLogin:
-                    client_ip = socket.inet_ntoa(unpacked_data)
-                    self.parent.client_login_logout.emit('online', client_ip)
+                    client_mac = unpacked_data.decode()
+                    self.parent.client_login_logout.emit('online', socket_addr[0], client_mac)
                 elif unpacked_flag == PrivateMessageFlag.ClientLogout:
-                    client_ip = socket.inet_ntoa(unpacked_data)
-                    self.parent.client_login_logout.emit('offline', client_ip)
+                    client_mac = unpacked_data.decode()
+                    self.parent.client_login_logout.emit('offline', socket_addr[0], client_mac)
                 elif unpacked_flag == PrivateMessageFlag.ClientScreen:
                     unpacked_data = zlib.decompress(unpacked_data)
                     image = Image.open(BytesIO(unpacked_data)).toqpixmap()
