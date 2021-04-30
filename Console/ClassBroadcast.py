@@ -44,6 +44,16 @@ class ClassBroadcast(QObject):
         payload_data = struct.pack(f'!i{len(targets)}s{len(text)}s', len(targets), targets, text)
         self.send_data(ClassBroadcastFlag.PrivateMessage, payload_data)
 
+    def send_public_command(self, command):
+        command = base64.b64encode(str(command).encode('utf-8'))
+        self.send_data(ClassBroadcastFlag.PublicCommand, command)
+
+    def send_private_command(self, address, command):
+        targets = b'\x00'.join([socket.inet_aton(ip) for ip in address])
+        command = base64.b64encode(str(command).encode('utf-8'))
+        payload_data = struct.pack(f'!i{len(targets)}s{len(command)}s', len(targets), targets, command)
+        self.send_data(ClassBroadcastFlag.PrivateCommand, payload_data)
+
     def console_quit_notify(self):
         self.send_data(ClassBroadcastFlag.ConsoleQuit, b'')
 

@@ -117,6 +117,31 @@
           </widget>
          </item>
          <item>
+          <widget class="QPushButton" name="remote_command">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>微软雅黑</family>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>远程命令</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="file_transfer">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -138,31 +163,6 @@
            </property>
            <property name="text">
             <string>文件传输</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="toggle_black_screen">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>微软雅黑</family>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>黑屏/解除</string>
            </property>
           </widget>
          </item>
@@ -326,15 +326,7 @@
     <addaction name="services_operation_menu"/>
     <addaction name="exit_menu"/>
    </widget>
-   <widget class="QMenu" name="remote_operation_menu">
-    <property name="title">
-     <string>远程命令</string>
-    </property>
-    <addaction name="remote_shutdown_menu"/>
-    <addaction name="remote_reboot_menu"/>
-   </widget>
    <addaction name="menu"/>
-   <addaction name="remote_operation_menu"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="sizePolicy">
@@ -558,6 +550,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>remote_command</sender>
+   <signal>clicked()</signal>
+   <receiver>DashboardForm</receiver>
+   <slot>remote_command()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>825</x>
+     <y>51</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>876</x>
+     <y>79</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>clear_client_selection()</slot>
@@ -565,5 +573,6 @@
   <slot>client_scroll_out()</slot>
   <slot>send_message()</slot>
   <slot>toggle_broadcast(bool)</slot>
+  <slot>remote_command()</slot>
  </slots>
 </ui>

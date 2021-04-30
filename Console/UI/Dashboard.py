@@ -1,10 +1,12 @@
-from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication, QDialog, QListWidgetItem, QLabel
+from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication, QDialog, QListWidgetItem, QLabel, QMessageBox
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QIcon
 import ujson
 import time
 from functools import partial
 from .DashboardUI import Ui_DashboardForm
+from .SendMessageGroup import SendMessageGroupForm
+from .RemoteCommandGroup import RemoteCommandGroupForm
 
 
 class DashboardForm(QMainWindow):
@@ -18,8 +20,8 @@ class DashboardForm(QMainWindow):
         self.ui.setupUi(self)
         self.ui.toggle_broadcast.setProperty('class', 'big_button')
         self.ui.remote_spy.setProperty('class', 'big_button')
+        self.ui.remote_command.setProperty('class', 'big_button')
         self.ui.file_transfer.setProperty('class', 'big_button')
-        self.ui.toggle_black_screen.setProperty('class', 'big_button')
 
     def init_connections(self):
         self.private_message_thread.client_login_logout.connect(self.__logger)
@@ -90,21 +92,46 @@ class DashboardForm(QMainWindow):
             thread.start()
 
     def send_message(self):
-        self.send_message_group_dialog.ui.send_to_selected.setChecked(True)
-        self.send_message_group_dialog.ui.target_select.show()
-        self.send_message_group_dialog.ui.send_message_input.clear()
-        self.send_message_group_dialog.ui.target_list.clear()
-        self.send_message_group_dialog.ui.target_list.addItems(self.clients.keys())
-        result = self.send_message_group_dialog.exec_()
+        send_message_group_dialog = SendMessageGroupForm(self)
+        result = send_message_group_dialog.exec_()
         if result:
-            message = self.send_message_group_dialog.ui.send_message_input.toPlainText()
-            if self.send_message_group_dialog.ui.send_to_all.isChecked():
+            message = send_message_group_dialog.ui.send_message_input.toPlainText()
+            if send_message_group_dialog.ui.send_to_all.isChecked():
                 self.class_broadcast_object.send_public_text(message)
                 self.__log_append(f'广播消息：{message}')
-            elif self.send_message_group_dialog.ui.send_to_selected.isChecked():
-                targets = list(map(lambda x: x.text(), self.send_message_group_dialog.ui.target_list.selectedItems()))
-                self.class_broadcast_object.send_private_text(targets, message)
-                self.__log_append(f'私人消息({",".join(targets)})：{message}')
+            elif send_message_group_dialog.ui.send_to_selected.isChecked():
+                targets = send_message_group_dialog.ui.target_list.selectedItems()
+                if len(targets) == 0:
+                    QMessageBox.critical(self, '错误', '选择目标为空')
+                    return
+                target_labels = list(map(lambda x: x.text(), targets))
+                target_ips = list(map(lambda x: x.data(Qt.UserRole), targets))
+                self.class_broadcast_object.send_private_text(target_ips, message)
+                self.__log_append(f'私人消息({",".join(target_labels)})：{message}')
+
+    def remote_command(self):
+        remote_command_group_dialog = RemoteCommandGroupForm(self)
+        result = remote_command_group_dialog.exec_()
+        if result:
+            command = remote_command_group_dialog.ui.command_select.selectedItems()
+            if len(command) == 0:
+                QMessageBox.critical(self, '错误', '选择命令为空')
+                return
+            selected_label = command[0].text()
+            selected_command = command[0].data(Qt.UserRole)
+            confirm = QMessageBox.question(self, '确认', f'是否确认发送 {selected_label} 命令？', QMessageBox.Yes | QMessageBox.No)
+            if confirm != QMessageBox.Yes:
+                return
+            if remote_command_group_dialog.ui.send_to_all.isChecked():
+                self.class_broadcast_object.send_public_command(selected_command)
+            elif remote_command_group_dialog.ui.send_to_selected.isChecked():
+                targets = remote_command_group_dialog.ui.target_list.selectedItems()
+                if len(targets) == 0:
+                    QMessageBox.critical(self, '错误', '选择目标为空')
+                    return
+                target_ips = list(map(lambda x: x.data(Qt.UserRole), targets))
+                self.class_broadcast_object.send_private_command(target_ips, selected_command)
+            QMessageBox.information(self, '提示', '发送成功')
 
     def toggle_broadcast(self, working):
         if working:

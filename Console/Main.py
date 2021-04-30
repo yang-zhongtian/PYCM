@@ -7,7 +7,6 @@ from LoadConfig import NetworkConfig, ClientConfig
 
 from UI.Login import LoginForm
 from UI.Dashboard import DashboardForm
-from UI.SendMessageGroup import SendMessageGroupForm
 from UI.NetworkDeviceSelect import NetworkDeviceSelectForm
 
 from Threadings import NetworkDiscoverThread, PrivateMessageThread, ScreenBroadcastThread
@@ -53,7 +52,6 @@ class DashboardWindow(DashboardForm):
                                                      self.network_config.get('ClassBroadcast').get('Buffer'))
         self.private_message_thread = PrivateMessageThread(self.network_config, self.client_config, self)
         self.screen_broadcast_thread = ScreenBroadcastThread(self.network_config)
-        self.send_message_group_dialog = SendMessageGroupForm(self)
         self.init_connections()
 
 

@@ -92,9 +92,10 @@ This file is used to store network configurations for both console and client.
 
 ## Install Guide
 * Clone repository.
-* Run pip install -r requirements.txt to install required libraries.
-* Edit *.json.example file for configuration & remove the .example extention.
-* Run python Main.py to start application.
+* Run `pip install -r requirements.txt` to install required libraries.
+* Install `ffmpeg` and add to environment variable
+* Edit `*.json.example` file for configuration & remove the .example extention.
+* Run `python Main.py` to start application.
 
 ## Contact
 * Author: Richard Yang

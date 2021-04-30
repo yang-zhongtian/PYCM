@@ -9,6 +9,8 @@ class ClassBroadcastFlag(object):
     StartScreenBroadcast = 3
     StopScreenBroadcast = 4
     ConsoleQuit = 5
+    PrivateCommand = 6
+    PublicCommand = 7
 
 
 class PrivateMessageFlag(object):
