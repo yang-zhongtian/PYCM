@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from PyQt5.QtWidgets import QWidget, QApplication
 from qt_material import apply_stylesheet
 import sys
