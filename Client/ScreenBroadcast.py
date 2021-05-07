@@ -22,8 +22,9 @@ class ScreenBroadcast(QObject):
 
     def __recieve_thread(self):
         try:
-            self.video_capture = cv2.VideoCapture(f'udp://{self.socket_ip}@{self.current_ip}:{self.socket_port}',
-                                                  cv2.CAP_FFMPEG)
+            additional_params = 'overrun_nonfatal=1&fifo_size=50000000'
+            self.video_capture = cv2.VideoCapture(
+                f'udp://{self.socket_ip}@{self.current_ip}:{self.socket_port}?{additional_params}', cv2.CAP_FFMPEG)
             while self.working:
                 status, frame = self.video_capture.read()
                 if status:

@@ -73,6 +73,9 @@ class MainForm(QWidget):
         elif type_ == 'private':
             self.tray_icon.showMessage('私人消息', message, icon, 1000)
 
+    def notify_console(self):
+        self.private_message_object.notify_console()
+
     def server_found(self, server_ip, config):
         self.server_ip = server_ip
         local_ip = config.get('Local').get('IP')

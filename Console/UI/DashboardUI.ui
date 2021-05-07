@@ -177,7 +177,7 @@
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="8,2">
+        <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="8,0">
          <property name="leftMargin">
           <number>0</number>
          </property>
@@ -274,23 +274,40 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="send_message_button">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>发送消息</string>
-              </property>
-             </widget>
+             <layout class="QHBoxLayout" name="action_buttons_layout">
+              <item>
+               <widget class="QPushButton" name="send_message_button">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>发送消息</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="clear_log_area">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>清除日志</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </widget>
@@ -563,6 +580,22 @@
     <hint type="destinationlabel">
      <x>876</x>
      <y>79</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clear_log_area</sender>
+   <signal>clicked()</signal>
+   <receiver>log_area</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1225</x>
+     <y>722</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1225</x>
+     <y>539</y>
     </hint>
    </hints>
   </connection>

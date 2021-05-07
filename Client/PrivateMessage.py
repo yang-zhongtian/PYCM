@@ -43,11 +43,14 @@ class PrivateMessage(QObject):
     def offline_notify(self):
         self.send_data(PrivateMessageFlag.ClientLogout, str(self.current_mac).encode())
 
+    def notify_console(self):
+        self.send_data(PrivateMessageFlag.ClientNotify, b'')
+
     def screen_spy_send(self):
         with mss() as sct:
             sct_img = sct.grab(sct.monitors[1])
             img = Image.frombytes('RGB', sct_img.size, sct_img.bgra, 'raw', 'BGRX')
-            img = img.resize((img.size[0] // 4, img.size[1] // 4), Image.ANTIALIAS)
+            img = img.resize((img.size[0] // 6, img.size[1] // 6), Image.ANTIALIAS)
             img_bytes = BytesIO()
             img.save(img_bytes, format='JPEG')
             img_compressed = zlib.compress(img_bytes.getvalue())

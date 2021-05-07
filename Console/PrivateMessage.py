@@ -76,6 +76,8 @@ class PrivateMessage(object):
                     unpacked_data = zlib.decompress(unpacked_data)
                     image = Image.open(BytesIO(unpacked_data)).toqpixmap()
                     self.parent.client_desktop_recieved.emit(socket_addr[0], image)
+                elif unpacked_flag == PrivateMessageFlag.ClientNotify:
+                    self.parent.client_notify_recieved.emit(socket_addr[0])
                 elif unpacked_flag == PrivateMessageFlag.ClientFile:
                     file_index, file_buffer_length, file_amount, file_buffer = struct.unpack(f'!3i{chuck_size}s',
                                                                                              unpacked_data)

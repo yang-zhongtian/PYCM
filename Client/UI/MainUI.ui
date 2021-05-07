@@ -174,8 +174,8 @@ color: rgb(255, 255, 255);</string>
    <slot>show_file_send_window()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>123</x>
-     <y>67</y>
+     <x>158</x>
+     <y>64</y>
     </hint>
     <hint type="destinationlabel">
      <x>130</x>
@@ -183,8 +183,25 @@ color: rgb(255, 255, 255);</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>notify_button</sender>
+   <signal>clicked()</signal>
+   <receiver>MainForm</receiver>
+   <slot>notify_console()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>41</x>
+     <y>51</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>66</x>
+     <y>22</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>show_file_send_window()</slot>
+  <slot>notify_console()</slot>
  </slots>
 </ui>

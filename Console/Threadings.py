@@ -22,6 +22,7 @@ class NetworkDiscoverThread(QThread):
 class PrivateMessageThread(QThread):
     client_login_logout = pyqtSignal(str, str, str)
     client_desktop_recieved = pyqtSignal(str, object)
+    client_notify_recieved = pyqtSignal(str)
     client_file_recieved = pyqtSignal(str)
 
     def __init__(self, network_config, client_config, parent=None):

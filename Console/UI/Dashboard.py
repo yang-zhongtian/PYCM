@@ -25,6 +25,7 @@ class DashboardForm(QMainWindow):
 
     def init_connections(self):
         self.private_message_thread.client_login_logout.connect(self.__logger)
+        self.private_message_thread.client_notify_recieved.connect(partial(self.__logger, 'client_notify'))
         self.private_message_thread.client_desktop_recieved.connect(self.__update_client_desktop)
         self.private_message_thread.client_file_recieved.connect(partial(self.__logger, 'file_recieved'))
 
@@ -41,6 +42,8 @@ class DashboardForm(QMainWindow):
             self.__remove_client_desktop(ip)
         elif type_ == 'file_recieved':
             self.__log_append(f'已收到来自 {self.get_client_label_by_ip(ip)} 的文件')
+        elif type_ == 'client_notify':
+            self.__log_append(f'{self.get_client_label_by_ip(ip)} 举手')
 
     def __log_append(self, message):
         self.ui.log_area.append(f'[{time.strftime("%H:%M", time.localtime(time.time()))}] {message}')

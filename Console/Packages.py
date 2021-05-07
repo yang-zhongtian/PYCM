@@ -19,3 +19,4 @@ class PrivateMessageFlag(object):
     ClientMessage = 3
     ClientScreen = 4
     ClientFile = 5
+    ClientNotify = 6
