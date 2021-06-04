@@ -71,7 +71,7 @@ class Ui_LoginForm(object):
         LoginForm.setWindowTitle(_translate("LoginForm", "PYCM Login"))
         self.username.setText(_translate("LoginForm", "admin"))
         self.password.setText(_translate("LoginForm", "123456"))
-        self.title.setText(_translate("LoginForm", "PYCM Login"))
+        self.title.setText(_translate("LoginForm", "PYCM 登录"))
         self.label_username.setText(_translate("LoginForm", "用户名："))
         self.label_password.setText(_translate("LoginForm", "密　码："))
         self.login_button.setText(_translate("LoginForm", "登录"))

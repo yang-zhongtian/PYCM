@@ -76,7 +76,7 @@
     </font>
    </property>
    <property name="text">
-    <string>PYCM Login</string>
+    <string>PYCM 登录</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from PyQt5.QtWidgets import QWidget, QApplication
-from qt_material import apply_stylesheet
+from Theme import Theme
 import sys
 import os
 
@@ -14,8 +14,8 @@ from Module.PrivateMessage import PrivateMessage
 base_dir = os.path.dirname(os.path.abspath(__file__))
 config = NetworkConfig(base_dir)
 app = QApplication(sys.argv)
-
-apply_stylesheet(app, theme='light_blue.xml', invert_secondary=True)
+app.setStyleSheet(Theme.load_stylesheet())
+app.setFont(Theme.load_font())
 
 
 class MainWindow(MainForm):

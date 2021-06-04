@@ -21,7 +21,7 @@ class MainForm(QWidget):
         self.ui = Ui_MainForm()
         self.parent = parent
         self.ui.setupUi(self)
-        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.Tool)
         self.setFixedSize(322, 70)
         desktop = QApplication.desktop()
         self.move(int(desktop.width() - 422), 65)
@@ -133,4 +133,3 @@ class MainForm(QWidget):
             QApplication.instance().quit()
         else:
             event.ignore()
-            self.hide()

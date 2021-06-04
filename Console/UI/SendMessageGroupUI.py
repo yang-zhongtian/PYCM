@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_SendMessageGroupDialog(object):
     def setupUi(self, SendMessageGroupDialog):
         SendMessageGroupDialog.setObjectName("SendMessageGroupDialog")
-        SendMessageGroupDialog.resize(398, 491)
+        SendMessageGroupDialog.resize(398, 522)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

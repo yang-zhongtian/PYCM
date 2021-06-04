@@ -1,1 +1,0 @@
-nuitka --mingw64 --standalone --show-progress --show-memory --plugin-enable=qt-plugins --plugin-enable=numpy --output-dir=Build-Windows Main.py

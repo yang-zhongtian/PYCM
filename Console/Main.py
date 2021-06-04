@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from PyQt5.QtWidgets import QApplication
-from qt_material import apply_stylesheet
+from Theme import Theme
 import sys
 import os
 
@@ -17,8 +17,8 @@ base_dir = os.path.dirname(os.path.abspath(__file__))
 network_config = NetworkConfig(base_dir)
 client_config = ClientConfig(base_dir)
 app = QApplication(sys.argv)
-
-apply_stylesheet(app, theme='dark_blue.xml')
+app.setStyleSheet(Theme.load_stylesheet())
+app.setFont(Theme.load_font())
 
 
 class DashboardWindow(DashboardForm):
