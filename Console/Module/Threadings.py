@@ -1,9 +1,7 @@
 from PyQt5.QtCore import QThread, pyqtSignal
-import os
-from NetworkDiscover import NetworkDiscover
-from PrivateMessage import PrivateMessage
-from ScreenBroadcast import ScreenBroadcast
-from Packages import PrivateMessageFlag
+from Module.NetworkDiscover import NetworkDiscover
+from Module.PrivateMessage import PrivateMessage
+from Module.ScreenBroadcast import ScreenBroadcast
 
 
 class NetworkDiscoverThread(QThread):

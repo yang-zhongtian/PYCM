@@ -4,12 +4,12 @@ from qt_material import apply_stylesheet
 import sys
 import os
 
-from LoadConfig import NetworkConfig
+from Module.LoadConfig import NetworkConfig
 
 from UI.Main import MainForm
 
-from Threadings import NetworkDiscoverThread, ClassBroadcastThread, ScreenBroadcastThread
-from PrivateMessage import PrivateMessage
+from Module.Threadings import NetworkDiscoverThread, ClassBroadcastThread, ScreenBroadcastThread
+from Module.PrivateMessage import PrivateMessage
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 config = NetworkConfig(base_dir)

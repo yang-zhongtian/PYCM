@@ -8,7 +8,7 @@ import zlib
 from io import BytesIO
 from math import ceil
 import time
-from Packages import NetworkDiscoverFlag, PrivateMessageFlag
+from Module.Packages import NetworkDiscoverFlag, PrivateMessageFlag
 
 
 class PrivateMessage(QObject):

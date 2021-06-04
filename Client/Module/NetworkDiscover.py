@@ -1,6 +1,6 @@
 import socket
 import struct
-from Packages import NetworkDiscoverFlag
+from Module.Packages import NetworkDiscoverFlag
 
 
 class NetworkDiscover(object):

@@ -1,16 +1,11 @@
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtGui import QPixmap
 import socket
 import struct
-from threading import Thread
 from PIL import Image
-from PIL.ImageQt import ImageQt
 from io import BytesIO
 import zlib
-import numpy as np
 import time
 import os
-from Packages import NetworkDiscoverFlag, PrivateMessageFlag
+from Module.Packages import PrivateMessageFlag
 
 
 class FileMerger(object):

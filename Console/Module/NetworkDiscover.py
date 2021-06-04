@@ -1,7 +1,7 @@
 import socket
 import time
 import struct
-from Packages import NetworkDiscoverFlag
+from Module.Packages import NetworkDiscoverFlag
 
 
 class NetworkDiscover(object):

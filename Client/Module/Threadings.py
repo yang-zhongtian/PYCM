@@ -1,8 +1,8 @@
 from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtGui import QPixmap
-from ClassBroadcast import ClassBroadcast
-from NetworkDiscover import NetworkDiscover
-from ScreenBroadcast import ScreenBroadcast
+from Module.ClassBroadcast import ClassBroadcast
+from Module.NetworkDiscover import NetworkDiscover
+from Module.ScreenBroadcast import ScreenBroadcast
 
 
 class ClassBroadcastThread(QThread):

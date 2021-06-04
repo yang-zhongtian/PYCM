@@ -1,8 +1,8 @@
-from PyQt5.QtCore import pyqtSignal, QObject
+from PyQt5.QtCore import QObject
 import socket
 import struct
 import base64
-from Packages import ClassBroadcastFlag
+from Module.Packages import ClassBroadcastFlag
 
 
 class ClassBroadcast(QObject):

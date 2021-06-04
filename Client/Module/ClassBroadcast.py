@@ -4,7 +4,7 @@ import time
 import struct
 import base64
 import subprocess
-from Packages import ClassBroadcastFlag
+from Module.Packages import ClassBroadcastFlag
 
 
 class ClassBroadcast(QObject):

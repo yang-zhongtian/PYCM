@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
-from PyQt5.QtWidgets import QWidget, QApplication
+from PyQt5.QtWidgets import QApplication
 from qt_material import apply_stylesheet
 import sys
 import os
 
-from LoadConfig import NetworkConfig, ClientConfig
+from Module.LoadConfig import NetworkConfig, ClientConfig
 
 from UI.Login import LoginForm
 from UI.Dashboard import DashboardForm
 from UI.NetworkDeviceSelect import NetworkDeviceSelectForm
 
-from Threadings import NetworkDiscoverThread, PrivateMessageThread, ScreenBroadcastThread
-from ClassBroadcast import ClassBroadcast
+from Module.Threadings import NetworkDiscoverThread, PrivateMessageThread, ScreenBroadcastThread
+from Module.ClassBroadcast import ClassBroadcast
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 network_config = NetworkConfig(base_dir)
