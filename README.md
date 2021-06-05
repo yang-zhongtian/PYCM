@@ -19,7 +19,7 @@ This program is a e-classroom management system written by python. It contains b
 * [x] Client side file submitting
 * [x] Console side message sending. Supporting both private & public messages.
 * [ ] Client notify
-
+* [x] Nuitka packaging
 
 ## Structure
 ```
@@ -27,15 +27,6 @@ This program is a e-classroom management system written by python. It contains b
 |-Console: Used for one host user, ex: teacher, host.
 |-Public: [DEPRECATED] Some files and algorithms for use.
 ```
-
-## Screenshots
-![console-login.png](https://i.loli.net/2021/02/05/nb6k57NJuWDxyAz.png)
-
-![console-main.png](https://i.loli.net/2021/02/05/fFt1iTxroBL3hJl.png)
-
-![client-main.png](https://i.loli.net/2021/02/05/HzofFCdVR2cK8qX.png)
-
-![client-file-send.png](https://i.loli.net/2021/02/05/CsAuZKvIcgXVBok.png)
 
 ## Config file
 ### Admin.json@console
@@ -55,6 +46,10 @@ This file is used to store all client configurations.
   "ClientLabel": {
     "A client mac address": "the label to show in console dashboard",
     "Another client mac address": "the label to show in console dashboard"
+  },
+  "AvailableRemoteCommands": {
+    "A command display name": "command",
+    "Another command display name": "command"
   }
 }
 ```
@@ -90,7 +85,13 @@ This file is used to store network configurations for both console and client.
 }
 ```
 
-## Install Guide
+## Release Install Guide
+* Download release version [here](https://github.com/yangzhongtian001/PYCM/releases).
+* Install `ffmpeg` and add to environment variable
+* Create `*.json` files according to `*.json.example` and the description above.
+* Run `Main.exe` or `Main`
+
+## Dev Install Guide
 * Clone repository.
 * Run `pip install -r requirements.txt` to install required libraries.
 * Install `ffmpeg` and add to environment variable
