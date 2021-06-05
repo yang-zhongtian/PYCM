@@ -25,8 +25,8 @@ class MainForm(QWidget):
         self.setFixedSize(322, 70)
         desktop = QApplication.desktop()
         self.move(int(desktop.width() - 422), 65)
-        self.file_send_window = FileSendForm(self)
-        self.screen_broadcast_window = ScreenBroadcastForm(self)
+        self.file_send_window = FileSendForm(parent)
+        self.screen_broadcast_window = ScreenBroadcastForm(parent)
         self.init_tray()
 
     def load_network_device(self):

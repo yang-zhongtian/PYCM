@@ -183,4 +183,5 @@ class FileSendForm(QWidget):
             self.ui.file_list.clearContents()
             self.ui.file_list.setRowCount(0)
             self.ui.file_send_progress_bar.setValue(0)
-            event.accept()
+            self.hide()
+            event.ignore()
