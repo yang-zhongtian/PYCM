@@ -3,7 +3,7 @@
 
 ## Mirror Repository
 * [Github(Master)](https://github.com/yangzhongtian001/PYCM)
-* [Gitee(Master)](https://gitee.com/yangzhongtian/PYCM)
+* [Gitee(Mirror)](https://gitee.com/yangzhongtian/PYCM)
 * [Gitlab(Mirror)](https://gitlab.com/yangzhongtian/PYCM)
 * [Coding(Mirror)](https://yangzhongtian.coding.net/public/PYCM/PYCM/git/files)
 
