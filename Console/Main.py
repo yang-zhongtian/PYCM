@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from PyQtPatch import *
 from PyQt5.QtWidgets import QApplication
 from Theme import Theme
 import sys
