@@ -19,7 +19,7 @@ This program is a e-classroom management system written by python. It contains b
 * [x] Client side file submitting
 * [x] Console side message sending. Supporting both private & public messages.
 * [ ] Client notify
-* [x] Nuitka packaging
+* [x] Pyinstaller packaging
 
 ## Structure
 ```
@@ -80,14 +80,16 @@ This file is used to store network configurations for both console and client.
     "IP": "225.2.2.21",
     "Port": 4092,
     "FFMpegPath": "ffmpeg",
-    "FFMpegQuality": 6
+    "FFMpegQuality": 6,
+    "Buffer": 1316
   }
 }
 ```
 
 ## Release Install Guide
 * Download release version [here](https://github.com/yangzhongtian001/PYCM/releases).
-* Install `ffmpeg` and add to environment variable
+* For Console, install `ffmpeg` and add to environment path
+* For Client, install `VLC Player`
 * Create `*.json` files according to `*.json.example` and the description above.
 * Run `Main.exe` or `Main`
 

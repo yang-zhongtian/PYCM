@@ -9,7 +9,7 @@ from Module.LoadConfig import NetworkConfig
 
 from UI.Main import MainForm
 
-from Module.Threadings import NetworkDiscoverThread, ClassBroadcastThread, ScreenBroadcastThread
+from Module.Threadings import NetworkDiscoverThread, ClassBroadcastThread
 from Module.PrivateMessage import PrivateMessage
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -39,7 +39,6 @@ class MainWindow(MainForm):
     def init_threadings(self):
         self.net_discover_thread = NetworkDiscoverThread(self.config)
         self.class_broadcast_thread = ClassBroadcastThread(self.config)
-        self.screen_broadcast_thread = ScreenBroadcastThread(self.config)
         self.private_message_object = PrivateMessage
         self.init_connections()
         self.net_discover_thread.start()

@@ -31,11 +31,11 @@ VSVersionInfo(
         u'040904B0',
         [StringStruct(u'CompanyName', u'BNDS HCC'),
         StringStruct(u'FileDescription', u'Python Class Management System'),
-        StringStruct(u'FileVersion', u'3.0.0.3'),
+        StringStruct(u'FileVersion', u'3.0.1.0'),
         StringStruct(u'InternalName', u'pycm'),
         StringStruct(u'OriginalFilename', u'pycm'),
         StringStruct(u'ProductName', u'PYCM'),
-        StringStruct(u'ProductVersion', u'3.0.0.3'),
+        StringStruct(u'ProductVersion', u'3.0.1.0'),
         StringStruct(u'Comments', u'Python Class Management System'),
         StringStruct(u'LegalCopyright', u'(C) Richard Yang')])
       ]), 
