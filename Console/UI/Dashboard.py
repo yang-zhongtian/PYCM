@@ -145,5 +145,6 @@ class DashboardForm(QMainWindow):
             self.class_broadcast_object.screen_broadcast_nodity(False)
 
     def closeEvent(self, event):
+        self.toggle_broadcast(False)
         self.class_broadcast_object.console_quit_notify()
         event.accept()

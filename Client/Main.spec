@@ -27,8 +27,7 @@ exe = EXE(pyz,
           strip=False,
           upx=False,
           console=False,
-          icon='UI/Resources/logo.ico',
-          version='..\\file_version_info.py')
+          icon='UI/Resources/logo.ico')
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,

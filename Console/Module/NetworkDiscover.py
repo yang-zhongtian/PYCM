@@ -1,6 +1,7 @@
 import socket
 import time
 import struct
+import logging
 from Module.Packages import NetworkDiscoverFlag
 
 
@@ -28,16 +29,10 @@ class NetworkDiscover(object):
         )
 
     def start(self):
-        try:
-            socket_packet = struct.pack('!i', NetworkDiscoverFlag.ConsoleFlag)
-            while True:
+        socket_packet = struct.pack('!i', NetworkDiscoverFlag.ConsoleFlag)
+        while True:
+            try:
                 self.socket_obj.sendto(socket_packet, (self.socket_ip, self.socket_port))
                 time.sleep(self.discover_interval)
-        except KeyboardInterrupt:
-            self.socket_obj.close()
-            return
-
-
-if __name__ == '__main__':
-    A = NetworkDiscover('224.50.50.50', 4088, 1)
-    A.start()
+            except Exception as e:
+                logging.warning(f'Failed to send net discover pack: {e}')

@@ -53,9 +53,9 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="screen_shot">
        <property name="text">
-        <string>PushButton</string>
+        <string>截图</string>
        </property>
       </widget>
      </item>
@@ -63,23 +63,20 @@
    </item>
    <item>
     <widget class="QWidget" name="screen_widget" native="true">
-     <widget class="QFrame" name="screen_display">
+     <widget class="QLabel" name="screen_display">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>231</width>
-        <height>151</height>
+        <width>421</width>
+        <height>341</height>
        </rect>
       </property>
-      <property name="autoFillBackground">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="scaledContents">
        <bool>true</bool>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
       </property>
      </widget>
     </widget>
@@ -122,9 +119,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>screen_shot</sender>
+   <signal>clicked()</signal>
+   <receiver>ScreenBroadcast</receiver>
+   <slot>screen_shot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>801</x>
+     <y>18</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>811</x>
+     <y>45</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>freeze_frame(bool)</slot>
   <slot>show_full_screen(bool)</slot>
+  <slot>screen_shot()</slot>
  </slots>
 </ui>

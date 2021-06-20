@@ -49,6 +49,7 @@ class MainForm(QWidget):
         self.class_broadcast_thread.message_recieved.connect(self.message_recieved)
         self.class_broadcast_thread.reset_all.connect(lambda: self.reset_all_threadings())
         self.class_broadcast_thread.toggle_screen_broadcats.connect(self.__toggle_screen_broadcast)
+        self.screen_broadcast_thread.frame_recieved.connect(self.screen_broadcast_window.update_frame)
         self.screen_spy_timer.timeout.connect(lambda: self.private_message_object.screen_spy_send())
 
     def init_tray(self):
@@ -91,9 +92,12 @@ class MainForm(QWidget):
         self.screen_spy_timer.start(3000)
 
     def __toggle_screen_broadcast(self, work):
+        self.screen_broadcast_thread.socket.working = work
         if work:
+            self.screen_broadcast_thread.start()
             self.screen_broadcast_window.show()
         else:
+            self.screen_broadcast_thread.quit()
             self.screen_broadcast_window.hide()
 
     def mouseMoveEvent(self, e: QMouseEvent):

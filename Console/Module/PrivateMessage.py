@@ -5,6 +5,7 @@ from io import BytesIO
 import zlib
 import time
 import os
+import logging
 from Module.Packages import PrivateMessageFlag
 
 
@@ -80,9 +81,5 @@ class PrivateMessage(object):
                                                       file_buffer[:file_buffer_length])
                     if status:
                         self.parent.client_file_recieved.emit(socket_addr[0])
-
-            except KeyboardInterrupt:
-                self.socket_obj.close()
-                return None
             except Exception as e:
-                print(e)
+                logging.warning(f'Failed to decode socket data: {e}')

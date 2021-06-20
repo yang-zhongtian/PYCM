@@ -4,6 +4,7 @@ import time
 import struct
 import base64
 import subprocess
+import logging
 from Module.Packages import ClassBroadcastFlag
 
 
@@ -77,9 +78,5 @@ class ClassBroadcast(QObject):
                 elif unpacked_flag == ClassBroadcastFlag.ConsoleQuit:
                     self.parent.reset_all.emit()
                     return None
-
-            except KeyboardInterrupt:
-                self.socket_obj.close()
-                return None
             except Exception as e:
-                print(e)
+                logging.warning(f'Failed to decode socket data: {e}')

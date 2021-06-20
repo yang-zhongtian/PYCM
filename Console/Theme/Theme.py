@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QCoreApplication, QFile, QTextStream, QT_VERSION_STR
-from PyQt5.QtGui import QColor, QPalette, QFontDatabase, QFont
+from PyQt5.QtGui import QColor, QPalette
 from Theme.dark import style_rc
 from Theme.dark.palette import DarkPalette
 import os
@@ -40,61 +40,61 @@ def _apply_customize_patches():
         }
     '''
     translation_fix = '''
-        QMessageBox QPushButton[text="OK"] {
+        QPushButton[text="OK"] {
             qproperty-text: "好的";
         }
-        QMessageBox QPushButton[text="Open"] {
+        QPushButton[text="Open"] {
             qproperty-text: "打开";
         }
-        QMessageBox QPushButton[text="Save"] {
+        QPushButton[text="Save"] {
             qproperty-text: "保存";
         }
-        QMessageBox QPushButton[text="Cancel"] {
+        QPushButton[text="Cancel"] {
             qproperty-text: "取消";
         }
-        QMessageBox QPushButton[text="Close"] {
+        QPushButton[text="Close"] {
             qproperty-text: "关闭";
         }
-        QMessageBox QPushButton[text="Discard"] {
+        QPushButton[text="Discard"] {
             qproperty-text: "不保存";
         }
-        QMessageBox QPushButton[text="Don't Save"] {
+        QPushButton[text="Don't Save"] {
             qproperty-text: "不保存";
         }
-        QMessageBox QPushButton[text="Apply"] {
+        QPushButton[text="Apply"] {
             qproperty-text: "应用";
         }
-        QMessageBox QPushButton[text="Reset"] {
+        QPushButton[text="Reset"] {
             qproperty-text: "重置";
         }
-        QMessageBox QPushButton[text="Restore Defaults"] {
+        QPushButton[text="Restore Defaults"] {
             qproperty-text: "恢复默认";
         }
-        QMessageBox QPushButton[text="Help"] {
+        QPushButton[text="Help"] {
             qproperty-text: "帮助";
         }
-        QMessageBox QPushButton[text="Save All"] {
+        QPushButton[text="Save All"] {
             qproperty-text: "保存全部";
         }
-        QMessageBox QPushButton[text="&Yes"] {
+        QPushButton[text="&Yes"] {
             qproperty-text: "是";
         }
-        QMessageBox QPushButton[text="Yes to &All"] {
+        QPushButton[text="Yes to &All"] {
             qproperty-text: "全部都是";
         }
-        QMessageBox QPushButton[text="&No"] {
+        QPushButton[text="&No"] {
             qproperty-text: "否";
         }
-        QMessageBox QPushButton[text="N&o to All"] {
+        QPushButton[text="N&o to All"] {
             qproperty-text: "全部都不";
         }
-        QMessageBox QPushButton[text="Abort"] {
+        QPushButton[text="Abort"] {
             qproperty-text: "终止";
         }
-        QMessageBox QPushButton[text="Retry"] {
+        QPushButton[text="Retry"] {
             qproperty-text: "重试";
         }
-        QMessageBox QPushButton[text="Ignore"] {
+        QPushButton[text="Ignore"] {
             qproperty-text: "忽略";
         }
     '''
@@ -136,10 +136,3 @@ def load_stylesheet():
     _apply_application_patches(QCoreApplication, QPalette, QColor, palette)
 
     return stylesheet
-
-
-def load_font():
-    QFontDatabase.addApplicationFont('SourceHanSansSC-VF.ttf')
-    font = QFont('Source Han Sans SC VF')
-    font.setPointSize(10)
-    return font

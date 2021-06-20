@@ -2,6 +2,7 @@ from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtGui import QPixmap
 from Module.ClassBroadcast import ClassBroadcast
 from Module.NetworkDiscover import NetworkDiscover
+from Module.ScreenBroadcast import ScreenBroadcast
 
 
 class ClassBroadcastThread(QThread):
@@ -35,3 +36,17 @@ class NetworkDiscoverThread(QThread):
     def run(self):
         server_ip = self.socket.wait_for_console()
         self.server_info.emit(server_ip, self.config)
+
+
+class ScreenBroadcastThread(QThread):
+    frame_recieved = pyqtSignal(QPixmap)
+
+    def __init__(self, config):
+        super(ScreenBroadcastThread, self).__init__()
+        self.current_ip = config.get('Local').get('IP')
+        self.socket_ip = config.get('ScreenBroadcast').get('IP')
+        self.socket_port = config.get('ScreenBroadcast').get('Port')
+        self.socket = ScreenBroadcast(self, self.current_ip, self.socket_ip, self.socket_port)
+
+    def run(self):
+        self.socket.start()

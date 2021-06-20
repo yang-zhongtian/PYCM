@@ -1,5 +1,6 @@
 import socket
 import struct
+import logging
 from Module.Packages import NetworkDiscoverFlag
 
 
@@ -26,19 +27,10 @@ class NetworkDiscover(object):
         )
 
     def wait_for_console(self):
-        try:
-            while True:
-                try:
-                    socket_data, socket_addr = self.socket_client.recvfrom(1024)
-                    if struct.unpack('!i', socket_data)[0] == NetworkDiscoverFlag.ConsoleFlag:
-                        return socket_addr[0]
-                except Exception as e:
-                    pass
-        except KeyboardInterrupt:
-            self.socket_server.close()
-            return None
-
-
-if __name__ == '__main__':
-    A = NetworkDiscover('192.168.1.6', '224.50.50.50', 4088)
-    print(A.wait_for_console())
+        while True:
+            try:
+                socket_data, socket_addr = self.socket_client.recvfrom(1024)
+                if struct.unpack('!i', socket_data)[0] == NetworkDiscoverFlag.ConsoleFlag:
+                    return socket_addr[0]
+            except Exception as e:
+                logging.warning(f'Failed to decode socket data: {e}')

@@ -68,7 +68,3 @@ class PrivateMessage(QObject):
             self.send_data(PrivateMessageFlag.ClientFile, chuck_pack)
             self.file_send_progress.emit((index + 1) / chuck_count)
             time.sleep(0.01)
-
-
-if __name__ == '__main__':
-    A = PrivateMessage('192.168.1.8', '192.168.1.8', 4089, 32768)

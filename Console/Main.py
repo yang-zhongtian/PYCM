@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QApplication
 from Theme import Theme
 import sys
 import os
+import logging
 
 from Module.LoadConfig import NetworkConfig, ClientConfig
 
@@ -19,7 +20,11 @@ network_config = NetworkConfig(base_dir)
 client_config = ClientConfig(base_dir)
 app = QApplication(sys.argv)
 app.setStyleSheet(Theme.load_stylesheet())
-app.setFont(Theme.load_font())
+
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s %(name)s %(levelname)s %(module)s %(funcName)s %(message)s',
+                    datefmt='%Y-%m-%d  %H:%M:%S %a'
+                    )
 
 
 class DashboardWindow(DashboardForm):
