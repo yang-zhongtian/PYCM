@@ -41,6 +41,7 @@ This program is a e-classroom management system written by python. It contains b
 * Run `python Main.py` to start application.
 
 ## Config file
+
 ### Admin.json@console
 This file is used for console login authentication
 ```json
@@ -49,6 +50,7 @@ This file is used for console login authentication
   "password": "MD5 of password for logging in Console"
 }
 ```
+
 ### Client.json@console
 This file is used to store all client configurations.
 ```json
@@ -64,6 +66,7 @@ This file is used to store all client configurations.
   }
 }
 ```
+
 ### Network.json@console&client
 This file is used to store network configurations for both console and client.
 **The settings bellow "NetworkDiscover" is not adviced to be modified.**
@@ -96,12 +99,12 @@ This file is used to store network configurations for both console and client.
 ```
 
 ## Screenshot
+
 ### Console
 ![Dashboard](ScreenShot/Console/Dashboard.png)
 
-![MessageSend](ScreenShot/Console/MessageSend.png)
+![MessageSend](ScreenShot/Console/MessageSend.png) ![RemoteCommand](ScreenShot/Console/RemoteCommand.png)
 
-![RemoteCommand](ScreenShot/Console/RemoteCommand.png)
 ## Client
 ![Main](ScreenShot/Client/Main.png)
 
