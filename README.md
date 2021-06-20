@@ -1,5 +1,5 @@
 # Python Class Management System
-[![Github Build](https://github.com/yangzhongtian001/PYCM/workflows/PYCM-Build/badge.svg)](https://github.com/yangzhongtian001/PYCM/releases) [![GitHub issues](https://img.shields.io/github/issues/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/issues) [![GitHub forks](https://img.shields.io/github/forks/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/network) [![GitHub stars](https://img.shields.io/github/stars/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/stargazers) [![GitHub license](https://img.shields.io/github/license/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/yangzhongtian001/PYCM)
+[![Github Build](https://github.com/yangzhongtian001/PYCM/workflows/PYCM-Build/badge.svg)](https://github.com/yangzhongtian001/PYCM/releases) [![GitHub issues](https://img.shields.io/github/issues/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/issues) [![GitHub forks](https://img.shields.io/github/forks/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/network) [![GitHub stars](https://img.shields.io/github/stars/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/stargazers) [![GitHub license](https://img.shields.io/github/license/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM)
 
 ## Mirror Repository
 * [Github(Master)](https://github.com/yangzhongtian001/PYCM)
@@ -15,7 +15,6 @@ This program is a e-classroom management system written by python. It contains b
 * [x] Console screen broadcasting
 * [ ] Cient screen remote control by Console
 * [ ] Console side file handout
-* [ ] Screen locking
 * [x] Client side file submitting
 * [x] Console side message sending. Supporting both private & public messages.
 * [ ] Client notify
@@ -28,6 +27,19 @@ This program is a e-classroom management system written by python. It contains b
 |-Public: [DEPRECATED] Some files and algorithms for use.
 ```
 
+## Release Install Guide
+* Download release version [here](https://github.com/yangzhongtian001/PYCM/releases).
+* For Console, install `ffmpeg` and add to environment path
+* Create `*.json` files according to `*.json.example` and the description above.
+* Run `Main.exe` or `Main`
+
+## Dev Install Guide
+* Clone repository.
+* Run `pip install -r requirements.txt` to install required libraries.
+* Install `ffmpeg` and add to environment variable
+* Edit `*.json.example` file for configuration & remove the .example extention.
+* Run `python Main.py` to start application.
+
 ## Config file
 ### Admin.json@console
 This file is used for console login authentication
@@ -37,7 +49,6 @@ This file is used for console login authentication
   "password": "MD5 of password for logging in Console"
 }
 ```
-
 ### Client.json@console
 This file is used to store all client configurations.
 ```json
@@ -53,7 +64,6 @@ This file is used to store all client configurations.
   }
 }
 ```
-
 ### Network.json@console&client
 This file is used to store network configurations for both console and client.
 **The settings bellow "NetworkDiscover" is not adviced to be modified.**
@@ -80,25 +90,22 @@ This file is used to store network configurations for both console and client.
     "IP": "225.2.2.21",
     "Port": 4092,
     "FFMpegPath": "ffmpeg",
-    "FFMpegQuality": 6,
-    "Buffer": 1316
+    "FFMpegQuality": 6
   }
 }
 ```
 
-## Release Install Guide
-* Download release version [here](https://github.com/yangzhongtian001/PYCM/releases).
-* For Console, install `ffmpeg` and add to environment path
-* For Client, install `VLC Player`
-* Create `*.json` files according to `*.json.example` and the description above.
-* Run `Main.exe` or `Main`
+## Screenshot
+### Console
+![Dashboard](ScreenShot/Console/Dashboard.png)
 
-## Dev Install Guide
-* Clone repository.
-* Run `pip install -r requirements.txt` to install required libraries.
-* Install `ffmpeg` and add to environment variable
-* Edit `*.json.example` file for configuration & remove the .example extention.
-* Run `python Main.py` to start application.
+![MessageSend](ScreenShot/Console/MessageSend.png)
+
+![RemoteCommand](ScreenShot/Console/RemoteCommand.png)
+## Client
+![Main](ScreenShot/Client/Main.png)
+
+![FileTransfer](ScreenShot/Client/FileTransfer.png)
 
 ## Contact
 * Author: Richard Yang
