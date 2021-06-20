@@ -105,7 +105,7 @@ This file is used to store network configurations for both console and client.
 
 ![MessageSend](ScreenShot/Console/MessageSend.png) ![RemoteCommand](ScreenShot/Console/RemoteCommand.png)
 
-## Client
+### Client
 ![Main](ScreenShot/Client/Main.png)
 
 ![FileTransfer](ScreenShot/Client/FileTransfer.png)
