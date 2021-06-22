@@ -23,6 +23,7 @@ jobs:
           architecture: 'x64'
       - name: Init
         run: |
+          pip install wheel
           pip install -r requirements.txt
           pip install pyinstaller
       - name: Build
