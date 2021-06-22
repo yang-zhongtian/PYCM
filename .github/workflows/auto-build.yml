@@ -1,17 +1,15 @@
 name: Auto Build
+
 on:
-  workflow_dispatch:
-    inputs:
-      release_tag:
-        description: 'Release Tag'
-        required: true
+  release:
+    types: [published]
 
 jobs:
   Windows:
     runs-on: windows-2016
     strategy:
       matrix:
-        product: [Client]
+        product: [Client, Console]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -33,17 +31,41 @@ jobs:
       - uses: papeloto/action-zip@v1
         with:
           files: ${{ matrix.product }}/dist/Main/
-          recursive: true
-          dest: pro.zip #PYCM-${{ matrix.product }}-${{ github.event.inputs.release_tag }}-Windows.zip
-      - uses: actions/upload-artifact@v2
+          dest: PYCM-${{ matrix.product }}-Windows.zip
+      - name: Upload to release
+        uses: JasonEtco/upload-to-release@master
         with:
-          name: win-${{ matrix.product }}
-          path: pro.zip
-#   macOS:
-#     runs-on: macos-10.15
-#     strategy:
-#       matrix:
-#         product: [Client, Console]
-#     steps:
-#       - run: |
-#           echo "Hello ${{ github.event.inputs.release_tag }}!"
+          args: PYCM-${{ matrix.product }}-Windows.zip application/zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # macOS:
+  #   runs-on: macos-10.15
+  #   strategy:
+  #     matrix:
+  #       product: [Client, Console]
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         ref: ${{ github.event.inputs.release_tag }}
+  #     - name: Setup python
+  #       uses: actions/setup-python@v2
+  #       with:
+  #         python-version: '3.8'
+  #         architecture: 'x64'
+  #     - name: Init
+  #       run: |
+  #         pip install wheel
+  #         pip install -r requirements.txt
+  #         pip install pyinstaller
+  #     - name: Build
+  #       run: |
+  #         cd ${{ matrix.product }}
+  #         pyinstaller --clean -D -i UI/Resources/logo.ico --hidden-import PyQt5.sip --hidden-import numpy Main.py
+  #     - uses: papeloto/action-zip@v1
+  #       with:
+  #         files: ${{ matrix.product }}/dist/Main/
+  #         dest: pro.zip #PYCM-${{ matrix.product }}-${{ github.event.inputs.release_tag }}-Windows.zip
+  #     - uses: actions/upload-artifact@v2
+  #       with:
+  #         name: win-${{ matrix.product }}
+  #         path: pro.zip
