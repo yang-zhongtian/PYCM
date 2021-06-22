@@ -38,4 +38,7 @@ coll = COLLECT(exe,
 app = BUNDLE(exe,
              name='PYCM-Client',
              icon='UI/Resources/logo.ico',
-             bundle_identifier='io.hcc.pycm.client')
+             bundle_identifier='io.hcc.pycm.client',
+             info_plist={
+                'NSHighResolutionCapable': 'True'
+             })

@@ -1,0 +1,25 @@
+name: Auto Build
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Release Tag'
+        required: true
+
+jobs:
+  Windows:
+    runs-on: windows-2016
+    strategy:
+      matrix:
+        product: [Client, Console]
+    steps:
+      - run: |
+          echo "Hello ${{ github.event.inputs.release_tag }}!"
+  macOS:
+    runs-on: macos-10.15
+    strategy:
+      matrix:
+        product: [Client, Console]
+    steps:
+      - run: |
+          echo "Hello ${{ github.event.inputs.release_tag }}!"
