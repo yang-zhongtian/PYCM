@@ -1,8 +1,6 @@
 name: Auto Build
 
-on:
-  release:
-    types: [published]
+on: release
 
 jobs:
   Windows:
@@ -12,8 +10,6 @@ jobs:
         product: [Client, Console]
     steps:
       - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.inputs.release_tag }}
       - name: Setup python
         uses: actions/setup-python@v2
         with:
