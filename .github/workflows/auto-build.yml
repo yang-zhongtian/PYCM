@@ -8,7 +8,7 @@ on:
 
 jobs:
   Windows:
-    runs-on: ubuntu-18.04
+    runs-on: windows-2016
     strategy:
       matrix:
         product: [Client]
@@ -16,13 +16,22 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.event.inputs.release_tag }}
-      - name: Package Application
-        uses: JackMcKew/pyinstaller-action-windows@main
+      - name: Setup python
+        uses: actions/setup-python@v2
         with:
-          path: ${{ matrix.product }}
+          python-version: '3.8'
+          architecture: 'x64'
+      - name: Init
+        run: |
+          pip install -r requirements.txt
+          pip install pyinstaller
+      - name: Build
+        run: |
+          cd ${{ matrix.product }}
+          pyinstaller --clean -D -i UI/Resources/logo.ico --hidden-import=PyQt5.sip Main.py
       - uses: papeloto/action-zip@v1
         with:
-          files: ${{ matrix.product }}/dist/windows/
+          files: dist/
           recursive: false
           dest: pro.zip #PYCM-${{ matrix.product }}-${{ github.event.inputs.release_tag }}-Windows.zip
       - uses: actions/upload-artifact@v2
