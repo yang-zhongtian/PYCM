@@ -11,21 +11,18 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-2016]
+        os: [ubuntu-20.04] #[windows-2016]
         product: [Client]
     steps:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.event.inputs.release_tag }}
-      - run: |
-          function current_branch () {
-            local folder="$(pwd)"
-            [ -n "$1" ] && folder="$1"
-            git -C "$folder" rev-parse --abbrev-ref HEAD | grep -v HEAD || \
-            git -C "$folder" describe --exact-match HEAD || \
-            git -C "$folder" rev-parse HEAD
-          }
-          current_branch .
+      - uses: shaowenchen/debugger-action@v2
+        name: debugger
+        timeout-minutes: 30
+        continue-on-error: true
+        with:
+          ngrok_token: ${{ secrets.NGROK_TOKEN }}
           
 #   macOS:
 #     runs-on: macos-10.15
