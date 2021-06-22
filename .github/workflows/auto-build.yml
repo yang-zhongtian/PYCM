@@ -7,15 +7,16 @@ on:
         required: true
 
 jobs:
-  Windows:
-    runs-on: windows-2016
+  Build:
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        product: [Client, Console]
+        os: [windows-2016]
+        product: [Client]
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: github.event.inputs.release_tag
+          ref: ${{ github.event.inputs.release_tag }}
       - run: |
           function current_branch () {
             local folder="$(pwd)"
