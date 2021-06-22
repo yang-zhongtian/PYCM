@@ -17,12 +17,9 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.event.inputs.release_tag }}
-      - uses: shaowenchen/debugger-action@v2
-        name: debugger
-        timeout-minutes: 30
-        continue-on-error: true
-        with:
-          ngrok_token: ${{ secrets.NGROK_TOKEN }}
+      - run: |
+            ls -l
+            pwd
           
 #   macOS:
 #     runs-on: macos-10.15
