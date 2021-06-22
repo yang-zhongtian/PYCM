@@ -31,11 +31,11 @@ jobs:
           cd ${{ matrix.product }}
           pyinstaller --clean -D -i UI/Resources/logo.ico --hidden-import=PyQt5.sip Main.py
       - run: |
-        ls -l
-        cd Client
-        ls -l
-        cd dist
-        ls -l
+          ls -l
+          cd Client
+          ls -l
+          cd dist
+          ls -l
       # - uses: papeloto/action-zip@v1
       #   with:
       #     files: dist/
