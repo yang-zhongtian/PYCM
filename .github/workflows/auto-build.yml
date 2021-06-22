@@ -1,6 +1,8 @@
 name: Auto Build
 
-on: release
+on:
+  release:
+    types: [published]
 
 jobs:
   Windows:
@@ -28,10 +30,11 @@ jobs:
         with:
           files: ${{ matrix.product }}/dist/Main/
           dest: PYCM-${{ matrix.product }}-Windows.zip
-      - name: Upload to release
-        uses: JasonEtco/upload-to-release@master
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          args: PYCM-${{ matrix.product }}-Windows.zip application/zip
+          files: PYCM-${{ matrix.product }}-Windows.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   # macOS:
