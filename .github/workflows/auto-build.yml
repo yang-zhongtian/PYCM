@@ -7,19 +7,23 @@ on:
         required: true
 
 jobs:
-  Build:
-    runs-on: ${{ matrix.os }}
+  Windows:
+    runs-on: windows-2016
     strategy:
       matrix:
-        os: [ubuntu-20.04] #[windows-2016]
         product: [Client]
     steps:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.event.inputs.release_tag }}
+      - name: Package Application
+        uses: JackMcKew/pyinstaller-action-windows@main
+        with:
+            path: ${{ matrix.product }}
       - run: |
             ls -l
-            pwd
+            cd Client/dist
+            ls -l
           
 #   macOS:
 #     runs-on: macos-10.15
