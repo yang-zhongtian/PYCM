@@ -19,12 +19,16 @@ jobs:
       - name: Package Application
         uses: JackMcKew/pyinstaller-action-windows@main
         with:
-            path: ${{ matrix.product }}
-      - run: |
-            ls -l
-            cd Client/dist
-            ls -l
-          
+          path: ${{ matrix.product }}
+      - uses: papeloto/action-zip@v1
+        with:
+          files: ${{ matrix.product }}/dist/windows/
+          recursive: false
+          dest: pro.zip #PYCM-${{ matrix.product }}-${{ github.event.inputs.release_tag }}-Windows.zip
+      - uses: actions/upload-artifact@v2
+        with:
+          name: win-${{ matrix.product }}
+          path: pro.zip
 #   macOS:
 #     runs-on: macos-10.15
 #     strategy:
