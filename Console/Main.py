@@ -6,7 +6,7 @@ import sys
 import os
 import logging
 
-from Module.LoadConfig import NetworkConfig, ClientConfig
+from Module.LoadConfig import Config
 
 from UI.Login import LoginForm
 from UI.Dashboard import DashboardForm
@@ -15,9 +15,12 @@ from UI.NetworkDeviceSelect import NetworkDeviceSelectForm
 from Module.Threadings import NetworkDiscoverThread, PrivateMessageThread, ScreenBroadcastThread
 from Module.ClassBroadcast import ClassBroadcast
 
-base_dir = os.path.dirname(os.path.abspath(__file__))
-network_config = NetworkConfig(base_dir)
-client_config = ClientConfig(base_dir)
+config = Config()
+config.init_all()
+# print(config.get('Client/AvailableRemoteCommands/打开计算器(Windows)'))
+# TODO: fix all config pattern, this is just an example
+exit(0)
+
 app = QApplication(sys.argv)
 app.setStyleSheet(Theme.load_stylesheet())
 
@@ -28,9 +31,7 @@ logging.basicConfig(level=logging.DEBUG,
 
 
 class DashboardWindow(DashboardForm):
-    base_dir = base_dir
-    network_config = network_config
-    client_config = client_config
+    config = config
     net_discover_thread = None
     class_broadcast_object = None
     private_message_thread = None
