@@ -6,14 +6,13 @@ from .NetworkDeviceSelectUI import Ui_NetworkDeviceSelectDialog
 
 
 class NetworkDeviceSelectForm(QDialog):
-    def __init__(self, parent=None):
-        super(NetworkDeviceSelectForm, self).__init__(parent)
+    def __init__(self):
+        super(NetworkDeviceSelectForm, self).__init__()
         self.devices = []
         self.ui = Ui_NetworkDeviceSelectDialog()
         self.setFixedSize(413, 120)
         self.setWindowModality(Qt.ApplicationModal)
         self.ui.setupUi(self)
-        self.default_device = parent.config.get_item('Network/Local/Device')
         self.load_network_devices()
 
     def sync_network_devices(self):
@@ -21,8 +20,6 @@ class NetworkDeviceSelectForm(QDialog):
         for idx, device in enumerate(self.devices):
             device_name, device_info = device
             self.ui.network_device_list.addItem(device_name, device_info)
-            if device_name == self.default_device:
-                self.ui.network_device_list.setCurrentIndex(idx)
 
     def load_network_devices(self):
         network_devices = psutil.net_if_addrs()
@@ -40,7 +37,4 @@ class NetworkDeviceSelectForm(QDialog):
         self.sync_network_devices()
 
     def get_selected_device(self):
-        obj_data = self.ui.network_device_list.currentData()
-        obj_tag = self.ui.network_device_list.currentText()
-        self.parent().config.save('Network/Local/Device', obj_tag)
-        return obj_data
+        return self.ui.network_device_list.currentText()

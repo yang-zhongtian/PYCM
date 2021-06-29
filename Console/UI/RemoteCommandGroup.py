@@ -8,7 +8,7 @@ class RemoteCommandGroupForm(QDialog):
         super(RemoteCommandGroupForm, self).__init__(parent)
         self.ui = Ui_RemoteCommandGroupDialog()
         self.parent = parent
-        self.available_commands = parent.client_config.get('AvailableRemoteCommands')
+        self.available_commands = parent.config.get_all('Client/AvailableRemoteCommands')
         self.ui.setupUi(self)
         self.init()
 

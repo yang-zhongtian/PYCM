@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QFileDialog
 from PyQt5.QtCore import Qt
 import pathlib
 from .ScreenBroadcastUI import Ui_ScreenBroadcast
@@ -31,9 +31,9 @@ class ScreenBroadcastForm(QWidget):
     def screen_shot(self):
         frame = self.ui.screen_display.pixmap()
         frame = frame.toImage()
-        desktop_path = pathlib.Path.home() / 'Desktop' / f'屏幕广播截图{self.screen_shot_idx}.jpg'
-        self.screen_shot_idx += 1
-        frame.save(str(desktop_path), 'JPEG')
+        file_path, _ = QFileDialog.getSaveFileName(self, '打开文件', str(pathlib.Path.home()), 'JPEG Image(*.jpg)')
+        if file_path:
+            frame.save(file_path, 'JPEG')
 
     def paintEvent(self, event):
         self.ui.screen_display.resize(self.ui.screen_widget.size())

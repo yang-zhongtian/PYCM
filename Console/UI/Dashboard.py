@@ -29,6 +29,10 @@ class DashboardForm(QMainWindow):
         self.private_message_thread.client_desktop_recieved.connect(self.__update_client_desktop)
         self.private_message_thread.client_file_recieved.connect(partial(self.__logger, 'file_recieved'))
 
+    def init_network_device(self, device):
+        self.config.save('Network/Local/IP', device['IP'])
+        self.config.save('Network/Local/MAC', device['MAC'])
+
     def __mark_status(self, name, status):
         self.threadings[name] = status
 
@@ -71,7 +75,7 @@ class DashboardForm(QMainWindow):
             self.clients[client_ip].setIcon(QIcon(client_desktop))
 
     def get_client_label_by_ip(self, ip):
-        label = self.client_config.get('ClientLabel').get(self.mac_binding.get(ip))
+        label = self.config.get_item(f'Client/ClientLabel/{self.mac_binding.get(ip)}')
         if not label:
             return ip
         return label

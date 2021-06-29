@@ -1,31 +1,34 @@
 # -*- coding: utf-8 -*-
 from PyQtPatch import *
 from PyQt5.QtWidgets import QWidget, QApplication
+from PyQt5.QtCore import Qt
 from Theme import Theme
-import logging
 import sys
 import os
+import logging
 
-from Module.LoadConfig import NetworkConfig
+from Module.LoadConfig import Config
 
 from UI.Main import MainForm
 
 from Module.Threadings import NetworkDiscoverThread, ClassBroadcastThread, ScreenBroadcastThread
 from Module.PrivateMessage import PrivateMessage
 
-base_dir = os.path.dirname(os.path.abspath(__file__))
-config = NetworkConfig(base_dir)
+QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
+QApplication.setAttribute(Qt.AA_DisableWindowContextHelpButton)
 app = QApplication(sys.argv)
 app.setStyleSheet(Theme.load_stylesheet())
+app.setQuitOnLastWindowClosed(False)
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s %(name)s %(levelname)s %(module)s %(funcName)s %(message)s',
+config = Config()
+
+logging.basicConfig(level=logging.CRITICAL,
+                    format='%(asctime)s %(name)s [%(levelname)s] %(module)s.%(funcName)s | %(message)s',
                     datefmt='%Y-%m-%d  %H:%M:%S %a'
                     )
 
 
 class MainWindow(MainForm):
-    base_dir = base_dir
     config = config
 
     def __init__(self):
@@ -36,9 +39,9 @@ class MainWindow(MainForm):
         self.private_message_object = None
         network_device = self.load_network_device()
         if not network_device:
-            print('Local network device not found')
+            logging.critical('Local network device not found')
             sys.exit(0)
-        self.config.set('Local', network_device)
+        self.init_network_device(network_device)
         self.init_threadings()
 
     def init_threadings(self):

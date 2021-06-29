@@ -1,5 +1,5 @@
 # Python Class Management System
-[![Github Build](https://github.com/yangzhongtian001/PYCM/workflows/PYCM-Build/badge.svg)](https://github.com/yangzhongtian001/PYCM/releases) [![GitHub issues](https://img.shields.io/github/issues/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/issues) [![GitHub forks](https://img.shields.io/github/forks/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/network) [![GitHub stars](https://img.shields.io/github/stars/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/stargazers) [![GitHub license](https://img.shields.io/github/license/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM)
+[![Github Build](https://hub.fastgit.org/yangzhongtian001/PYCM/workflows/PYCM-Build/badge.svg)](https://github.com/yangzhongtian001/PYCM/releases) [![GitHub issues](https://img.shields.io/github/issues/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/issues) [![GitHub forks](https://img.shields.io/github/forks/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/network) [![GitHub stars](https://img.shields.io/github/stars/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/stargazers) [![GitHub license](https://img.shields.io/github/license/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM)
 
 ## Mirror Repository
 * [Github(Master)](https://github.com/yangzhongtian001/PYCM)
@@ -30,73 +30,13 @@ This program is a e-classroom management system written by python. It contains b
 ## Release Install Guide
 * Download release version [here](https://github.com/yangzhongtian001/PYCM/releases).
 * For Console, install `ffmpeg` and add to environment path
-* Create `*.json` files according to `*.json.example` and the description above.
-* Run `Main.exe` or `Main`
+* Run `Main.exe` or `Main.app`
 
 ## Dev Install Guide
 * Clone repository.
 * Run `pip install -r requirements.txt` to install required libraries.
 * Install `ffmpeg` and add to environment variable
-* Edit `*.json.example` file for configuration & remove the .example extention.
 * Run `python Main.py` to start application.
-
-## Config file
-
-### Admin.json@console
-This file is used for console login authentication
-```json
-{
-  "username": "username for logging in Console",
-  "password": "MD5 of password for logging in Console"
-}
-```
-
-### Client.json@console
-This file is used to store all client configurations.
-```json
-{
-  "FileUploadPath": "The directory for storing client uploaded files",
-  "ClientLabel": {
-    "A client mac address": "the label to show in console dashboard",
-    "Another client mac address": "the label to show in console dashboard"
-  },
-  "AvailableRemoteCommands": {
-    "A command display name": "command",
-    "Another command display name": "command"
-  }
-}
-```
-
-### Network.json@console&client
-This file is used to store network configurations for both console and client.
-**The settings bellow "NetworkDiscover" is not adviced to be modified.**
-```json
-{
-  "Local": {
-    "Device": "The name of default network device"
-  },
-  "NetworkDiscover": {
-    "IP": "224.50.50.50",
-    "Port": 4088,
-    "Interval": 5
-  },
-  "ClassBroadcast": {
-    "IP": "225.2.2.19",
-    "Port": 4089,
-    "Buffer": 65500
-  },
-  "PrivateMessage": {
-    "Port": 4091,
-    "Buffer": 32768
-  },
-  "ScreenBroadcast": {
-    "IP": "225.2.2.21",
-    "Port": 4092,
-    "FFMpegPath": "ffmpeg",
-    "FFMpegQuality": 6
-  }
-}
-```
 
 ## Screenshot
 

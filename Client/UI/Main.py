@@ -42,7 +42,7 @@ class MainForm(QWidget):
                     af_link.append(item.address)
             if len(af_inet4) == 1 and len(af_link) == 1:
                 devices[device] = {'IP': af_inet4[0], 'MAC': af_link[0]}
-        return devices.get(self.parent.config.get('Local').get('Device'))
+        return devices.get(self.parent.config.get_item('Network/Local/Device'))
 
     def init_connections(self):
         self.net_discover_thread.server_info.connect(self.server_found)
@@ -52,15 +52,24 @@ class MainForm(QWidget):
         self.screen_broadcast_thread.frame_recieved.connect(self.screen_broadcast_window.update_frame)
         self.screen_spy_timer.timeout.connect(lambda: self.private_message_object.screen_spy_send())
 
+    # noinspection PyArgumentList
     def init_tray(self):
         self.tray_icon_menu = QMenu(self)
         self.tray_icon_menu.addAction(QAction('显示工具栏', self, triggered=self.show))
+        self.tray_icon_menu.addAction(QAction('修改网络配置', self, triggered=lambda: self.show_network_config_window()))
         self.tray_icon_menu.addAction(QAction('退出程序', self, triggered=self.close))
         self.tray_icon = QSystemTrayIcon(self)
         self.tray_icon.setIcon(QIcon(':/logo/UI/Resources/logo.png'))
         self.tray_icon.setContextMenu(self.tray_icon_menu)
         self.tray_icon.activated[QSystemTrayIcon.ActivationReason].connect(self.iconActivated)
         self.tray_icon.show()
+
+    def show_network_config_window(self):
+        reply = QMessageBox.question(self, '提示', '是否确认要修改网络配置？此操作可能会导致客户端无法正常启动！', QMessageBox.Yes, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            result = self.config.modify_network_device()
+            if result:
+                QMessageBox.information(self, '提示', '修改成功！请重启软件以生效', QMessageBox.Ok)
 
     def show_file_send_window(self):
         self.file_send_window.show()
@@ -77,10 +86,10 @@ class MainForm(QWidget):
 
     def server_found(self, server_ip, config):
         self.server_ip = server_ip
-        local_ip = config.get('Local').get('IP')
-        local_mac = config.get('Local').get('MAC')
-        private_message_port = config.get('PrivateMessage').get('Port')
-        private_message_buffer = config.get('PrivateMessage').get('Buffer')
+        local_ip = config.get_item('Network/Local/IP')
+        local_mac = config.get_item('Network/Local/MAC')
+        private_message_port = config.get_item('Network/PrivateMessage/Port')
+        private_message_buffer = config.get_item('Network/PrivateMessage/Buffer')
         self.private_message_object = self.private_message_object(local_ip, local_mac, self.server_ip,
                                                                   private_message_port, private_message_buffer)
         self.private_message_object.online_notify()
@@ -90,6 +99,10 @@ class MainForm(QWidget):
         self.ui.send_file_button.setEnabled(True)
         self.ui.private_message_button.setEnabled(True)
         self.screen_spy_timer.start(3000)
+
+    def init_network_device(self, device):
+        self.config.save('Network/Local/IP', device['IP'])
+        self.config.save('Network/Local/MAC', device['MAC'])
 
     def __toggle_screen_broadcast(self, work):
         self.screen_broadcast_thread.socket.working = work
@@ -121,7 +134,6 @@ class MainForm(QWidget):
             self.show()
 
     def closeEvent(self, event):
-        self.show()
         reply = QMessageBox.question(self, '提示', '是否退出？', QMessageBox.Yes, QMessageBox.No)
         if reply == QMessageBox.Yes:
             if self.server_ip is not None:

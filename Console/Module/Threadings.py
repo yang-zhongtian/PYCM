@@ -5,12 +5,12 @@ from Module.ScreenBroadcast import ScreenBroadcast
 
 
 class NetworkDiscoverThread(QThread):
-    def __init__(self, network_config):
+    def __init__(self, config):
         super(NetworkDiscoverThread, self).__init__()
-        self.current_ip = network_config.get('Local').get('IP')
-        self.socket_ip = network_config.get('NetworkDiscover').get('IP')
-        self.socket_port = network_config.get('NetworkDiscover').get('Port')
-        self.discover_interval = network_config.get('NetworkDiscover').get('Interval', 5)
+        self.current_ip = config.get_item('Network/Local/IP')
+        self.socket_ip = config.get_item('Network/NetworkDiscover/IP')
+        self.socket_port = config.get_item('Network/NetworkDiscover/Port')
+        self.discover_interval = config.get_item('Network/NetworkDiscover/Interval', 5)
         self.socket = NetworkDiscover(self.current_ip, self.socket_ip, self.socket_port, self.discover_interval)
 
     def run(self):
@@ -23,33 +23,27 @@ class PrivateMessageThread(QThread):
     client_notify_recieved = pyqtSignal(str)
     client_file_recieved = pyqtSignal(str)
 
-    def __init__(self, network_config, client_config, parent=None):
+    def __init__(self, config: object, parent: object = None):
         super(PrivateMessageThread, self).__init__()
-        self.socket_ip = network_config.get('Local').get('IP')
-        self.socket_port = network_config.get('PrivateMessage').get('Port')
-        self.socket_buffer_size = network_config.get('PrivateMessage').get('Buffer')
-        self.file_upload_path = client_config.get('FileUploadPath')
-        self.root_parent = parent
-        self.socket = PrivateMessage(self, self.root_parent, self.socket_ip, self.socket_port, self.socket_buffer_size)
-
-    def get_client_label_by_ip(self, ip):
-        label = self.client_config.get('ClientLabel').get(self.mac_binding.get(ip))
-        if not label:
-            return ip
-        return label
+        self.socket_ip = config.get_item('Network/Local/IP')
+        self.socket_port = config.get_item('Network/PrivateMessage/Port')
+        self.socket_buffer_size = config.get_item('Network/PrivateMessage/Buffer')
+        self.file_upload_path = config.get_item('Client/FileUploadPath')
+        self.config = config
+        self.socket = PrivateMessage(self, parent, self.socket_ip, self.socket_port, self.socket_buffer_size)
 
     def run(self):
         self.socket.start()
 
 
 class ScreenBroadcastThread(QThread):
-    def __init__(self, network_config):
+    def __init__(self, config):
         super(ScreenBroadcastThread, self).__init__()
-        self.current_ip = network_config.get('Local').get('IP')
-        self.socket_ip = network_config.get('ScreenBroadcast').get('IP')
-        self.socket_port = network_config.get('ScreenBroadcast').get('Port')
-        self.ffmpeg_path = network_config.get('ScreenBroadcast').get('FFMpegPath')
-        self.ffmpeg_quality = network_config.get('ScreenBroadcast').get('FFMpegQuality', 6)
+        self.current_ip = config.get_item('Network/Local/IP')
+        self.socket_ip = config.get_item('Network/ScreenBroadcast/IP')
+        self.socket_port = config.get_item('Network/ScreenBroadcast/Port')
+        self.ffmpeg_path = config.get_item('Network/ScreenBroadcast/FFMpegPath')
+        self.ffmpeg_quality = config.get_item('Network/ScreenBroadcast/FFMpegQuality', 6)
         self.socket = ScreenBroadcast(self, self.current_ip, self.socket_ip, self.socket_port, self.ffmpeg_path,
                                       self.ffmpeg_quality)
 

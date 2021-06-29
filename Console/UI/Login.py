@@ -17,19 +17,18 @@ class LoginForm(QDialog):
         self.ui.setupUi(self)
 
     def login(self):
-        real_admin_user = ujson.loads(
-            open(os.path.join(self.parent.base_dir, 'Admin.json'), 'r', encoding='utf8').read())
+        real_admin_username = self.parent.config.get_item('Login/Username')
+        real_admin_password = self.parent.config.get_item('Login/Password')
         username = self.ui.username.text()
         password = self.ui.password.text()
         if not all([username, password]):
             QMessageBox.critical(self, '提示', '用户名或密码不能为空')
             return
-        if self.ui.username.text() == real_admin_user['username']:
-            if encode_password(self.ui.password.text()) == real_admin_user['password']:
+        if self.ui.username.text() == real_admin_username:
+            if encode_password(self.ui.password.text()) == real_admin_password:
                 self.accept()
                 self.close()
             else:
                 QMessageBox.critical(self, '提示', '密码错误')
         else:
             QMessageBox.critical(self, '提示', '用户名错误')
-

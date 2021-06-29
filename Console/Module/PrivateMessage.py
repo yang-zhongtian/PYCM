@@ -13,11 +13,11 @@ class FileMerger(object):
     file_buffer = None
     file_upload_path = None
 
-    def __init__(self, file_upload_path, parent=None):
+    def __init__(self, file_upload_path, root_parent=None):
         self.chuck_count = None
         self.file_buffer = {}
         self.file_upload_path = file_upload_path
-        self.parent = parent
+        self.root_parent = root_parent
 
     def update_chuck(self, ip, index, amount, buffer):
         if ip not in self.file_buffer.keys():
@@ -27,7 +27,7 @@ class FileMerger(object):
             file_buffer_sorted = sorted(self.file_buffer[ip]['buffers'], key=lambda x: x[0])
             file_data = b''.join(map(lambda x: x[1], file_buffer_sorted))
             file_timestamp = time.strftime("%Y%m%d-%H.%M.%S", time.localtime(time.time()))
-            file_name = f'[{file_timestamp}] {self.parent.get_client_label_by_ip(ip)}.zip'
+            file_name = f'[{file_timestamp}] {self.root_parent.get_client_label_by_ip(ip)}.zip'
             open(os.path.join(self.file_upload_path, file_name), 'wb').write(file_data)
             self.file_buffer.pop(ip)
             return True

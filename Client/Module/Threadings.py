@@ -12,10 +12,10 @@ class ClassBroadcastThread(QThread):
 
     def __init__(self, config):
         super(ClassBroadcastThread, self).__init__()
-        self.current_ip = config.get('Local').get('IP')
-        self.socket_ip = config.get('ClassBroadcast').get('IP')
-        self.socket_port = config.get('ClassBroadcast').get('Port')
-        self.socket_buffer_size = config.get('ClassBroadcast').get('Buffer')
+        self.current_ip = config.get_item('Network/Local/IP')
+        self.socket_ip = config.get_item('Network/ClassBroadcast/IP')
+        self.socket_port = config.get_item('Network/ClassBroadcast/Port')
+        self.socket_buffer_size = config.get_item('Network/ClassBroadcast/Buffer')
         self.socket = ClassBroadcast(self, self.current_ip, self.socket_ip, self.socket_port, self.socket_buffer_size)
 
     def run(self):
@@ -27,9 +27,9 @@ class NetworkDiscoverThread(QThread):
 
     def __init__(self, config):
         super(NetworkDiscoverThread, self).__init__()
-        self.current_ip = config.get('Local').get('IP')
-        self.socket_ip = config.get('NetworkDiscover').get('IP')
-        self.socket_port = config.get('NetworkDiscover').get('Port')
+        self.current_ip = config.get_item('Network/Local/IP')
+        self.socket_ip = config.get_item('Network/NetworkDiscover/IP')
+        self.socket_port = config.get_item('Network/NetworkDiscover/Port')
         self.config = config
         self.socket = NetworkDiscover(self.current_ip, self.socket_ip, self.socket_port)
 
@@ -43,9 +43,9 @@ class ScreenBroadcastThread(QThread):
 
     def __init__(self, config):
         super(ScreenBroadcastThread, self).__init__()
-        self.current_ip = config.get('Local').get('IP')
-        self.socket_ip = config.get('ScreenBroadcast').get('IP')
-        self.socket_port = config.get('ScreenBroadcast').get('Port')
+        self.current_ip = config.get_item('Network/Local/IP')
+        self.socket_ip = config.get_item('Network/ScreenBroadcast/IP')
+        self.socket_port = config.get_item('Network/ScreenBroadcast/Port')
         self.socket = ScreenBroadcast(self, self.current_ip, self.socket_ip, self.socket_port)
 
     def run(self):

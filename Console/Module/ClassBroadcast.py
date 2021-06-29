@@ -12,12 +12,12 @@ class ClassBroadcast(QObject):
     socket_buffer_size = None
     socket_obj = None
 
-    def __init__(self, current_ip, socket_ip, socket_port, socket_buffer_size):
+    def __init__(self, config):
         super(ClassBroadcast, self).__init__()
-        self.current_ip = current_ip
-        self.socket_ip = socket_ip
-        self.socket_port = socket_port
-        self.socket_buffer_size = socket_buffer_size
+        self.current_ip = config.get_item('Network/Local/IP')
+        self.socket_ip = config.get_item('Network/ClassBroadcast/IP')
+        self.socket_port = config.get_item('Network/ClassBroadcast/Port')
+        self.socket_buffer_size = config.get_item('Network/ClassBroadcast/Buffer')
         self.__init_socket_obj()
 
     def __init_socket_obj(self):
