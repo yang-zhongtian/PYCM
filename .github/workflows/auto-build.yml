@@ -29,7 +29,7 @@ jobs:
           pyinstaller --clean -w -F -i UI/Resources/logo.ico --hidden-import PyQt5.sip --hidden-import numpy Main.py
       - uses: papeloto/action-zip@v1
         with:
-          files: ${{ matrix.product }}/dist/Main/
+          files: ${{ matrix.product }}/dist/
           dest: PYCM-${{ matrix.product }}-${{ runner.os }}.zip
       - name: Release
         uses: softprops/action-gh-release@v1
