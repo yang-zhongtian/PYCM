@@ -1,7 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication, QDialog, QListWidgetItem, QLabel, QMessageBox
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QIcon
-import ujson
 import time
 from functools import partial
 from .DashboardUI import Ui_DashboardForm

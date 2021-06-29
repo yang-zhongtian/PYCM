@@ -26,7 +26,7 @@ jobs:
       - name: Build
         run: |
           cd ${{ matrix.product }}
-          pyinstaller --clean -w -F -i UI/Resources/logo.ico --hidden-import PyQt5.sip --hidden-import numpy Main.py
+          pyinstaller --clean -w -F -n ${{ matrix.product }} -i UI/Resources/logo.ico --hidden-import PyQt5.sip --hidden-import numpy Main.py
       - uses: papeloto/action-zip@v1
         with:
           files: ${{ matrix.product }}/dist/

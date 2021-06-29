@@ -1,5 +1,4 @@
 from PyQt5.QtWidgets import QDialog, QApplication, QMessageBox
-import ujson
 import os
 import hashlib
 from .LoginUI import Ui_LoginForm
