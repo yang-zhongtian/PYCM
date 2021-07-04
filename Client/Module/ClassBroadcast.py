@@ -40,6 +40,16 @@ class ClassBroadcast(QObject):
     def execute_remote_command(command):
         subprocess.call(command, shell=True)
 
+    def batch_send_decode(self, unpacked_data):
+        integer_length = struct.calcsize('!i')
+        targets_length = struct.unpack('!i', unpacked_data[:integer_length])[0]
+        targets = unpacked_data[integer_length:integer_length + targets_length].split(b'\x00')
+        targets = [socket.inet_ntoa(item) for item in targets]
+        if self.current_ip in targets:
+            data = unpacked_data[integer_length + targets_length:]
+            return data
+        return None
+
     def start(self):
         payload_size = self.socket_buffer_size - struct.calcsize('!2i')
         while True:
@@ -47,30 +57,21 @@ class ClassBroadcast(QObject):
                 socket_data, socket_addr = self.socket_obj.recvfrom(self.socket_buffer_size)
                 unpacked_flag, unpacked_length, unpacked_data = struct.unpack(f'!2i{payload_size}s', socket_data)
                 unpacked_data = unpacked_data[:unpacked_length]
-                if unpacked_flag == ClassBroadcastFlag.PublicMessage:
-                    unpacked_data = base64.b64decode(unpacked_data).decode('utf-8')
-                    self.parent.message_recieved.emit('public', str(unpacked_data))
-                elif unpacked_flag == ClassBroadcastFlag.PrivateMessage:
-                    integer_length = struct.calcsize('!i')
-                    targets_length = struct.unpack('!i', unpacked_data[:integer_length])[0]
-                    targets = unpacked_data[integer_length:integer_length + targets_length].split(b'\x00')
-                    targets = [socket.inet_ntoa(item) for item in targets]
-                    if self.current_ip in targets:
-                        message = unpacked_data[integer_length + targets_length:]
-                        message = base64.b64decode(message).decode('utf-8')
-                        self.parent.message_recieved.emit('private', str(message))
-                elif unpacked_flag == ClassBroadcastFlag.PublicCommand:
-                    unpacked_data = base64.b64decode(unpacked_data).decode('utf-8')
-                    self.execute_remote_command(unpacked_data)
-                elif unpacked_flag == ClassBroadcastFlag.PrivateCommand:
-                    integer_length = struct.calcsize('!i')
-                    targets_length = struct.unpack('!i', unpacked_data[:integer_length])[0]
-                    targets = unpacked_data[integer_length:integer_length + targets_length].split(b'\x00')
-                    targets = [socket.inet_ntoa(item) for item in targets]
-                    if self.current_ip in targets:
-                        message = unpacked_data[integer_length + targets_length:]
-                        message = base64.b64decode(message).decode('utf-8')
-                        self.execute_remote_command(message)
+                if unpacked_flag in (
+                        ClassBroadcastFlag.Message,
+                        ClassBroadcastFlag.Command,
+                        ClassBroadcastFlag.RemoteControlStart
+                ):
+                    data = self.batch_send_decode(unpacked_data)
+                    if unpacked_flag == ClassBroadcastFlag.Message:
+                        message = base64.b64decode(data).decode('utf-8')
+                        self.parent.message_recieved.emit(str(message))
+                    elif unpacked_flag == ClassBroadcastFlag.Command:
+                        message = base64.b64decode(data).decode('utf-8')
+                        self.execute_remote_command(str(message))
+                    elif unpacked_flag == ClassBroadcastFlag.RemoteControlStart:
+                        if data is not None:
+                            self.parent.start_remote_control.emit()
                 elif unpacked_flag == ClassBroadcastFlag.StartScreenBroadcast:
                     self.parent.toggle_screen_broadcats.emit(True)
                 elif unpacked_flag == ClassBroadcastFlag.StopScreenBroadcast:

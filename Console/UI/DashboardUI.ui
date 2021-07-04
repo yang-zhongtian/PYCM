@@ -112,7 +112,10 @@
             </font>
            </property>
            <property name="text">
-            <string>远程监控</string>
+            <string>远程控制</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -223,7 +226,7 @@
                <enum>Qt::IgnoreAction</enum>
               </property>
               <property name="selectionMode">
-               <enum>QAbstractItemView::SingleSelection</enum>
+               <enum>QAbstractItemView::ContiguousSelection</enum>
               </property>
               <property name="iconSize">
                <size>
@@ -383,7 +386,7 @@
     <bool>false</bool>
    </attribute>
    <addaction name="client_sort"/>
-   <addaction name="clear_client_selection"/>
+   <addaction name="client_select_all"/>
    <addaction name="separator"/>
    <addaction name="client_scroll_in"/>
    <addaction name="client_scroll_out"/>
@@ -396,12 +399,12 @@
     <string>自动排列学生端</string>
    </property>
   </action>
-  <action name="clear_client_selection">
+  <action name="client_select_all">
    <property name="text">
-    <string>取消选择</string>
+    <string>选择全部</string>
    </property>
    <property name="toolTip">
-    <string>取消选择的学生端</string>
+    <string>选择全部学生端</string>
    </property>
   </action>
   <action name="start_all_services_menu">
@@ -456,18 +459,18 @@
  </resources>
  <connections>
   <connection>
-   <sender>clear_client_selection</sender>
+   <sender>client_select_all</sender>
    <signal>triggered()</signal>
-   <receiver>DashboardForm</receiver>
-   <slot>clear_client_selection()</slot>
+   <receiver>desktop_layout</receiver>
+   <slot>selectAll()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>577</x>
-     <y>385</y>
+     <x>520</x>
+     <y>410</y>
     </hint>
    </hints>
   </connection>
@@ -599,6 +602,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>remote_spy</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>DashboardForm</receiver>
+   <slot>toggle_remote_control(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>462</x>
+     <y>55</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>479</x>
+     <y>82</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>clear_client_selection()</slot>
@@ -607,5 +626,6 @@
   <slot>send_message()</slot>
   <slot>toggle_broadcast(bool)</slot>
   <slot>remote_command()</slot>
+  <slot>toggle_remote_control(bool)</slot>
  </slots>
 </ui>

@@ -6,6 +6,7 @@ from functools import partial
 from .DashboardUI import Ui_DashboardForm
 from .SendMessageGroup import SendMessageGroupForm
 from .RemoteCommandGroup import RemoteCommandGroupForm
+from .RemoteControl import RemoteControlForm
 
 
 class DashboardForm(QMainWindow):
@@ -13,7 +14,8 @@ class DashboardForm(QMainWindow):
         super(DashboardForm, self).__init__(parent)
         self.ui = Ui_DashboardForm()
         self.threadings = {'net_discover_thread': False,
-                           'private_message_thread': False}
+                           'private_message_thread': False,
+                           'remote_control_thread': False}
         self.clients = {}
         self.mac_binding = {}
         self.ui.setupUi(self)
@@ -21,12 +23,14 @@ class DashboardForm(QMainWindow):
         self.ui.remote_spy.setProperty('class', 'big_button')
         self.ui.remote_command.setProperty('class', 'big_button')
         self.ui.file_transfer.setProperty('class', 'big_button')
+        self.remote_control_window = RemoteControlForm(self)
 
     def init_connections(self):
         self.private_message_thread.client_login_logout.connect(self.__logger)
         self.private_message_thread.client_notify_recieved.connect(partial(self.__logger, 'client_notify'))
         self.private_message_thread.client_desktop_recieved.connect(self.__update_client_desktop)
         self.private_message_thread.client_file_recieved.connect(partial(self.__logger, 'file_recieved'))
+        self.remote_control_thread.frame_recieved.connect(self.remote_control_window.update_frame)
 
     def init_network_device(self, device):
         self.config.save('Network/Local/IP', device['IP'])
@@ -58,6 +62,7 @@ class DashboardForm(QMainWindow):
         desktop.setIcon(QIcon(':/logo/UI/Resources/client_blank.png'))
         desktop.setTextAlignment(Qt.AlignHCenter)
         desktop.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled | Qt.ItemIsEditable)
+        desktop.setData(Qt.UserRole, client_ip)
         self.clients[client_ip] = desktop
         self.ui.desktop_layout.addItem(self.clients[client_ip])
 
@@ -79,8 +84,20 @@ class DashboardForm(QMainWindow):
             return ip
         return label
 
-    def clear_client_selection(self):
-        self.ui.desktop_layout.clearSelection()
+    def get_all_selected_clients(self, ip_only=False):
+        clients = self.ui.desktop_layout.selectedItems()
+        if len(clients) == 0:
+            QMessageBox.warning(self, '提示', '未选择任何目标')
+            return []
+        client_infos = []
+        for client in clients:
+            client_ip = client.data(Qt.UserRole)
+            client_mac = self.mac_binding.get(client_ip)
+            if ip_only:
+                client_infos.append(client_ip)
+            else:
+                client_infos.append({'label': client.text(), 'ip': client_ip, 'mac': client_mac})
+        return client_infos
 
     def client_scroll_in(self):
         size = self.ui.desktop_layout.iconSize()
@@ -98,24 +115,20 @@ class DashboardForm(QMainWindow):
             thread.start()
 
     def send_message(self):
+        targets = self.get_all_selected_clients(ip_only=True)
+        if not targets:
+            return
         send_message_group_dialog = SendMessageGroupForm(self)
         result = send_message_group_dialog.exec_()
         if result:
             message = send_message_group_dialog.ui.send_message_input.toPlainText()
-            if send_message_group_dialog.ui.send_to_all.isChecked():
-                self.class_broadcast_object.send_public_text(message)
-                self.__log_append(f'广播消息：{message}')
-            elif send_message_group_dialog.ui.send_to_selected.isChecked():
-                targets = send_message_group_dialog.ui.target_list.selectedItems()
-                if len(targets) == 0:
-                    QMessageBox.critical(self, '错误', '选择目标为空')
-                    return
-                target_labels = list(map(lambda x: x.text(), targets))
-                target_ips = list(map(lambda x: x.data(Qt.UserRole), targets))
-                self.class_broadcast_object.send_private_text(target_ips, message)
-                self.__log_append(f'私人消息({",".join(target_labels)})：{message}')
+            self.class_broadcast_object.send_text(targets, message)
+            self.__log_append(f'发送消息：{message}')
 
     def remote_command(self):
+        targets = self.get_all_selected_clients(ip_only=True)
+        if not targets:
+            return
         remote_command_group_dialog = RemoteCommandGroupForm(self)
         result = remote_command_group_dialog.exec_()
         if result:
@@ -123,21 +136,31 @@ class DashboardForm(QMainWindow):
             if len(command) == 0:
                 QMessageBox.critical(self, '错误', '选择命令为空')
                 return
-            selected_label = command[0].text()
-            selected_command = command[0].data(Qt.UserRole)
+            command = command[0]
+            selected_label = command.text()
+            selected_command = command.data(Qt.UserRole)
             confirm = QMessageBox.question(self, '确认', f'是否确认发送 {selected_label} 命令？', QMessageBox.Yes | QMessageBox.No)
             if confirm != QMessageBox.Yes:
                 return
-            if remote_command_group_dialog.ui.send_to_all.isChecked():
-                self.class_broadcast_object.send_public_command(selected_command)
-            elif remote_command_group_dialog.ui.send_to_selected.isChecked():
-                targets = remote_command_group_dialog.ui.target_list.selectedItems()
-                if len(targets) == 0:
-                    QMessageBox.critical(self, '错误', '选择目标为空')
-                    return
-                target_ips = list(map(lambda x: x.data(Qt.UserRole), targets))
-                self.class_broadcast_object.send_private_command(target_ips, selected_command)
+            self.class_broadcast_object.send_command(targets, selected_command)
             QMessageBox.information(self, '提示', '发送成功')
+
+    def toggle_remote_control(self, working):
+        if working:
+            targets = self.get_all_selected_clients(ip_only=True)
+            if not targets:
+                self.ui.remote_spy.setChecked(False)
+                return
+            if len(targets) > 1:
+                QMessageBox.warning(self, '提示', '仅支持同时控制一台计算机')
+                self.ui.remote_spy.setChecked(False)
+                return
+            self.class_broadcast_object.remote_control_start_notify(targets[0])
+            self.remote_control_window.show()
+        else:
+            self.remote_control_thread.safe_stop()
+            self.remote_control_window.hide()
+            self.ui.remote_spy.setChecked(False)
 
     def toggle_broadcast(self, working):
         if working:
@@ -149,5 +172,6 @@ class DashboardForm(QMainWindow):
 
     def closeEvent(self, event):
         self.toggle_broadcast(False)
+        self.remote_control_thread.safe_stop()
         self.class_broadcast_object.console_quit_notify()
         event.accept()

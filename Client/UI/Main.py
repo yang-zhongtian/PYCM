@@ -49,6 +49,7 @@ class MainForm(QWidget):
         self.class_broadcast_thread.message_recieved.connect(self.message_recieved)
         self.class_broadcast_thread.reset_all.connect(lambda: self.reset_all_threadings())
         self.class_broadcast_thread.toggle_screen_broadcats.connect(self.__toggle_screen_broadcast)
+        self.class_broadcast_thread.start_remote_control.connect(self.start_remote_control)
         self.screen_broadcast_thread.frame_recieved.connect(self.screen_broadcast_window.update_frame)
         self.screen_spy_timer.timeout.connect(lambda: self.private_message_object.screen_spy_send())
 
@@ -74,24 +75,20 @@ class MainForm(QWidget):
     def show_file_send_window(self):
         self.file_send_window.show()
 
-    def message_recieved(self, type_, message):
+    def start_remote_control(self):
+        self.remote_control_thread.start()
+
+    def message_recieved(self, message):
         icon = QSystemTrayIcon.MessageIcon()
-        if type_ == 'public':
-            self.tray_icon.showMessage('广播消息', message, icon, 1000)
-        elif type_ == 'private':
-            self.tray_icon.showMessage('私人消息', message, icon, 1000)
+        self.tray_icon.showMessage('消息', message, icon, 1000)
 
     def notify_console(self):
         self.private_message_object.notify_console()
 
-    def server_found(self, server_ip, config):
+    def server_found(self, server_ip):
         self.server_ip = server_ip
-        local_ip = config.get_item('Network/Local/IP')
-        local_mac = config.get_item('Network/Local/MAC')
-        private_message_port = config.get_item('Network/PrivateMessage/Port')
-        private_message_buffer = config.get_item('Network/PrivateMessage/Buffer')
-        self.private_message_object = self.private_message_object(local_ip, local_mac, self.server_ip,
-                                                                  private_message_port, private_message_buffer)
+        self.private_message_object.set_socket_ip(self.server_ip)
+        self.remote_control_thread.set_socket_ip(self.server_ip)
         self.private_message_object.online_notify()
         self.class_broadcast_thread.start()
         self.ui.title_label.setText('PYCM Client - Online')

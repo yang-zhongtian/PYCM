@@ -34,25 +34,21 @@ class ClassBroadcast(QObject):
         socket_data = struct.pack(f'!2i{payload_size}s', flag, len(data), data)
         self.socket_obj.sendto(socket_data, (self.socket_ip, self.socket_port))
 
-    def send_public_text(self, text):
+    def batch_send(self, flag, clients, payload):
+        targets = b'\x00'.join([socket.inet_aton(ip) for ip in clients])
+        full_data = struct.pack(f'!i{len(targets)}s{len(payload)}s', len(targets), targets, payload)
+        self.send_data(flag, full_data)
+
+    def send_text(self, clients, text):
         text = base64.b64encode(str(text).encode('utf-8'))
-        self.send_data(ClassBroadcastFlag.PublicMessage, text)
+        self.batch_send(ClassBroadcastFlag.Message, clients, text)
 
-    def send_private_text(self, address, text):
-        targets = b'\x00'.join([socket.inet_aton(ip) for ip in address])
-        text = base64.b64encode(str(text).encode('utf-8'))
-        payload_data = struct.pack(f'!i{len(targets)}s{len(text)}s', len(targets), targets, text)
-        self.send_data(ClassBroadcastFlag.PrivateMessage, payload_data)
-
-    def send_public_command(self, command):
+    def send_command(self, clients, command):
         command = base64.b64encode(str(command).encode('utf-8'))
-        self.send_data(ClassBroadcastFlag.PublicCommand, command)
+        self.batch_send(ClassBroadcastFlag.Command, clients, command)
 
-    def send_private_command(self, address, command):
-        targets = b'\x00'.join([socket.inet_aton(ip) for ip in address])
-        command = base64.b64encode(str(command).encode('utf-8'))
-        payload_data = struct.pack(f'!i{len(targets)}s{len(command)}s', len(targets), targets, command)
-        self.send_data(ClassBroadcastFlag.PrivateCommand, payload_data)
+    def remote_control_start_notify(self, client):
+        self.batch_send(ClassBroadcastFlag.RemoteControlStart, [client], b'1')
 
     def console_quit_notify(self):
         self.send_data(ClassBroadcastFlag.ConsoleQuit, b'')

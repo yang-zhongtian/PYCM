@@ -63,6 +63,9 @@
    </item>
    <item>
     <widget class="QWidget" name="screen_widget" native="true">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(3, 118, 108);</string>
+     </property>
      <widget class="QLabel" name="screen_display">
       <property name="geometry">
        <rect>

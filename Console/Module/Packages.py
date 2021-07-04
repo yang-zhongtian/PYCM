@@ -4,13 +4,12 @@ class NetworkDiscoverFlag(object):
 
 
 class ClassBroadcastFlag(object):
-    PublicMessage = 1
-    PrivateMessage = 2
-    StartScreenBroadcast = 3
-    StopScreenBroadcast = 4
-    ConsoleQuit = 5
-    PrivateCommand = 6
-    PublicCommand = 7
+    Message = 1
+    StartScreenBroadcast = 2
+    StopScreenBroadcast = 3
+    ConsoleQuit = 4
+    Command = 5
+    RemoteControlStart = 6
 
 
 class PrivateMessageFlag(object):
@@ -20,3 +19,9 @@ class PrivateMessageFlag(object):
     ClientScreen = 4
     ClientFile = 5
     ClientNotify = 6
+
+
+class RemoteControlFlag(object):
+    PackInfo = 1
+    ControlCommmand = 2
+    RemoteControlStop = 3

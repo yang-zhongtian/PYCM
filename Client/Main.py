@@ -11,7 +11,7 @@ from Module.LoadConfig import Config
 
 from UI.Main import MainForm
 
-from Module.Threadings import NetworkDiscoverThread, ClassBroadcastThread, ScreenBroadcastThread
+from Module.Threadings import NetworkDiscoverThread, ClassBroadcastThread, ScreenBroadcastThread, RemoteControlThread
 from Module.PrivateMessage import PrivateMessage
 
 QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
@@ -30,13 +30,14 @@ logging.basicConfig(level=logging.CRITICAL,
 
 class MainWindow(MainForm):
     config = config
+    net_discover_thread = None
+    class_broadcast_thread = None
+    screen_broadcast_thread = None
+    remote_control_thread = None
+    private_message_object = None
 
     def __init__(self):
         super(MainWindow, self).__init__(self)
-        self.net_discover_thread = None
-        self.class_broadcast_thread = None
-        self.screen_broadcast_thread = None
-        self.private_message_object = None
         network_device = self.load_network_device()
         if not network_device:
             logging.critical('Local network device not found')
@@ -48,17 +49,21 @@ class MainWindow(MainForm):
         self.net_discover_thread = NetworkDiscoverThread(self.config)
         self.class_broadcast_thread = ClassBroadcastThread(self.config)
         self.screen_broadcast_thread = ScreenBroadcastThread(self.config)
-        self.private_message_object = PrivateMessage
+        self.remote_control_thread = RemoteControlThread(self.config)
+        self.private_message_object = PrivateMessage(self.config)
         self.init_connections()
         self.net_discover_thread.start()
 
     def reset_all_threadings(self):
         self.screen_spy_timer.stop()
         self.class_broadcast_thread.quit()
+        self.remote_control_thread.quit()
         self.class_broadcast_thread.wait()
+        self.remote_control_thread.wait()
         self.net_discover_thread = NetworkDiscoverThread(self.config)
         self.class_broadcast_thread = ClassBroadcastThread(self.config)
-        self.private_message_object = PrivateMessage
+        self.remote_control_thread = RemoteControlThread(self.config)
+        self.private_message_object = PrivateMessage(self.config)
         self.init_connections()
         self.ui.title_label.setText('PYCM Client - Offline')
         self.ui.notify_button.setEnabled(False)

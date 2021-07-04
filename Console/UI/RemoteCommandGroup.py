@@ -17,10 +17,3 @@ class RemoteCommandGroupForm(QDialog):
             new_item = QListWidgetItem(label)
             new_item.setData(Qt.UserRole, command)
             self.ui.command_select.addItem(new_item)
-        self.ui.send_to_selected.setChecked(True)
-        self.ui.target_select.show()
-        for ip in self.parent.clients.keys():
-            new_item = QListWidgetItem(self.parent.get_client_label_by_ip(ip))
-            new_item.setData(Qt.UserRole, ip)
-            self.ui.target_list.addItem(new_item)
-

@@ -19,18 +19,20 @@ class PrivateMessage(QObject):
     socket_obj = None
     file_send_progress = pyqtSignal(float)
 
-    def __init__(self, current_ip, current_mac, socket_ip, socket_port, socket_buffer_size):
+    def __init__(self, config):
         super(PrivateMessage, self).__init__()
-        self.current_ip = current_ip
-        self.current_mac = current_mac
-        self.socket_ip = socket_ip
-        self.socket_port = socket_port
-        self.socket_buffer_size = socket_buffer_size
+        self.current_ip = config.get_item('Network/Local/IP')
+        self.current_mac = config.get_item('Network/Local/MAC')
+        self.socket_port = config.get_item('Network/PrivateMessage/Port')
+        self.socket_buffer_size = config.get_item('Network/PrivateMessage/Buffer')
         self.__init_socket_obj()
 
     def __init_socket_obj(self):
         self.socket_obj = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
         self.socket_obj.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+    def set_socket_ip(self, socket_ip):
+        self.socket_ip = socket_ip
 
     def send_data(self, flag, data):
         payload_size = self.socket_buffer_size - struct.calcsize('!2i')

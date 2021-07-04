@@ -26,6 +26,9 @@ class Config(object):
                 'ScreenBroadcast': {
                     'IP': '225.2.2.21',
                     'Port': 4092
+                },
+                'RemoteControl': {
+                    'Port': 4093
                 }
             }
         }

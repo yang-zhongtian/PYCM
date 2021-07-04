@@ -4,3 +4,4 @@ Pillow~=7.0.0
 psutil~=5.8.0
 PyQt5~=5.15.4
 av~=8.0.3
+pynput~=1.7.3

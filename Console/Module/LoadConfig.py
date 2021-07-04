@@ -27,6 +27,9 @@ class Config(object):
                     'Port': 4092,
                     'FFMpegPath': 'ffmpeg',
                     'FFMpegQuality': 6
+                },
+                'RemoteControl': {
+                    'Port': 4093
                 }
             },
             'Login': {
