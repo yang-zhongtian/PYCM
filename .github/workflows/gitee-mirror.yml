@@ -1,9 +1,12 @@
-name: Sync
+name: Sync to Gitee
 
-on: [ push ]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
-    build:
+    sync-to-gitee:
         runs-on: ubuntu-latest
         steps:
           - name: Sync to Gitee
