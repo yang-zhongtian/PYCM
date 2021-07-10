@@ -1,3 +1,0 @@
-ffmpeg -f gdigrab -i desktop -preset ultrafast -vcodec libx264 -tune zerolatency -b 9000k -f mpegts udp://127.0.0.1:1234
-
-ffmpeg -f gdigrab -i desktop -framerate 30 -probesize 42M -vcodec mpeg4 -q 6 -f mpegts udp://225.2.2.21@127.0.0.1:4092

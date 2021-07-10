@@ -112,7 +112,7 @@
             </font>
            </property>
            <property name="text">
-            <string>远程控制</string>
+            <string>远程监控</string>
            </property>
            <property name="checkable">
             <bool>true</bool>
@@ -606,15 +606,15 @@
    <sender>remote_spy</sender>
    <signal>clicked(bool)</signal>
    <receiver>DashboardForm</receiver>
-   <slot>toggle_remote_control(bool)</slot>
+   <slot>toggle_remote_spy(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>462</x>
+     <x>469</x>
      <y>55</y>
     </hint>
     <hint type="destinationlabel">
-     <x>479</x>
-     <y>82</y>
+     <x>506</x>
+     <y>79</y>
     </hint>
    </hints>
   </connection>
@@ -626,6 +626,6 @@
   <slot>send_message()</slot>
   <slot>toggle_broadcast(bool)</slot>
   <slot>remote_command()</slot>
-  <slot>toggle_remote_control(bool)</slot>
+  <slot>toggle_remote_spy(bool)</slot>
  </slots>
 </ui>

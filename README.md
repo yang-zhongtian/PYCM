@@ -13,18 +13,18 @@ This program is a e-classroom management system written by python. It contains b
 ## Features
 * [x] Auto LAN discover
 * [x] Console screen broadcasting
-* [ ] Cient screen remote control by Console
+* [x] Cient screen spyby Console
 * [ ] Console side file handout
 * [x] Client side file submitting
 * [x] Console side message sending. Supporting both private & public messages.
 * [ ] Client notify
 * [x] Pyinstaller packaging
+* [x] Nuitka packaging
 
 ## Structure
 ```
-|-Client: Used for muti users, ex: students, visitors.
-|-Console: Used for one host user, ex: teacher, host.
-|-Public: [DEPRECATED] Some files and algorithms for use.
+Client: Used for muti users, ex: students, visitors.
+Console: Used for one host user, ex: teacher, host.
 ```
 
 ## Release Install Guide

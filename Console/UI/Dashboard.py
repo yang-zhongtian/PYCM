@@ -6,7 +6,7 @@ from functools import partial
 from .DashboardUI import Ui_DashboardForm
 from .SendMessageGroup import SendMessageGroupForm
 from .RemoteCommandGroup import RemoteCommandGroupForm
-from .RemoteControl import RemoteControlForm
+from .RemoteSpy import RemoteSpyForm
 
 
 class DashboardForm(QMainWindow):
@@ -15,7 +15,7 @@ class DashboardForm(QMainWindow):
         self.ui = Ui_DashboardForm()
         self.threadings = {'net_discover_thread': False,
                            'private_message_thread': False,
-                           'remote_control_thread': False}
+                           'remote_spy_thread': False}
         self.clients = {}
         self.mac_binding = {}
         self.ui.setupUi(self)
@@ -23,14 +23,14 @@ class DashboardForm(QMainWindow):
         self.ui.remote_spy.setProperty('class', 'big_button')
         self.ui.remote_command.setProperty('class', 'big_button')
         self.ui.file_transfer.setProperty('class', 'big_button')
-        self.remote_control_window = RemoteControlForm(self)
+        self.remote_spy_window = RemoteSpyForm(self)
 
     def init_connections(self):
         self.private_message_thread.client_login_logout.connect(self.__logger)
         self.private_message_thread.client_notify_recieved.connect(partial(self.__logger, 'client_notify'))
         self.private_message_thread.client_desktop_recieved.connect(self.__update_client_desktop)
         self.private_message_thread.client_file_recieved.connect(partial(self.__logger, 'file_recieved'))
-        self.remote_control_thread.frame_recieved.connect(self.remote_control_window.update_frame)
+        self.remote_spy_thread.frame_recieved.connect(self.remote_spy_window.update_frame)
 
     def init_network_device(self, device):
         self.config.save('Network/Local/IP', device['IP'])
@@ -145,7 +145,7 @@ class DashboardForm(QMainWindow):
             self.class_broadcast_object.send_command(targets, selected_command)
             QMessageBox.information(self, '提示', '发送成功')
 
-    def toggle_remote_control(self, working):
+    def toggle_remote_spy(self, working):
         if working:
             targets = self.get_all_selected_clients(ip_only=True)
             if not targets:
@@ -155,11 +155,11 @@ class DashboardForm(QMainWindow):
                 QMessageBox.warning(self, '提示', '仅支持同时控制一台计算机')
                 self.ui.remote_spy.setChecked(False)
                 return
-            self.class_broadcast_object.remote_control_start_notify(targets[0])
-            self.remote_control_window.show()
+            self.class_broadcast_object.remote_spy_start_notify(targets[0])
+            self.remote_spy_window.show()
         else:
-            self.remote_control_thread.safe_stop()
-            self.remote_control_window.hide()
+            self.remote_spy_thread.safe_stop()
+            self.remote_spy_window.hide()
             self.ui.remote_spy.setChecked(False)
 
     def toggle_broadcast(self, working):
@@ -172,6 +172,6 @@ class DashboardForm(QMainWindow):
 
     def closeEvent(self, event):
         self.toggle_broadcast(False)
-        self.remote_control_thread.safe_stop()
+        self.remote_spy_thread.safe_stop()
         self.class_broadcast_object.console_quit_notify()
         event.accept()

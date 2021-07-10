@@ -3,14 +3,14 @@ from PyQt5.QtGui import QPixmap
 from Module.ClassBroadcast import ClassBroadcast
 from Module.NetworkDiscover import NetworkDiscover
 from Module.ScreenBroadcast import ScreenBroadcast
-from Module.RemoteControl import RemoteControl
+from Module.RemoteSpy import RemoteSpy
 
 
 class ClassBroadcastThread(QThread):
     message_recieved = pyqtSignal(str)
     reset_all = pyqtSignal()
     toggle_screen_broadcats = pyqtSignal(bool)
-    start_remote_control = pyqtSignal()
+    start_remote_spy = pyqtSignal()
 
     def __init__(self, config):
         super(ClassBroadcastThread, self).__init__()
@@ -53,16 +53,19 @@ class ScreenBroadcastThread(QThread):
         self.socket.start()
 
 
-class RemoteControlThread(QThread):
+class RemoteSpyThread(QThread):
     def __init__(self, config):
-        super(RemoteControlThread, self).__init__()
+        super(RemoteSpyThread, self).__init__()
         self.socket_ip = None
-        self.socket_port = config.get_item('Network/RemoteControl/Port')
-        self.socket = RemoteControl(self.socket_port)
+        self.socket_port = config.get_item('Network/RemoteSpy/Port')
+        self.socket = RemoteSpy(self.socket_port)
 
     def set_socket_ip(self, socket_ip):
         self.socket_ip = socket_ip
         self.socket.set_socket_ip(self.socket_ip)
+
+    def safe_stop(self):
+        self.socket.stop()
 
     def run(self):
         if self.socket_ip is not None:

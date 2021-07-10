@@ -27,7 +27,7 @@ class Config(object):
                     'IP': '225.2.2.21',
                     'Port': 4092
                 },
-                'RemoteControl': {
+                'RemoteSpy': {
                     'Port': 4093
                 }
             }

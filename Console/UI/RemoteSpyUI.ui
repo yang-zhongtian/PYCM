@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RemoteControl</class>
- <widget class="QWidget" name="RemoteControl">
+ <class>RemoteSpy</class>
+ <widget class="QWidget" name="RemoteSpy">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -20,7 +20,7 @@
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string>远程控制</string>
+   <string>远程监控</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../Resources.qrc">

@@ -47,8 +47,8 @@ class ClassBroadcast(QObject):
         command = base64.b64encode(str(command).encode('utf-8'))
         self.batch_send(ClassBroadcastFlag.Command, clients, command)
 
-    def remote_control_start_notify(self, client):
-        self.batch_send(ClassBroadcastFlag.RemoteControlStart, [client], b'1')
+    def remote_spy_start_notify(self, client):
+        self.batch_send(ClassBroadcastFlag.RemoteSpyStart, [client], b'1')
 
     def console_quit_notify(self):
         self.send_data(ClassBroadcastFlag.ConsoleQuit, b'')

@@ -28,7 +28,7 @@ class Config(object):
                     'FFMpegPath': 'ffmpeg',
                     'FFMpegQuality': 6
                 },
-                'RemoteControl': {
+                'RemoteSpy': {
                     'Port': 4093
                 }
             },

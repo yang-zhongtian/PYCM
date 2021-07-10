@@ -60,7 +60,7 @@ class ClassBroadcast(QObject):
                 if unpacked_flag in (
                         ClassBroadcastFlag.Message,
                         ClassBroadcastFlag.Command,
-                        ClassBroadcastFlag.RemoteControlStart
+                        ClassBroadcastFlag.RemoteSpyStart
                 ):
                     data = self.batch_send_decode(unpacked_data)
                     if unpacked_flag == ClassBroadcastFlag.Message:
@@ -69,9 +69,9 @@ class ClassBroadcast(QObject):
                     elif unpacked_flag == ClassBroadcastFlag.Command:
                         message = base64.b64decode(data).decode('utf-8')
                         self.execute_remote_command(str(message))
-                    elif unpacked_flag == ClassBroadcastFlag.RemoteControlStart:
+                    elif unpacked_flag == ClassBroadcastFlag.RemoteSpyStart:
                         if data is not None:
-                            self.parent.start_remote_control.emit()
+                            self.parent.start_remote_spy.emit()
                 elif unpacked_flag == ClassBroadcastFlag.StartScreenBroadcast:
                     self.parent.toggle_screen_broadcats.emit(True)
                 elif unpacked_flag == ClassBroadcastFlag.StopScreenBroadcast:

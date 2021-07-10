@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'RemoteControlUI.ui'
+# Form implementation generated from reading ui file 'RemoteSpyUI.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -11,30 +11,30 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_RemoteControl(object):
-    def setupUi(self, RemoteControl):
-        RemoteControl.setObjectName("RemoteControl")
-        RemoteControl.resize(971, 598)
+class Ui_RemoteSpy(object):
+    def setupUi(self, RemoteSpy):
+        RemoteSpy.setObjectName("RemoteSpy")
+        RemoteSpy.resize(971, 598)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(RemoteControl.sizePolicy().hasHeightForWidth())
-        RemoteControl.setSizePolicy(sizePolicy)
-        RemoteControl.setMouseTracking(True)
+        sizePolicy.setHeightForWidth(RemoteSpy.sizePolicy().hasHeightForWidth())
+        RemoteSpy.setSizePolicy(sizePolicy)
+        RemoteSpy.setMouseTracking(True)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/logo/UI/Resources/logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        RemoteControl.setWindowIcon(icon)
-        self.screen_display = QtWidgets.QLabel(RemoteControl)
+        RemoteSpy.setWindowIcon(icon)
+        self.screen_display = QtWidgets.QLabel(RemoteSpy)
         self.screen_display.setGeometry(QtCore.QRect(0, 0, 421, 341))
         self.screen_display.setMouseTracking(True)
         self.screen_display.setText("")
         self.screen_display.setScaledContents(True)
         self.screen_display.setObjectName("screen_display")
 
-        self.retranslateUi(RemoteControl)
-        QtCore.QMetaObject.connectSlotsByName(RemoteControl)
+        self.retranslateUi(RemoteSpy)
+        QtCore.QMetaObject.connectSlotsByName(RemoteSpy)
 
-    def retranslateUi(self, RemoteControl):
+    def retranslateUi(self, RemoteSpy):
         _translate = QtCore.QCoreApplication.translate
-        RemoteControl.setWindowTitle(_translate("RemoteControl", "远程控制"))
+        RemoteSpy.setWindowTitle(_translate("RemoteSpy", "远程监控"))
 import Resources_rc

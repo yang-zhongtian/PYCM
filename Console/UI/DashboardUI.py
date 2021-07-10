@@ -224,14 +224,14 @@ class Ui_DashboardForm(object):
         self.toggle_broadcast.clicked['bool'].connect(DashboardForm.toggle_broadcast)
         self.remote_command.clicked.connect(DashboardForm.remote_command)
         self.clear_log_area.clicked.connect(self.log_area.clear)
-        self.remote_spy.clicked['bool'].connect(DashboardForm.toggle_remote_control)
+        self.remote_spy.clicked['bool'].connect(DashboardForm.toggle_remote_spy)
         QtCore.QMetaObject.connectSlotsByName(DashboardForm)
 
     def retranslateUi(self, DashboardForm):
         _translate = QtCore.QCoreApplication.translate
         DashboardForm.setWindowTitle(_translate("DashboardForm", "PYCM Dashboard"))
         self.toggle_broadcast.setText(_translate("DashboardForm", "屏幕广播"))
-        self.remote_spy.setText(_translate("DashboardForm", "远程控制"))
+        self.remote_spy.setText(_translate("DashboardForm", "远程监控"))
         self.remote_command.setText(_translate("DashboardForm", "远程命令"))
         self.file_transfer.setText(_translate("DashboardForm", "文件传输"))
         self.send_message_button.setText(_translate("DashboardForm", "发送消息"))

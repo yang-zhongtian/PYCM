@@ -3,7 +3,7 @@ from PyQt5.QtGui import QPixmap
 from Module.NetworkDiscover import NetworkDiscover
 from Module.PrivateMessage import PrivateMessage
 from Module.ScreenBroadcast import ScreenBroadcast
-from Module.RemoteControl import RemoteControl, Command
+from Module.RemoteSpy import RemoteSpy
 
 
 class NetworkDiscoverThread(QThread):
@@ -58,20 +58,16 @@ class ScreenBroadcastThread(QThread):
         self.socket.start()
 
 
-class RemoteControlThread(QThread):
+class RemoteSpyThread(QThread):
     frame_recieved = pyqtSignal(QPixmap)
 
     def __init__(self, config: object):
-        super(RemoteControlThread, self).__init__()
-        self.socket_port = config.get_item('Network/RemoteControl/Port')
-        self.socket = RemoteControl(self, self.socket_port)
-
-    def add_command(self, operation, key, x, y):
-        self.socket.command_queue.put(Command(operation, key, x, y))
+        super(RemoteSpyThread, self).__init__()
+        self.socket_port = config.get_item('Network/RemoteSpy/Port')
+        self.socket = RemoteSpy(self, self.socket_port)
 
     def safe_stop(self):
         self.socket.stop()
 
     def run(self):
-        self.socket.old_frame = None
         self.socket.start()

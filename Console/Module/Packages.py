@@ -9,7 +9,7 @@ class ClassBroadcastFlag(object):
     StopScreenBroadcast = 3
     ConsoleQuit = 4
     Command = 5
-    RemoteControlStart = 6
+    RemoteSpyStart = 6
 
 
 class PrivateMessageFlag(object):
@@ -21,7 +21,6 @@ class PrivateMessageFlag(object):
     ClientNotify = 6
 
 
-class RemoteControlFlag(object):
+class RemoteSpyFlag(object):
     PackInfo = 1
-    ControlCommmand = 2
-    RemoteControlStop = 3
+    RemoteSpyStop = 2
