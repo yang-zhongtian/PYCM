@@ -21,6 +21,9 @@ class Ui_RemoteCommandGroupDialog(object):
         sizePolicy.setHeightForWidth(RemoteCommandGroupDialog.sizePolicy().hasHeightForWidth())
         RemoteCommandGroupDialog.setSizePolicy(sizePolicy)
         RemoteCommandGroupDialog.setMinimumSize(QtCore.QSize(0, 0))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/Core/Resources/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        RemoteCommandGroupDialog.setWindowIcon(icon)
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(RemoteCommandGroupDialog)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.command_group = QtWidgets.QGroupBox(RemoteCommandGroupDialog)
@@ -49,3 +52,4 @@ class Ui_RemoteCommandGroupDialog(object):
         _translate = QtCore.QCoreApplication.translate
         RemoteCommandGroupDialog.setWindowTitle(_translate("RemoteCommandGroupDialog", "远程命令"))
         self.command_group.setTitle(_translate("RemoteCommandGroupDialog", "命令选择"))
+import Resources_rc

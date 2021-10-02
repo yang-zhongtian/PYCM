@@ -21,7 +21,7 @@ class Ui_ScreenBroadcast(object):
         sizePolicy.setHeightForWidth(ScreenBroadcast.sizePolicy().hasHeightForWidth())
         ScreenBroadcast.setSizePolicy(sizePolicy)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/logo/UI/Resources/logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/Core/Resources/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         ScreenBroadcast.setWindowIcon(icon)
         self.verticalLayout = QtWidgets.QVBoxLayout(ScreenBroadcast)
         self.verticalLayout.setContentsMargins(22, -1, 22, -1)

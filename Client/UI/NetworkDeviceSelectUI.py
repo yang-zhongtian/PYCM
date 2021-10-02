@@ -16,7 +16,7 @@ class Ui_NetworkDeviceSelectDialog(object):
         NetworkDeviceSelectDialog.setObjectName("NetworkDeviceSelectDialog")
         NetworkDeviceSelectDialog.resize(413, 120)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/logo/UI/Resources/logo.ico"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/Core/Resources/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         NetworkDeviceSelectDialog.setWindowIcon(icon)
         self.buttonBox = QtWidgets.QDialogButtonBox(NetworkDeviceSelectDialog)
         self.buttonBox.setGeometry(QtCore.QRect(10, 70, 391, 41))
@@ -39,5 +39,5 @@ class Ui_NetworkDeviceSelectDialog(object):
 
     def retranslateUi(self, NetworkDeviceSelectDialog):
         _translate = QtCore.QCoreApplication.translate
-        NetworkDeviceSelectDialog.setWindowTitle(_translate("NetworkDeviceSelectDialog", "Network"))
+        NetworkDeviceSelectDialog.setWindowTitle(_translate("NetworkDeviceSelectDialog", "网络设置"))
 import Resources_rc

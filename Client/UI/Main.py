@@ -60,7 +60,7 @@ class MainForm(QWidget):
         self.tray_icon_menu.addAction(QAction('修改网络配置', self, triggered=lambda: self.show_network_config_window()))
         self.tray_icon_menu.addAction(QAction('退出程序', self, triggered=self.close))
         self.tray_icon = QSystemTrayIcon(self)
-        self.tray_icon.setIcon(QIcon(':/logo/UI/Resources/logo.png'))
+        self.tray_icon.setIcon(QIcon(':/Core/Resources/Logo.png'))
         self.tray_icon.setContextMenu(self.tray_icon_menu)
         self.tray_icon.activated[QSystemTrayIcon.ActivationReason].connect(self.iconActivated)
         self.tray_icon.show()

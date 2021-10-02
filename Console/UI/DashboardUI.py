@@ -16,7 +16,7 @@ class Ui_DashboardForm(object):
         DashboardForm.setObjectName("DashboardForm")
         DashboardForm.resize(1304, 779)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/logo/UI/Resources/logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/Core/Resources/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         DashboardForm.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(DashboardForm)
         self.centralwidget.setObjectName("centralwidget")

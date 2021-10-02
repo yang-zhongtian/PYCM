@@ -44,10 +44,8 @@ class ScreenBroadcastThread(QThread):
         self.current_ip = config.get_item('Network/Local/IP')
         self.socket_ip = config.get_item('Network/ScreenBroadcast/IP')
         self.socket_port = config.get_item('Network/ScreenBroadcast/Port')
-        self.ffmpeg_path = config.get_item('Network/ScreenBroadcast/FFMpegPath')
         self.ffmpeg_quality = config.get_item('Network/ScreenBroadcast/FFMpegQuality', 6)
-        self.socket = ScreenBroadcast(self, self.current_ip, self.socket_ip, self.socket_port, self.ffmpeg_path,
-                                      self.ffmpeg_quality)
+        self.socket = ScreenBroadcast(self, self.current_ip, self.socket_ip, self.socket_port, self.ffmpeg_quality)
 
     def safe_stop(self):
         self.socket.working = False

@@ -2,12 +2,14 @@
 from PyQtPatch import *
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import Qt
-from Theme import Theme
 import sys
 import os
 import logging
 
 from Module.LoadConfig import Config
+
+import Resources_rc
+import Theme
 
 from UI.Login import LoginForm
 from UI.Dashboard import DashboardForm

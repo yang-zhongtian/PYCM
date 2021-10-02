@@ -22,7 +22,7 @@ class Ui_RemoteSpy(object):
         RemoteSpy.setSizePolicy(sizePolicy)
         RemoteSpy.setMouseTracking(True)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/logo/UI/Resources/logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/Core/Resources/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         RemoteSpy.setWindowIcon(icon)
         self.screen_display = QtWidgets.QLabel(RemoteSpy)
         self.screen_display.setGeometry(QtCore.QRect(0, 0, 421, 341))

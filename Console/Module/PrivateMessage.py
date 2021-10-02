@@ -1,7 +1,6 @@
+from PyQt5.QtGui import QImage, QPixmap
 import socket
 import struct
-from PIL import Image
-from io import BytesIO
 import zlib
 import time
 import os
@@ -70,8 +69,8 @@ class PrivateMessage(object):
                     self.parent.client_login_logout.emit('offline', socket_addr[0], client_mac)
                 elif unpacked_flag == PrivateMessageFlag.ClientScreen:
                     unpacked_data = zlib.decompress(unpacked_data)
-                    image = Image.open(BytesIO(unpacked_data)).toqpixmap()
-                    self.parent.client_desktop_recieved.emit(socket_addr[0], image)
+                    image = QImage.fromData(unpacked_data)
+                    self.parent.client_desktop_recieved.emit(socket_addr[0], QPixmap.fromImage(image))
                 elif unpacked_flag == PrivateMessageFlag.ClientNotify:
                     self.parent.client_notify_recieved.emit(socket_addr[0])
                 elif unpacked_flag == PrivateMessageFlag.ClientFile:

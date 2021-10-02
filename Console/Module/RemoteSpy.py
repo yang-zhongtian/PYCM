@@ -1,7 +1,6 @@
+from PyQt5.QtGui import QImage, QPixmap
 import socket
 import struct
-from PIL import Image
-from io import BytesIO
 from queue import Queue
 from threading import Thread
 import zlib
@@ -57,8 +56,8 @@ class RemoteSpy(object):
                             payload_part = self.socket_conn.recv(payload_size)
                             frame += payload_part
                         frame = zlib.decompress(frame)
-                        frame = Image.open(BytesIO(frame))
-                        self.parent.frame_recieved.emit(frame.toqpixmap())
+                        frame = QImage.fromData(frame)
+                        self.parent.frame_recieved.emit(QPixmap.fromImage(frame))
                 self.socket_conn.close()
                 self.socket_conn = None
             except ConnectionResetError:

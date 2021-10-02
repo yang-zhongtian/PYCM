@@ -3,7 +3,6 @@ from PyQt5.QtGui import QImage, QPixmap
 import logging
 from threading import Thread, Lock
 from queue import Queue
-import av
 import time
 
 

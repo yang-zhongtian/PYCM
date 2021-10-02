@@ -1,11 +1,10 @@
-from PyQt5.QtCore import pyqtSignal, QObject
+from PyQt5.QtCore import pyqtSignal, QObject, QBuffer, QIODevice, Qt
+from PyQt5.QtGui import QImage
 import socket
 import struct
 from threading import Thread
 from mss import mss
-from PIL import Image
 import zlib
-from io import BytesIO
 from math import ceil
 import time
 from Module.Packages import NetworkDiscoverFlag, PrivateMessageFlag
@@ -51,11 +50,13 @@ class PrivateMessage(QObject):
     def screen_spy_send(self):
         with mss() as sct:
             sct_img = sct.grab(sct.monitors[1])
-            img = Image.frombytes('RGB', sct_img.size, sct_img.bgra, 'raw', 'BGRX')
-            img = img.resize((img.size[0] // 6, img.size[1] // 6), Image.ANTIALIAS)
-            img_bytes = BytesIO()
-            img.save(img_bytes, format='JPEG')
-            img_compressed = zlib.compress(img_bytes.getvalue())
+            img = QImage(sct_img.rgb, sct_img.width, sct_img.height, QImage.Format_RGB888)
+            img = img.scaled(360, 203, Qt.KeepAspectRatio)
+            buffer = QBuffer()
+            buffer.open(QIODevice.ReadWrite)
+            img.save(buffer, 'JPEG', quality=75)
+            img_compressed = zlib.compress(buffer.data())
+            buffer.close()
             self.send_data(PrivateMessageFlag.ClientScreen, img_compressed)
 
     def send_file(self, file_buffer):

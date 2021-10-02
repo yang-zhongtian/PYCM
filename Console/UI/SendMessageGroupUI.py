@@ -21,6 +21,9 @@ class Ui_SendMessageGroupDialog(object):
         sizePolicy.setHeightForWidth(SendMessageGroupDialog.sizePolicy().hasHeightForWidth())
         SendMessageGroupDialog.setSizePolicy(sizePolicy)
         SendMessageGroupDialog.setMinimumSize(QtCore.QSize(0, 0))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/Core/Resources/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        SendMessageGroupDialog.setWindowIcon(icon)
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(SendMessageGroupDialog)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.send_message_group = QtWidgets.QGroupBox(SendMessageGroupDialog)
@@ -49,3 +52,4 @@ class Ui_SendMessageGroupDialog(object):
         _translate = QtCore.QCoreApplication.translate
         SendMessageGroupDialog.setWindowTitle(_translate("SendMessageGroupDialog", "消息发送"))
         self.send_message_group.setTitle(_translate("SendMessageGroupDialog", "消息编辑"))
+import Resources_rc

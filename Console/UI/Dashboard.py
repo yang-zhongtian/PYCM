@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication, QDialog, QListWi
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QIcon
 import time
+import platform
 from functools import partial
 from .DashboardUI import Ui_DashboardForm
 from .SendMessageGroup import SendMessageGroupForm
@@ -59,7 +60,7 @@ class DashboardForm(QMainWindow):
         if client_ip in self.clients.keys():
             return
         desktop = QListWidgetItem(self.get_client_label_by_ip(client_ip))
-        desktop.setIcon(QIcon(':/logo/UI/Resources/client_blank.png'))
+        desktop.setIcon(QIcon(':/Core/Resources/ClientBlank.png'))
         desktop.setTextAlignment(Qt.AlignHCenter)
         desktop.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled | Qt.ItemIsEditable)
         desktop.setData(Qt.UserRole, client_ip)
@@ -164,6 +165,10 @@ class DashboardForm(QMainWindow):
 
     def toggle_broadcast(self, working):
         if working:
+            if platform.system().lower() not in ('windows', 'darwin'):
+                QMessageBox.critical(self, '提示', '屏幕广播当前仅支持 Windows MacOS 系统')
+                self.ui.toggle_broadcast.setChecked(False)
+                return
             self.screen_broadcast_thread.start()
             self.class_broadcast_object.screen_broadcast_nodity(True)
         else:

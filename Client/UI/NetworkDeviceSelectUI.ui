@@ -11,11 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Network</string>
+   <string>网络设置</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../Resources.qrc">
-    <normaloff>:/logo/UI/Resources/logo.ico</normaloff>:/logo/UI/Resources/logo.ico</iconset>
+    <normaloff>:/Core/Resources/Logo.png</normaloff>:/Core/Resources/Logo.png</iconset>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">

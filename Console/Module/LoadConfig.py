@@ -25,7 +25,6 @@ class Config(object):
                 'ScreenBroadcast': {
                     'IP': '225.2.2.21',
                     'Port': 4092,
-                    'FFMpegPath': 'ffmpeg',
                     'FFMpegQuality': 6
                 },
                 'RemoteSpy': {
