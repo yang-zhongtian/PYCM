@@ -23,7 +23,7 @@ jobs:
       - name: Build
         working-directory: Console
         run: |
-          nuitka --standalone --mingw64 --windows-icon-from-ico=Resources/Logo.ico `
+          nuitka --standalone --clang --windows-icon-from-ico=Resources/Logo.ico `
                  --windows-company-name=HCC --windows-uac-admin --windows-disable-console `
                  --windows-product-name=PYCM-Console --windows-product-version=4 `
                  --windows-file-description=PYCM-Console --windows-file-version=4 `
@@ -36,7 +36,6 @@ jobs:
           dest: PYCM-Console-${{ runner.os }}.zip
       - name: Upload to release
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: PYCM-Console-${{ runner.os }}.zip
         env:
