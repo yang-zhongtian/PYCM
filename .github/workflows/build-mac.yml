@@ -30,9 +30,9 @@ jobs:
       - name: Build
         working-directory: Console
         run: |
-          nuitka --standalone \
-                 --plugin-enable=qt-plugins --assume-yes-for-downloads \
-                 --output-dir=Build Main.py
+          python -m nuitka --standalone \
+                           --plugin-enable=qt-plugins --assume-yes-for-downloads \
+                           --output-dir=Build Main.py
       - name: Copy FFMpeg
         working-directory: Console
         run: |
