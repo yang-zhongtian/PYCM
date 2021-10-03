@@ -30,7 +30,7 @@ jobs:
       - name: Build
         working-directory: Console
         run: |
-          nuitka --standalone --msvc=14.0 --lto --windows-icon-from-ico=Resources/Logo.ico `
+          nuitka --standalone --msvc=14.0 --lto=yes --windows-icon-from-ico=Resources/Logo.ico `
                  --windows-company-name=HCC --windows-uac-admin --windows-disable-console `
                  --windows-product-name=PYCM-Console --windows-product-version=${{ steps.tag.outputs.result }} `
                  --windows-file-description=PYCM-Console --windows-file-version=${{ steps.tag.outputs.result }} `
