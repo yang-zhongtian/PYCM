@@ -21,13 +21,13 @@ jobs:
           pip install -r requirements.txt
           pip install nuitka
       - name: Build
-        run: |
-          cd Console
-          nuitka --standalone --mingw64 --windows-icon-from-ico=Resources/Logo.ico `
-                 --windows-company-name=HCC --windows-uac-admin --windows-disable-console `
-                 --windows-product-name=$product --windows-product-version=$version `
-                 --windows-file-description=$product --windows-file-version=$version `
-                 --plugin-enable=qt-plugins `
+        working-directory: Console
+        run: >
+          nuitka --standalone --mingw64 --windows-icon-from-ico=Resources/Logo.ico
+                 --windows-company-name=HCC --windows-uac-admin --windows-disable-console
+                 --windows-product-name=${{ github.sha }} --windows-product-version=${{ github.sha }}
+                 --windows-file-description=PYCM Console --windows-file-version=${{ github.sha }}
+                 --plugin-enable=qt-plugins
                  --output-dir=Build Main.py
       - name: Zip files
         uses: papeloto/action-zip@v1
