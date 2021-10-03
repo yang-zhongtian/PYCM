@@ -1,5 +1,10 @@
 # Python Class Management System
-[![Github Build](https://github.com/yangzhongtian001/PYCM/actions/workflows/auto-build.yml/badge.svg)](https://github.com/yangzhongtian001/PYCM/releases) [![GitHub issues](https://img.shields.io/github/issues/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/issues) [![GitHub forks](https://img.shields.io/github/forks/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/network) [![GitHub stars](https://img.shields.io/github/stars/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/stargazers) [![GitHub license](https://img.shields.io/github/license/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM)
+[![GitHub issues](https://img.shields.io/github/issues/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/issues) [![GitHub forks](https://img.shields.io/github/forks/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/network) [![GitHub stars](https://img.shields.io/github/stars/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/stargazers) [![GitHub license](https://img.shields.io/github/license/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM)
+
+## Build Status
+|  Windows | MacOS |
+|  ----    | ----  |
+|  ![](https://github.com/yangzhongtian001/PYCM/actions/workflows/build-windows.yml/badge.svg)  | ![](https://github.com/yangzhongtian001/PYCM/actions/workflows/build-mac.yml/badge.svg) |
 
 ## Mirror Repository
 * [Github(Master)](https://github.com/yangzhongtian001/PYCM)
@@ -8,7 +13,7 @@
 * [Coding(Mirror)](https://yangzhongtian.coding.net/public/PYCM/PYCM/git/files)
 
 ## Introduction
-This program is a e-classroom management system written by python. It contains both client(student side) and console(teacher size). GUI written by PyQt5, supporting all platforms.
+This program is an e-classroom management system written by python. It contains both client(student side) and console(teacher size). GUI written by PyQt5, supporting all platforms.
 
 ## Features
 * [x] Auto LAN discover
@@ -18,7 +23,6 @@ This program is a e-classroom management system written by python. It contains b
 * [x] Client side file submitting
 * [x] Console side message sending. Supporting both private & public messages.
 * [ ] Client notify
-* [x] Pyinstaller packaging
 * [x] Nuitka packaging
 
 ## Structure
