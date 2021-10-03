@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Get release info
         id: info
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/tag/v}
+        run: echo "::set-output name=tag::${GITHUB_REF#refs/tag/v}"
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
@@ -28,6 +28,7 @@ jobs:
         env:
           RELEASE_VERSION: ${{ steps.info.outputs.tag }}
         run: |
+          echo $RELEASE_VERSION
           nuitka --standalone --msvc=14.0 --windows-icon-from-ico=Resources/Logo.ico `
                  --windows-company-name=HCC --windows-uac-admin --windows-disable-console `
                  --windows-product-name=PYCM-Console --windows-product-version=$RELEASE_VERSION `
