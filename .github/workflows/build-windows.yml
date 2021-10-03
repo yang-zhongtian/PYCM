@@ -25,8 +25,8 @@ jobs:
         run: |
           nuitka --standalone --mingw64 --windows-icon-from-ico=Resources/Logo.ico `
                  --windows-company-name=HCC --windows-uac-admin --windows-disable-console `
-                 --windows-product-name=${{ github.sha }} --windows-product-version=${{ github.sha }} `
-                 --windows-file-description=PYCM-Console --windows-file-version=${{ github.sha }} `
+                 --windows-product-name=PYCM-Console --windows-product-version=${{ github.sha }} `
+                 --windows-file-description=PYCM-Console --windows-file-version=4 `
                  --plugin-enable=qt-plugins `
                  --output-dir=Build Main.py
       - name: Zip files
