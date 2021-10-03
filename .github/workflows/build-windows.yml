@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Get release info
         id: info
-        run: echo "::set-output name=tag::${GITHUB_REF#refs/tag/v}"
+        run: echo "::set-output name=tag::${GITHUB_REF#refs/tags/v}"
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
