@@ -9,6 +9,13 @@ jobs:
   Build-Console:
     runs-on: windows-2016
     steps:
+      - name: Extract tag name
+        id: tag
+        uses: actions/github-script@0.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            return context.payload.ref.replace(/\/refs\/tags\/v/, '');
       - name: debug
         run: |
           set version=%GITHUB_REF:*tags/v=%
@@ -16,6 +23,7 @@ jobs:
           echo %GITHUB_REF%
           echo $GITHUB_REF
           echo ${{ github.ref }}
+          echo ${{ steps.tag.outputs.result }}
       - uses: actions/checkout@v2
       - name: Setup Python
         uses: actions/setup-python@v2
