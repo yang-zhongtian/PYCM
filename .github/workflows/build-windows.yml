@@ -20,6 +20,11 @@ jobs:
           pip install wheel
           pip install -r requirements.txt
           pip install nuitka
+      - name: Set up Clang
+        uses: egor-tensin/setup-clang@v1
+        with:
+          version: latest
+          platform: x64
       - name: Build
         working-directory: Console
         run: |
@@ -36,6 +41,7 @@ jobs:
           dest: PYCM-Console-${{ runner.os }}.zip
       - name: Upload to release
         uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: PYCM-Console-${{ runner.os }}.zip
         env:
