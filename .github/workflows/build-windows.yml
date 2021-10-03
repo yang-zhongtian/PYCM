@@ -15,14 +15,9 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            return context.payload.ref.replace('/refs/tags/v', '');
+            return context.payload.ref.replace('refs/tags/v', '');
       - name: debug
         run: |
-          set version=%GITHUB_REF:*tags/v=%
-          echo %version$
-          echo %GITHUB_REF%
-          echo $GITHUB_REF
-          echo ${{ github.ref }}
           echo ${{ steps.tag.outputs.result }}
       - uses: actions/checkout@v2
       - name: Setup Python
@@ -41,8 +36,8 @@ jobs:
           set version=%GITHUB_REF:*tags/v=%
           nuitka --standalone --msvc=14.0 --windows-icon-from-ico=Resources/Logo.ico `
                  --windows-company-name=HCC --windows-uac-admin --windows-disable-console `
-                 --windows-product-name=PYCM-Console --windows-product-version=%version% `
-                 --windows-file-description=PYCM-Console --windows-file-version=%version% `
+                 --windows-product-name=PYCM-Console --windows-product-version=${{ steps.tag.outputs.result }} `
+                 --windows-file-description=PYCM-Console --windows-file-version=${{ steps.tag.outputs.result }} `
                  --plugin-enable=qt-plugins --assume-yes-for-downloads `
                  --output-dir=Build Main.py
       - name: Copy FFMpeg
