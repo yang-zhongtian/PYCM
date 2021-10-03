@@ -24,7 +24,8 @@ app.setQuitOnLastWindowClosed(False)
 
 config = Config()
 
-logging.basicConfig(level=logging.CRITICAL,
+debug_flag_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'DEBUG'))
+logging.basicConfig(level=logging.DEBUG if os.path.isfile(debug_flag_path) else logging.CRITICAL,
                     format='%(asctime)s %(name)s [%(levelname)s] %(module)s.%(funcName)s | %(message)s',
                     datefmt='%Y-%m-%d  %H:%M:%S %a'
                     )
