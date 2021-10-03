@@ -22,12 +22,12 @@ jobs:
           pip install nuitka
       - name: Build
         working-directory: Console
-        run: >
-          nuitka --standalone --mingw64 --windows-icon-from-ico=Resources/Logo.ico
-                 --windows-company-name=HCC --windows-uac-admin --windows-disable-console
-                 --windows-product-name=${{ github.sha }} --windows-product-version=${{ github.sha }}
-                 --windows-file-description=PYCM Console --windows-file-version=${{ github.sha }}
-                 --plugin-enable=qt-plugins
+        run: |
+          nuitka --standalone --mingw64 --windows-icon-from-ico=Resources/Logo.ico `
+                 --windows-company-name=HCC --windows-uac-admin --windows-disable-console `
+                 --windows-product-name=${{ github.sha }} --windows-product-version=${{ github.sha }} `
+                 --windows-file-description=PYCM Console --windows-file-version=${{ github.sha }} `
+                 --plugin-enable=qt-plugins `
                  --output-dir=Build Main.py
       - name: Zip files
         uses: papeloto/action-zip@v1
