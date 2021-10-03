@@ -41,7 +41,7 @@ def _apply_application_patches():
 
 
 def load_stylesheet():
-    qss_file = QFile('Style.qss')
+    qss_file = QFile(':/Core/Style.qss')
     qss_file.open(QFile.ReadOnly | QFile.Text)
     text_stream = QTextStream(qss_file)
     text_stream.setCodec('UTF-8')
