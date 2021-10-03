@@ -1,4 +1,5 @@
 from PyQt5.QtCore import QSettings
+from PyQt5.QtWidgets import QMessageBox
 from UI.NetworkDeviceSelect import NetworkDeviceSelectForm
 
 
@@ -66,7 +67,7 @@ class Config(object):
     def modify_network_device(self):
         network_device_select_form = NetworkDeviceSelectForm()
         return_code = network_device_select_form.exec_()
-        if return_code:
+        if return_code == network_device_select_form.Accepted:
             device_tag = network_device_select_form.get_selected_device()
             self.save('Network/Local/Device', device_tag)
             return True
@@ -76,7 +77,8 @@ class Config(object):
         if not self.first_run():
             return False
         network_device_select_form = NetworkDeviceSelectForm()
-        network_device_select_form.exec_()
+        while network_device_select_form.exec_() != network_device_select_form.Accepted:
+            QMessageBox.critical(None, '提示', '请选择网络设备！')
         self.__default_config['Network']['Local']['Device'] = network_device_select_form.get_selected_device()
         self.__default_tree.clear()
         self.__generate_default_tree(self.__default_config)

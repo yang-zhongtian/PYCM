@@ -29,11 +29,8 @@
      <height>31</height>
     </rect>
    </property>
-   <property name="text">
-    <string>admin</string>
-   </property>
    <property name="placeholderText">
-    <string/>
+    <string>默认admin</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="password">
@@ -45,17 +42,11 @@
      <height>31</height>
     </rect>
    </property>
-   <property name="inputMask">
-    <string/>
-   </property>
-   <property name="text">
-    <string>123456</string>
-   </property>
    <property name="echoMode">
     <enum>QLineEdit::Password</enum>
    </property>
    <property name="placeholderText">
-    <string/>
+    <string>默认123456</string>
    </property>
   </widget>
   <widget class="QLabel" name="title">

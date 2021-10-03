@@ -121,7 +121,7 @@ class DashboardForm(QMainWindow):
             return
         send_message_group_dialog = SendMessageGroupForm(self)
         result = send_message_group_dialog.exec_()
-        if result:
+        if result == send_message_group_dialog.Accepted:
             message = send_message_group_dialog.ui.send_message_input.toPlainText()
             self.class_broadcast_object.send_text(targets, message)
             self.__log_append(f'发送消息：{message}')
@@ -132,7 +132,7 @@ class DashboardForm(QMainWindow):
             return
         remote_command_group_dialog = RemoteCommandGroupForm(self)
         result = remote_command_group_dialog.exec_()
-        if result:
+        if result == remote_command_group_dialog.Accepted:
             command = remote_command_group_dialog.ui.command_select.selectedItems()
             if len(command) == 0:
                 QMessageBox.critical(self, '错误', '选择命令为空')

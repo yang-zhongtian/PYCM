@@ -26,7 +26,8 @@ app.setStyleSheet(Theme.load_stylesheet())
 config = Config()
 
 debug_flag_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'DEBUG'))
-logging.basicConfig(level=logging.DEBUG if os.path.isfile(debug_flag_path) else logging.CRITICAL,
+is_debug = os.path.isfile(debug_flag_path)
+logging.basicConfig(level=logging.DEBUG if is_debug else logging.CRITICAL,
                     format='%(asctime)s %(name)s [%(levelname)s] %(module)s.%(funcName)s | %(message)s',
                     datefmt='%Y-%m-%d %H:%M:%S %a'
                     )
@@ -44,11 +45,15 @@ class DashboardWindow(DashboardForm):
 
     def __init__(self):
         super(DashboardWindow, self).__init__()
-        login_result = LoginForm(self).exec_()
-        if not login_result:
+        login = LoginForm(self)
+        if is_debug:
+            login.ui.username.setText('admin')
+            login.ui.password.setText('123456')
+        if login.exec_() != login.Accepted:
             sys.exit(0)
         network_devices_select_dialog = NetworkDeviceSelectForm(self)
-        network_devices_select_dialog.exec_()
+        if network_devices_select_dialog.exec_() != network_devices_select_dialog.Accepted:
+            sys.exit(0)
         network_device = network_devices_select_dialog.get_selected_device()
         self.init_network_device(network_device)
         self.init_threads()
