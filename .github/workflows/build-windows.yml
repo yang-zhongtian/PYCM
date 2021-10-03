@@ -1,14 +1,21 @@
 name: Build Windows
 
-on:
-  push:
-    tags:
-      - 'v*'
+on: push
+#  push:
+#    tags:
+#      - 'v*'
 
 jobs:
   Build-Console:
     runs-on: windows-2016
     steps:
+      - name: debug
+        run: |
+          set version=%GITHUB_REF:*tags/v=%
+          echo %version$
+          echo %GITHUB_REF%
+          echo $GITHUB_REF
+          echo ${{ github.ref }}
       - uses: actions/checkout@v2
       - name: Setup Python
         uses: actions/setup-python@v2
@@ -20,12 +27,6 @@ jobs:
           pip install wheel
           pip install -r requirements.txt
           pip install nuitka
-      - uses: shaowenchen/debugger-action@v2
-        name: debugger
-        timeout-minutes: 30
-        continue-on-error: true
-        with:
-          ngrok_token: ${{ secrets.NGROK_TOKEN }}
       - name: Build
         working-directory: Console
         run: |
