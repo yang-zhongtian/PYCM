@@ -10,9 +10,6 @@ jobs:
     runs-on: windows-2016
     steps:
       - uses: actions/checkout@v2
-      - name: Get release info
-        id: info
-        run: echo "::set-output name=tag::${GITHUB_REF#refs/tags/v}"
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
@@ -25,14 +22,12 @@ jobs:
           pip install nuitka
       - name: Build
         working-directory: Console
-        env:
-          RELEASE_VERSION: ${{ steps.info.outputs.tag }}
         run: |
-          echo $RELEASE_VERSION
+          set version=%GITHUB_REF:*tags/v=%
           nuitka --standalone --msvc=14.0 --windows-icon-from-ico=Resources/Logo.ico `
                  --windows-company-name=HCC --windows-uac-admin --windows-disable-console `
-                 --windows-product-name=PYCM-Console --windows-product-version=$RELEASE_VERSION `
-                 --windows-file-description=PYCM-Console --windows-file-version=$RELEASE_VERSION `
+                 --windows-product-name=PYCM-Console --windows-product-version=%version% `
+                 --windows-file-description=PYCM-Console --windows-file-version=%version% `
                  --plugin-enable=qt-plugins --assume-yes-for-downloads `
                  --output-dir=Build Main.py
       - name: Copy FFMpeg
