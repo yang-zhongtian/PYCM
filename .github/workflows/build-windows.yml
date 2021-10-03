@@ -27,12 +27,12 @@ jobs:
                  --windows-company-name=HCC --windows-uac-admin --windows-disable-console `
                  --windows-product-name=PYCM-Console --windows-product-version=4 `
                  --windows-file-description=PYCM-Console --windows-file-version=4 `
-                 --plugin-enable=qt-plugins `
+                 --plugin-enable=qt-plugins --assume-yes-for-downloads `
                  --output-dir=Build Main.py
       - name: Zip files
         uses: papeloto/action-zip@v1
         with:
-          files: Console/Build/
+          files: Console/Build/Main.dist/
           dest: PYCM-Console-${{ runner.os }}.zip
       - name: Upload to release
         uses: softprops/action-gh-release@v1

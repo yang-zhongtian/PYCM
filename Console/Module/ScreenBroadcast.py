@@ -17,13 +17,13 @@ class ScreenBroadcast(QObject):
         system = platform.system().lower()
         ffmpeg_basedir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../Utils'))
         if system == 'windows':
-            self.ffmpeg_path = os.path.join(ffmpeg_basedir, 'Win/ffmpeg.exe')
+            self.ffmpeg_path = os.path.join(ffmpeg_basedir, 'ffmpeg-win.exe')
             self.ffmpeg_device_config = ['-f', 'gdigrab',
                                          '-framerate', '24',
                                          '-probesize', '60M',
                                          '-i', 'desktop']
         elif system == 'darwin':
-            self.ffmpeg_path = os.path.join(ffmpeg_basedir, 'Mac/ffmpeg')
+            self.ffmpeg_path = os.path.join(ffmpeg_basedir, 'ffmpeg-mac')
             self.ffmpeg_device_config = ['-f', 'avfoundation',
                                          '-r', '24',
                                          '-pix_fmt', 'yuv420p',
