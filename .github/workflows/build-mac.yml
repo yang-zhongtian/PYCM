@@ -1,4 +1,4 @@
-name: Build Windows
+name: Build Mac
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   Build-Console:
-    runs-on: windows-2016
+    runs-on: macos-10.15
     steps:
       - name: Extract tag name
         id: tag
@@ -30,20 +30,14 @@ jobs:
       - name: Build
         working-directory: Console
         run: |
-          nuitka --standalone --msvc=14.0 --windows-icon-from-ico=Resources/Logo.ico `
-                 --windows-company-name=HCC --windows-uac-admin --windows-disable-console `
-                 --windows-product-name=PYCM-Console --windows-product-version=${{ steps.tag.outputs.result }} `
-                 --windows-file-description=PYCM-Console --windows-file-version=${{ steps.tag.outputs.result }} `
-                 --plugin-enable=qt-plugins --assume-yes-for-downloads `
+          nuitka --standalone \
+                 --plugin-enable=qt-plugins --assume-yes-for-downloads \
                  --output-dir=Build Main.py
-      - name: Check build
-        working-directory: Console
-        run: if(!(Test-Path Build/Main.dist/Main.exe)){ exit 1 }
       - name: Copy FFMpeg
         working-directory: Console
         run: |
           mkdir Build/Main.dist/Utils
-          cp Utils/ffmpeg-win.exe Build/Main.dist/Utils/ffmpeg-win.exe
+          cp Utils/ffmpeg-mac Build/Main.dist/Utils/ffmpeg-mac
       - name: Zip files
         uses: papeloto/action-zip@v1
         with:
