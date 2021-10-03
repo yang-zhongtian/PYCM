@@ -1,9 +1,9 @@
 name: Build Windows
 
-on: push
-#  push:
-#    tags:
-#      - 'v*'
+on: 
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   Build-Console:
@@ -15,7 +15,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            return context.payload.ref.replace(/\/refs\/tags\/v/, '');
+            return context.payload.ref.replace('\/refs\/tags\/v', '');
       - name: debug
         run: |
           set version=%GITHUB_REF:*tags/v=%
