@@ -50,3 +50,47 @@ jobs:
           files: PYCM-Console-${{ runner.os }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  Build-Client:
+    runs-on: windows-2016
+    steps:
+      - name: Extract tag name
+        id: tag
+        uses: actions/github-script@0.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            return context.payload.ref.replace('refs/tags/v', '');
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+          architecture: 'x64'
+      - name: Install requirements
+        run: |
+          pip install wheel
+          pip install -r requirements.txt
+          pip install nuitka
+      - name: Build
+        working-directory: Client
+        run: |
+          nuitka --standalone --msvc=14.0 --lto=yes --windows-icon-from-ico=Resources/Logo.ico `
+                 --windows-company-name=HCC --windows-uac-admin --windows-disable-console `
+                 --windows-product-name=PYCM-Client --windows-product-version=${{ steps.tag.outputs.result }} `
+                 --windows-file-description=PYCM-Client --windows-file-version=${{ steps.tag.outputs.result }} `
+                 --plugin-enable=qt-plugins --assume-yes-for-downloads `
+                 --output-dir=Build Main.py
+      - name: Check build
+        working-directory: Client
+        run: if(!(Test-Path Build/Main.dist/Main.exe)){ exit 1 }
+      - name: Zip files
+        uses: papeloto/action-zip@v1
+        with:
+          files: Client/Build/Main.dist/
+          dest: PYCM-Client-${{ runner.os }}.zip
+      - name: Upload to release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: PYCM-Client-${{ runner.os }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
