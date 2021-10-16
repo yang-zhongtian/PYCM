@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QCoreApplication, QFile, QTextStream, QT_VERSION_STR
-from PyQt5.QtGui import QColor, QPalette
+from PyQt5.QtGui import QColor, QPalette, QFontDatabase
 import platform
 
 
@@ -40,6 +40,10 @@ def _apply_application_patches():
     app.setPalette(app_palette)
 
 
+def _apply_application_font():
+    QFontDatabase.addApplicationFont(':/Core/MicrosoftYaHei.ttf')
+
+
 def load_stylesheet():
     qss_file = QFile(':/Core/Style.qss')
     qss_file.open(QFile.ReadOnly | QFile.Text)
@@ -50,5 +54,6 @@ def load_stylesheet():
     stylesheet += _apply_os_patches()
     stylesheet += _apply_version_patches()
     _apply_application_patches()
+    _apply_application_font()
 
     return stylesheet

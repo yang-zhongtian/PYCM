@@ -29,6 +29,11 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+    </font>
+   </property>
    <property name="placeholderText">
     <string>默认admin</string>
    </property>
@@ -41,6 +46,11 @@
      <width>211</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+    </font>
    </property>
    <property name="echoMode">
     <enum>QLineEdit::Password</enum>
@@ -60,7 +70,7 @@
    </property>
    <property name="font">
     <font>
-     <family>Arial</family>
+     <family>微软雅黑</family>
      <pointsize>16</pointsize>
      <weight>75</weight>
      <bold>true</bold>

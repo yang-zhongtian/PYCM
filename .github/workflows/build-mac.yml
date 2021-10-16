@@ -33,11 +33,6 @@ jobs:
           python -m nuitka --standalone --lto=yes \
                            --plugin-enable=qt-plugins --assume-yes-for-downloads \
                            --output-dir=Build Main.py
-      - name: Copy FFMpeg
-        working-directory: Console
-        run: |
-          mkdir Build/Main.dist/Utils
-          cp Utils/ffmpeg-mac Build/Main.dist/Utils/ffmpeg-mac
       - name: Zip files
         uses: papeloto/action-zip@v1
         with:

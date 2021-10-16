@@ -1,5 +1,5 @@
-from PyQt5.QtCore import QObject, QBuffer, QIODevice
-from PyQt5.QtGui import QImage
+from PyQt5.QtCore import QObject, QBuffer, QIODevice, Qt
+from PyQt5.QtGui import QImage, QCursor
 import socket
 import struct
 from threading import Thread
@@ -29,6 +29,8 @@ class RemoteSpy(QObject):
         self.socket_ip = socket_ip
 
     def screen_send(self):
+        cursor = QCursor(Qt.ArrowCursor).pixmap().isNull()
+        print(cursor)
         while self.working:
             try:
                 with mss() as sct:

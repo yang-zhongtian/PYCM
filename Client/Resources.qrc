@@ -1,8 +1,9 @@
 <RCC>
   <qresource prefix="Core">
-    <file>Style.qss</file>
+    <file>MicrosoftYaHei.ttf</file>
     <file>Resources/Logo.ico</file>
     <file>Resources/Logo.png</file>
+    <file>Style.qss</file>
   </qresource>
   <qresource prefix="Theme">
     <file>Resources/arrow_down.png</file>

@@ -25,7 +25,8 @@ class Config(object):
                 'ScreenBroadcast': {
                     'IP': '225.2.2.21',
                     'Port': 4092,
-                    'FFMpegQuality': 6
+                    'Buffer': 65500,
+                    'Quality': 60
                 },
                 'RemoteSpy': {
                     'Port': 4093
@@ -38,7 +39,7 @@ class Config(object):
             'Client': {
                 'FileUploadPath': '',
                 'ClientLabel': {
-                    'XX-XX-XX-XX-XX-XX': 'ExampleClient'
+
                 },
                 'AvailableRemoteCommands': {
                     '关机(Window)': 'shutdown -s -t 0',
@@ -64,6 +65,11 @@ class Config(object):
 
     def save(self, path, value, sync=True):
         self.settings.setValue(str(path), value)
+        if sync:
+            self.settings.sync()
+
+    def remove(self, path, sync=True):
+        self.settings.remove(str(path))
         if sync:
             self.settings.sync()
 

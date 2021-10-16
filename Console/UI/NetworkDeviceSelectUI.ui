@@ -26,6 +26,11 @@
      <height>41</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+    </font>
+   </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
    </property>
@@ -47,7 +52,7 @@
    </property>
    <property name="font">
     <font>
-     <family>Abyssinica SIL</family>
+     <family>微软雅黑</family>
      <pointsize>10</pointsize>
     </font>
    </property>

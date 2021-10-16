@@ -17,8 +17,8 @@ class ClassBroadcastThread(QThread):
         self.current_ip = config.get_item('Network/Local/IP')
         self.socket_ip = config.get_item('Network/ClassBroadcast/IP')
         self.socket_port = config.get_item('Network/ClassBroadcast/Port')
-        self.socket_buffer_size = config.get_item('Network/ClassBroadcast/Buffer')
-        self.socket = ClassBroadcast(self, self.current_ip, self.socket_ip, self.socket_port, self.socket_buffer_size)
+        self.socket_buffer = config.get_item('Network/ClassBroadcast/Buffer')
+        self.socket = ClassBroadcast(self, self.current_ip, self.socket_ip, self.socket_port, self.socket_buffer)
 
     def run(self):
         self.socket.start()
@@ -47,10 +47,15 @@ class ScreenBroadcastThread(QThread):
         self.current_ip = config.get_item('Network/Local/IP')
         self.socket_ip = config.get_item('Network/ScreenBroadcast/IP')
         self.socket_port = config.get_item('Network/ScreenBroadcast/Port')
-        self.socket = ScreenBroadcast(self, self.current_ip, self.socket_ip, self.socket_port)
+        self.socket_buffer = config.get_item('Network/ScreenBroadcast/Buffer')
+        self.socket = ScreenBroadcast(self, self.current_ip, self.socket_ip, self.socket_port, self.socket_buffer)
 
     def run(self):
         self.socket.start()
+
+    def safe_stop(self):
+        self.socket.working = False
+        self.quit()
 
 
 class RemoteSpyThread(QThread):

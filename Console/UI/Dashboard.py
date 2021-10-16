@@ -1,8 +1,8 @@
-from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication, QDialog, QListWidgetItem, QLabel, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication, QDialog, QListWidgetItem, QLabel, QMessageBox, \
+    QInputDialog, QLineEdit
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QIcon
 import time
-import platform
 from functools import partial
 from .DashboardUI import Ui_DashboardForm
 from .SendMessageGroup import SendMessageGroupForm
@@ -62,7 +62,7 @@ class DashboardForm(QMainWindow):
         desktop = QListWidgetItem(self.get_client_label_by_ip(client_ip))
         desktop.setIcon(QIcon(':/Core/Resources/ClientBlank.png'))
         desktop.setTextAlignment(Qt.AlignHCenter)
-        desktop.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled | Qt.ItemIsEditable)
+        desktop.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled)
         desktop.setData(Qt.UserRole, client_ip)
         self.clients[client_ip] = desktop
         self.ui.desktop_layout.addItem(self.clients[client_ip])
@@ -78,6 +78,24 @@ class DashboardForm(QMainWindow):
     def __update_client_desktop(self, client_ip, client_desktop):
         if client_ip in self.clients.keys():
             self.clients[client_ip].setIcon(QIcon(client_desktop))
+
+    def client_rename(self):
+        target = self.get_all_selected_clients()
+        if not target:
+            return
+        if len(target) > 1:
+            QMessageBox.warning(self, '提示', '仅支持同时重命名一台计算机')
+            return
+        target = target[0]
+        client = self.clients[target['ip']]
+        new_label, confirm = QInputDialog.getText(self, '重命名客户端', '请输入新名称，留空恢复至默认名称', QLineEdit.Normal, target['label'])
+        if confirm:
+            if new_label != target['label']:
+                if new_label == '':
+                    self.config.remove(f'Client/ClientLabel/{target["mac"]}')
+                else:
+                    self.config.save(f'Client/ClientLabel/{target["mac"]}', new_label)
+                client.setText(self.get_client_label_by_ip(target['ip']))
 
     def get_client_label_by_ip(self, ip):
         label = self.config.get_item(f'Client/ClientLabel/{self.mac_binding.get(ip)}')
@@ -165,10 +183,6 @@ class DashboardForm(QMainWindow):
 
     def toggle_broadcast(self, working):
         if working:
-            if platform.system().lower() not in ('windows', 'darwin'):
-                QMessageBox.critical(self, '提示', '屏幕广播当前仅支持 Windows MacOS 系统')
-                self.ui.toggle_broadcast.setChecked(False)
-                return
             self.screen_broadcast_thread.start()
             self.class_broadcast_object.screen_broadcast_nodity(True)
         else:

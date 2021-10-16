@@ -34,6 +34,11 @@
     <layout class="QHBoxLayout" name="control_box_layout">
      <item>
       <widget class="QPushButton" name="freeze_frame">
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+        </font>
+       </property>
        <property name="text">
         <string>冻结屏幕</string>
        </property>
@@ -44,6 +49,11 @@
      </item>
      <item>
       <widget class="QPushButton" name="full_screen">
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+        </font>
+       </property>
        <property name="text">
         <string>全屏</string>
        </property>
@@ -54,6 +64,11 @@
      </item>
      <item>
       <widget class="QPushButton" name="screen_shot">
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+        </font>
+       </property>
        <property name="text">
         <string>截图</string>
        </property>

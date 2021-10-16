@@ -33,13 +33,11 @@ Console: Used for one host user, ex: teacher, host.
 
 ## Release Install Guide
 * Download release version [here](https://github.com/yangzhongtian001/PYCM/releases).
-* For Console, install `ffmpeg` and add to environment path
 * Run `Main.exe` or `Main.app`
 
 ## Dev Install Guide
 * Clone repository.
 * Run `pip install -r requirements.txt` to install required libraries.
-* Install `ffmpeg` and add to environment variable
 * Run `python Main.py` to start application.
 
 ## Screenshot

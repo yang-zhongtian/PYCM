@@ -26,7 +26,8 @@ class Config(object):
                 },
                 'ScreenBroadcast': {
                     'IP': '225.2.2.21',
-                    'Port': 4092
+                    'Port': 4092,
+                    'Buffer': 65500
                 },
                 'RemoteSpy': {
                     'Port': 4093

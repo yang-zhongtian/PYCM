@@ -22,6 +22,7 @@ class MainForm(QWidget):
         self.parent = parent
         self.ui.setupUi(self)
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.Tool)
+        self.setAttribute(Qt.WA_TranslucentBackground)
         self.setFixedSize(322, 70)
         desktop = QApplication.desktop()
         self.move(int(desktop.width() - 422), 65)
@@ -107,7 +108,7 @@ class MainForm(QWidget):
             self.screen_broadcast_thread.start()
             self.screen_broadcast_window.show()
         else:
-            self.screen_broadcast_thread.quit()
+            self.screen_broadcast_thread.safe_stop()
             self.screen_broadcast_window.hide()
 
     def mouseMoveEvent(self, e: QMouseEvent):

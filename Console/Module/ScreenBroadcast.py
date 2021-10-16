@@ -1,61 +1,62 @@
-from PyQt5.QtCore import QObject
-import os
-import platform
-import subprocess
-import time
-import re
+from PyQt5.QtCore import QObject, QBuffer, QIODevice, Qt
+from PyQt5.QtGui import QImage
+from Module.Packages import ScreenBroadcastFlag
+import socket
+import struct
+from mss import mss
+import zlib
 import logging
 
 
 class ScreenBroadcast(QObject):
-    def __init__(self, parent, current_ip, socket_ip, socket_port, ffmpeg_quality=6):
+    def __init__(self, parent, current_ip, socket_ip, socket_port, socket_buffer, quality=60):
         super(ScreenBroadcast, self).__init__()
         self.parent = parent
         self.current_ip = current_ip
         self.socket_ip = socket_ip
         self.socket_port = socket_port
-        system = platform.system().lower()
-        ffmpeg_basedir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../Utils'))
-        if system == 'windows':
-            self.ffmpeg_path = os.path.join(ffmpeg_basedir, 'ffmpeg-win.exe')
-            self.ffmpeg_device_config = ['-f', 'gdigrab',
-                                         '-framerate', '24',
-                                         '-probesize', '60M',
-                                         '-i', 'desktop']
-        elif system == 'darwin':
-            self.ffmpeg_path = os.path.join(ffmpeg_basedir, 'ffmpeg-mac')
-            self.ffmpeg_device_config = ['-f', 'avfoundation',
-                                         '-r', '24',
-                                         '-pix_fmt', 'yuv420p',
-                                         '-i', '1']
-        else:
-            self.ffmpeg_path = ''
-            self.ffmpeg_device_config = []
-        self.ffmpeg_path = os.path.abspath(self.ffmpeg_path)
-        self.ffmpeg_quality = ffmpeg_quality
-        self.ffmpeg_args = ['-vcodec', 'mpeg4',
-                            '-q', str(self.ffmpeg_quality),
-                            '-f', 'mpegts']
-        self.ffmpeg_uri = f'udp://{self.current_ip}@{self.socket_ip}:{self.socket_port}?pkt_size=1316'
-        self.ffmpeg_command = [self.ffmpeg_path] + self.ffmpeg_device_config + self.ffmpeg_args + [self.ffmpeg_uri]
-        self.ffmpeg_object = None
-        self.ffmpeg_log_pattern = r'frame= *(?P<frame>\S+) *fps= *(?P<fps>\S+) *q=.*size= *(?P<size>\S+) *time= *(' \
-                                  r'?P<time>\S+) *bitrate= *(?P<bitrate>\S+) *speed= *(?P<speed>\S+) *'
+        self.socket_buffer = socket_buffer
+        self.quality = quality
+        self.socket_obj = None
         self.working = False
+        self.init_socket_obj()
+
+    def init_socket_obj(self):
+        self.socket_obj = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+        self.socket_obj.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 255)
+        self.socket_obj.setsockopt(
+            socket.IPPROTO_IP,
+            socket.IP_ADD_MEMBERSHIP,
+            socket.inet_aton(self.socket_ip) + socket.inet_aton(self.current_ip)
+        )
 
     def start(self):
-        logging.debug(f'FFMpeg command: {" ".join(self.ffmpeg_command)}')
-        if not self.ffmpeg_path:
-            logging.critical(f'FFMpeg error: this system({platform.system()}) is currently not supported.')
-            return
-        self.ffmpeg_object = subprocess.Popen(self.ffmpeg_command, shell=True, stdin=subprocess.PIPE, bufsize=64,
-                                              stdout=subprocess.PIPE, stderr=subprocess.STDOUT, encoding='utf-8')
+        pack_index = 0
+        payload_size = self.socket_buffer - struct.calcsize('!2i')
+        target = (self.socket_ip, self.socket_port)
         while self.working:
-            line = self.ffmpeg_object.stdout.readline().strip()
-            if line[:5] == 'frame':
-                line = re.match(self.ffmpeg_log_pattern, line)
-                if line:
-                    logging.debug(f'FFMpeg streaming log: {line.groupdict()}')
-        self.ffmpeg_object.stdin.write('q')
-        self.ffmpeg_object.communicate()
-        self.ffmpeg_object.wait()
+            try:
+                with mss() as sct:
+                    frame = sct.grab(sct.monitors[1])
+                    img = QImage(frame.rgb, frame.width, frame.height, QImage.Format_RGB888)
+                    buffer = QBuffer()
+                    buffer.open(QIODevice.ReadWrite)
+                    img.save(buffer, 'JPEG', quality=self.quality)
+                    img_encoded = zlib.compress(buffer.data())
+                    buffer.close()
+                    rounds = len(img_encoded) // payload_size
+                    looped_size = rounds * payload_size
+                    logging.debug(f'Screen broadcast index: {pack_index}, rounds: {rounds}')
+                    header = struct.pack('!4i', ScreenBroadcastFlag.PackInfo, pack_index, len(img_encoded), rounds)
+                    self.socket_obj.sendto(header, target)
+                    for i in range(rounds):
+                        pack = img_encoded[i * payload_size: (i + 1) * payload_size]
+                        data = struct.pack(f'!2i{payload_size}s', ScreenBroadcastFlag.PackData, len(pack), pack)
+                        self.socket_obj.sendto(data, target)
+                    if looped_size < len(img_encoded):
+                        pack = img_encoded[looped_size:]
+                        data = struct.pack(f'!2i{payload_size}s', ScreenBroadcastFlag.PackData, len(pack), pack)
+                        self.socket_obj.sendto(data, target)
+                    pack_index = (pack_index + 1) % 1000
+            except Exception as e:
+                logging.warning(f'Screen send thread unexpected error: {e}')

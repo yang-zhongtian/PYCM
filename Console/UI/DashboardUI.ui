@@ -10,6 +10,11 @@
     <height>779</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <family>微软雅黑</family>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>PYCM Dashboard</string>
   </property>
@@ -19,10 +24,65 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>4</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <family>微软雅黑</family>
+        <pointsize>14</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(25, 35, 45, 255), stop:1 rgba(69, 83, 100, 255));
+color: rgb(255, 255, 255);
+padding-top: 5px;
+padding-bottom: 5px;
+</string>
+      </property>
+      <property name="text">
+       <string>Python Classroom Management System</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="margin">
+       <number>6</number>
+      </property>
+     </widget>
+    </item>
     <item>
      <layout class="QVBoxLayout" name="main_layout" stretch="1,30">
       <property name="spacing">
-       <number>10</number>
+       <number>7</number>
+      </property>
+      <property name="leftMargin">
+       <number>11</number>
+      </property>
+      <property name="topMargin">
+       <number>3</number>
+      </property>
+      <property name="rightMargin">
+       <number>11</number>
+      </property>
+      <property name="bottomMargin">
+       <number>11</number>
       </property>
       <item>
        <widget class="QFrame" name="frame_header">
@@ -78,6 +138,8 @@
             <font>
              <family>微软雅黑</family>
              <pointsize>12</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
             </font>
            </property>
            <property name="text">
@@ -322,32 +384,6 @@
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1304</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menu">
-    <property name="title">
-     <string>系统</string>
-    </property>
-    <widget class="QMenu" name="services_operation_menu">
-     <property name="title">
-      <string>服务</string>
-     </property>
-     <addaction name="start_all_services_menu"/>
-     <addaction name="stop_all_services_menu"/>
-     <addaction name="restart_all_services_menu"/>
-    </widget>
-    <addaction name="services_operation_menu"/>
-    <addaction name="exit_menu"/>
-   </widget>
-   <addaction name="menu"/>
-  </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="sizePolicy">
     <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
@@ -366,6 +402,11 @@
      <width>0</width>
      <height>0</height>
     </size>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+    </font>
    </property>
    <property name="windowTitle">
     <string>toolBar</string>
@@ -388,6 +429,8 @@
    <addaction name="client_sort"/>
    <addaction name="client_select_all"/>
    <addaction name="separator"/>
+   <addaction name="client_rename"/>
+   <addaction name="separator"/>
    <addaction name="client_scroll_in"/>
    <addaction name="client_scroll_out"/>
   </widget>
@@ -398,6 +441,11 @@
    <property name="toolTip">
     <string>自动排列学生端</string>
    </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+    </font>
+   </property>
   </action>
   <action name="client_select_all">
    <property name="text">
@@ -406,25 +454,10 @@
    <property name="toolTip">
     <string>选择全部学生端</string>
    </property>
-  </action>
-  <action name="start_all_services_menu">
-   <property name="text">
-    <string>启动所有服务</string>
-   </property>
-  </action>
-  <action name="stop_all_services_menu">
-   <property name="text">
-    <string>停止所有服务</string>
-   </property>
-  </action>
-  <action name="restart_all_services_menu">
-   <property name="text">
-    <string>重启所有服务</string>
-   </property>
-  </action>
-  <action name="exit_menu">
-   <property name="text">
-    <string>退出</string>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+    </font>
    </property>
   </action>
   <action name="client_scroll_in">
@@ -434,6 +467,11 @@
    <property name="toolTip">
     <string>放大客户端图标</string>
    </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+    </font>
+   </property>
   </action>
   <action name="client_scroll_out">
    <property name="text">
@@ -442,15 +480,23 @@
    <property name="toolTip">
     <string>缩小客户端图标</string>
    </property>
-  </action>
-  <action name="remote_shutdown_menu">
-   <property name="text">
-    <string>远程关机</string>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+    </font>
    </property>
   </action>
-  <action name="remote_reboot_menu">
+  <action name="client_rename">
    <property name="text">
-    <string>远程重启</string>
+    <string>重命名</string>
+   </property>
+   <property name="toolTip">
+    <string>重命名客户端</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+    </font>
    </property>
   </action>
  </widget>
@@ -487,22 +533,6 @@
     <hint type="destinationlabel">
      <x>461</x>
      <y>413</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>exit_menu</sender>
-   <signal>triggered()</signal>
-   <receiver>DashboardForm</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>577</x>
-     <y>385</y>
     </hint>
    </hints>
   </connection>
@@ -561,12 +591,12 @@
    <slot>toggle_broadcast(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>168</x>
-     <y>55</y>
+     <x>180</x>
+     <y>47</y>
     </hint>
     <hint type="destinationlabel">
-     <x>651</x>
-     <y>389</y>
+     <x>188</x>
+     <y>111</y>
     </hint>
    </hints>
   </connection>
@@ -577,8 +607,8 @@
    <slot>remote_command()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>825</x>
-     <y>51</y>
+     <x>969</x>
+     <y>47</y>
     </hint>
     <hint type="destinationlabel">
      <x>876</x>
@@ -609,12 +639,28 @@
    <slot>toggle_remote_spy(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>469</x>
-     <y>55</y>
+     <x>647</x>
+     <y>47</y>
     </hint>
     <hint type="destinationlabel">
      <x>506</x>
      <y>79</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>client_rename</sender>
+   <signal>triggered()</signal>
+   <receiver>DashboardForm</receiver>
+   <slot>client_rename()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>651</x>
+     <y>389</y>
     </hint>
    </hints>
   </connection>
@@ -627,5 +673,6 @@
   <slot>toggle_broadcast(bool)</slot>
   <slot>remote_command()</slot>
   <slot>toggle_remote_spy(bool)</slot>
+  <slot>client_rename()</slot>
  </slots>
 </ui>

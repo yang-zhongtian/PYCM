@@ -24,3 +24,8 @@ class PrivateMessageFlag(object):
 class RemoteSpyFlag(object):
     PackInfo = 1
     RemoteSpyStop = 2
+
+
+class ScreenBroadcastFlag(object):
+    PackInfo = 1
+    PackData = 2

@@ -39,11 +39,6 @@ jobs:
       - name: Check build
         working-directory: Console
         run: if(!(Test-Path Build/Main.dist/Main.exe)){ exit 1 }
-      - name: Copy FFMpeg
-        working-directory: Console
-        run: |
-          mkdir Build/Main.dist/Utils
-          cp Utils/ffmpeg-win.exe Build/Main.dist/Utils/ffmpeg-win.exe
       - name: Zip files
         uses: papeloto/action-zip@v1
         with:

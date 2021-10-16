@@ -32,6 +32,11 @@
   <layout class="QVBoxLayout" name="verticalLayout_3" stretch="3,0">
    <item>
     <widget class="QGroupBox" name="send_message_group">
+     <property name="font">
+      <font>
+       <family>微软雅黑</family>
+      </font>
+     </property>
      <property name="title">
       <string>消息编辑</string>
      </property>
@@ -56,6 +61,11 @@
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="font">
+      <font>
+       <family>微软雅黑</family>
+      </font>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>

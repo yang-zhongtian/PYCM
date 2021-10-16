@@ -32,6 +32,11 @@
   <layout class="QVBoxLayout" name="verticalLayout_3" stretch="5,0">
    <item>
     <widget class="QGroupBox" name="command_group">
+     <property name="font">
+      <font>
+       <family>微软雅黑</family>
+      </font>
+     </property>
      <property name="title">
       <string>命令选择</string>
      </property>
@@ -49,13 +54,24 @@
        <number>11</number>
       </property>
       <item>
-       <widget class="QListWidget" name="command_select"/>
+       <widget class="QListWidget" name="command_select">
+        <property name="font">
+         <font>
+          <family>微软雅黑</family>
+         </font>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="font">
+      <font>
+       <family>微软雅黑</family>
+      </font>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
