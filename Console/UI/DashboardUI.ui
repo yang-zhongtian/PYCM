@@ -10,11 +10,6 @@
     <height>779</height>
    </rect>
   </property>
-  <property name="font">
-   <font>
-    <family>微软雅黑</family>
-   </font>
-  </property>
   <property name="windowTitle">
    <string>PYCM Dashboard</string>
   </property>
@@ -43,8 +38,7 @@
      <widget class="QLabel" name="label">
       <property name="font">
        <font>
-        <family>微软雅黑</family>
-        <pointsize>14</pointsize>
+        <pointsize>16</pointsize>
         <weight>75</weight>
         <bold>true</bold>
        </font>
@@ -136,14 +130,13 @@ padding-bottom: 5px;
            </property>
            <property name="font">
             <font>
-             <family>微软雅黑</family>
              <pointsize>12</pointsize>
              <weight>50</weight>
              <bold>false</bold>
             </font>
            </property>
            <property name="text">
-            <string>屏幕广播</string>
+            <string>Screen Broadcast</string>
            </property>
            <property name="checkable">
             <bool>true</bool>
@@ -169,12 +162,11 @@ padding-bottom: 5px;
            </property>
            <property name="font">
             <font>
-             <family>微软雅黑</family>
              <pointsize>12</pointsize>
             </font>
            </property>
            <property name="text">
-            <string>远程监控</string>
+            <string>Remote View</string>
            </property>
            <property name="checkable">
             <bool>true</bool>
@@ -197,12 +189,11 @@ padding-bottom: 5px;
            </property>
            <property name="font">
             <font>
-             <family>微软雅黑</family>
              <pointsize>12</pointsize>
             </font>
            </property>
            <property name="text">
-            <string>远程命令</string>
+            <string>Remote Command</string>
            </property>
           </widget>
          </item>
@@ -222,12 +213,11 @@ padding-bottom: 5px;
            </property>
            <property name="font">
             <font>
-             <family>微软雅黑</family>
              <pointsize>12</pointsize>
             </font>
            </property>
            <property name="text">
-            <string>文件传输</string>
+            <string>File Transfer</string>
            </property>
           </widget>
          </item>
@@ -272,6 +262,11 @@ padding-bottom: 5px;
             </property>
             <item>
              <widget class="QListWidget" name="desktop_layout">
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
               <property name="editTriggers">
                <set>QAbstractItemView::DoubleClicked</set>
               </property>
@@ -329,7 +324,6 @@ padding-bottom: 5px;
              <widget class="QTextEdit" name="log_area">
               <property name="font">
                <font>
-                <family>楷体</family>
                 <pointsize>10</pointsize>
                </font>
               </property>
@@ -355,7 +349,7 @@ padding-bottom: 5px;
                  </size>
                 </property>
                 <property name="text">
-                 <string>发送消息</string>
+                 <string>Messaging</string>
                 </property>
                </widget>
               </item>
@@ -368,7 +362,7 @@ padding-bottom: 5px;
                  </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>清除日志</string>
+                 <string>Clear Log</string>
                 </property>
                </widget>
               </item>
@@ -403,11 +397,6 @@ padding-bottom: 5px;
      <height>0</height>
     </size>
    </property>
-   <property name="font">
-    <font>
-     <family>微软雅黑</family>
-    </font>
-   </property>
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
@@ -436,67 +425,27 @@ padding-bottom: 5px;
   </widget>
   <action name="client_sort">
    <property name="text">
-    <string>自动排列</string>
-   </property>
-   <property name="toolTip">
-    <string>自动排列学生端</string>
-   </property>
-   <property name="font">
-    <font>
-     <family>微软雅黑</family>
-    </font>
+    <string>Arrange Client</string>
    </property>
   </action>
   <action name="client_select_all">
    <property name="text">
-    <string>选择全部</string>
-   </property>
-   <property name="toolTip">
-    <string>选择全部学生端</string>
-   </property>
-   <property name="font">
-    <font>
-     <family>微软雅黑</family>
-    </font>
+    <string>Select All</string>
    </property>
   </action>
   <action name="client_scroll_in">
    <property name="text">
-    <string>放大图标</string>
-   </property>
-   <property name="toolTip">
-    <string>放大客户端图标</string>
-   </property>
-   <property name="font">
-    <font>
-     <family>微软雅黑</family>
-    </font>
+    <string>Zoom In</string>
    </property>
   </action>
   <action name="client_scroll_out">
    <property name="text">
-    <string>缩小图标</string>
-   </property>
-   <property name="toolTip">
-    <string>缩小客户端图标</string>
-   </property>
-   <property name="font">
-    <font>
-     <family>微软雅黑</family>
-    </font>
+    <string>Zoom Out</string>
    </property>
   </action>
   <action name="client_rename">
    <property name="text">
-    <string>重命名</string>
-   </property>
-   <property name="toolTip">
-    <string>重命名客户端</string>
-   </property>
-   <property name="font">
-    <font>
-     <family>微软雅黑</family>
-    </font>
+    <string>Rename</string>
    </property>
   </action>
  </widget>
@@ -591,8 +540,8 @@ padding-bottom: 5px;
    <slot>toggle_broadcast(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>180</x>
-     <y>47</y>
+     <x>191</x>
+     <y>84</y>
     </hint>
     <hint type="destinationlabel">
      <x>188</x>
@@ -607,8 +556,8 @@ padding-bottom: 5px;
    <slot>remote_command()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>969</x>
-     <y>47</y>
+     <x>970</x>
+     <y>84</y>
     </hint>
     <hint type="destinationlabel">
      <x>876</x>
@@ -640,7 +589,7 @@ padding-bottom: 5px;
    <hints>
     <hint type="sourcelabel">
      <x>647</x>
-     <y>47</y>
+     <y>84</y>
     </hint>
     <hint type="destinationlabel">
      <x>506</x>

@@ -1,6 +1,7 @@
 from PyQt5.QtCore import QCoreApplication, QFile, QTextStream, QT_VERSION_STR
 from PyQt5.QtGui import QColor, QPalette, QFontDatabase
 import platform
+import os
 
 
 def _apply_os_patches():
@@ -41,7 +42,9 @@ def _apply_application_patches():
 
 
 def _apply_application_font():
-    QFontDatabase.addApplicationFont(':/Core/MicrosoftYaHei.ttf')
+    current_path = os.path.dirname(os.path.abspath(__file__))
+    QFontDatabase.addApplicationFont(os.path.join(current_path, 'Alibaba-PuHuiTi-Regular.ttf'))
+    QFontDatabase.addApplicationFont(os.path.join(current_path, 'Alibaba-PuHuiTi-Bold.ttf'))
 
 
 def load_stylesheet():

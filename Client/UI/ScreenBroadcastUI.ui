@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>屏幕广播</string>
+   <string>Screen Broadcast</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../Resources.qrc">
@@ -34,13 +34,8 @@
     <layout class="QHBoxLayout" name="control_box_layout">
      <item>
       <widget class="QPushButton" name="freeze_frame">
-       <property name="font">
-        <font>
-         <family>微软雅黑</family>
-        </font>
-       </property>
        <property name="text">
-        <string>冻结屏幕</string>
+        <string>Freeze Screen</string>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -49,13 +44,8 @@
      </item>
      <item>
       <widget class="QPushButton" name="full_screen">
-       <property name="font">
-        <font>
-         <family>微软雅黑</family>
-        </font>
-       </property>
        <property name="text">
-        <string>全屏</string>
+        <string>Full Screen</string>
        </property>
        <property name="checkable">
         <bool>true</bool>
@@ -64,13 +54,8 @@
      </item>
      <item>
       <widget class="QPushButton" name="screen_shot">
-       <property name="font">
-        <font>
-         <family>微软雅黑</family>
-        </font>
-       </property>
        <property name="text">
-        <string>截图</string>
+        <string>Screen Shot</string>
        </property>
       </widget>
      </item>
@@ -79,7 +64,9 @@
    <item>
     <widget class="QWidget" name="screen_widget" native="true">
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(3, 118, 108);</string>
+      <string notr="true">#screen_widget {
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(82, 229, 231, 255), stop:1 rgba(19, 12, 183, 255));
+}</string>
      </property>
      <widget class="QLabel" name="screen_display">
       <property name="geometry">

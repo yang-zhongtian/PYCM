@@ -21,13 +21,13 @@ class LoginForm(QDialog):
         username = self.ui.username.text()
         password = self.ui.password.text()
         if not all([username, password]):
-            QMessageBox.critical(self, '提示', '用户名或密码不能为空')
+            QMessageBox.critical(self, 'Warning', "Username and password can't be blank")
             return
         if self.ui.username.text() == real_admin_username:
             if encode_password(self.ui.password.text()) == real_admin_password:
                 self.accept()
                 self.close()
             else:
-                QMessageBox.critical(self, '提示', '密码错误')
+                QMessageBox.critical(self, 'Warning', 'Password incorrect')
         else:
-            QMessageBox.critical(self, '提示', '用户名错误')
+            QMessageBox.critical(self, 'Warning', 'Username incorrect')

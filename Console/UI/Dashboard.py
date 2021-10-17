@@ -43,15 +43,15 @@ class DashboardForm(QMainWindow):
     def __logger(self, type_, ip, mac=None):
         if type_ == 'online':
             self.mac_binding[ip] = mac
-            self.__log_append(f'{self.get_client_label_by_ip(ip)}上线')
+            self.__log_append(f'{self.get_client_label_by_ip(ip)} logged on')
             self.__add_client_desktop(ip)
         elif type_ == 'offline':
-            self.__log_append(f'{self.get_client_label_by_ip(ip)}离线')
+            self.__log_append(f'{self.get_client_label_by_ip(ip)} logged off')
             self.__remove_client_desktop(ip)
         elif type_ == 'file_recieved':
-            self.__log_append(f'已收到来自{self.get_client_label_by_ip(ip)}的文件')
+            self.__log_append(f'Received file from: {self.get_client_label_by_ip(ip)}')
         elif type_ == 'client_notify':
-            self.__log_append(f'{self.get_client_label_by_ip(ip)}举手')
+            self.__log_append(f'Hands up: {self.get_client_label_by_ip(ip)}')
 
     def __log_append(self, message):
         self.ui.log_area.append(f'[{time.strftime("%H:%M", time.localtime(time.time()))}] {message}')
@@ -84,11 +84,13 @@ class DashboardForm(QMainWindow):
         if not target:
             return
         if len(target) > 1:
-            QMessageBox.warning(self, '提示', '仅支持同时重命名一台计算机')
+            QMessageBox.warning(self, 'Warning', 'Only support to rename one client each time')
             return
         target = target[0]
         client = self.clients[target['ip']]
-        new_label, confirm = QInputDialog.getText(self, '重命名客户端', '请输入新名称，留空恢复至默认名称', QLineEdit.Normal, target['label'])
+        new_label, confirm = QInputDialog.getText(self, 'Rename client',
+                                                  'Please input the new name, leave blank for restoring to default',
+                                                  QLineEdit.Normal, target['label'])
         if confirm:
             if new_label != target['label']:
                 if new_label == '':
@@ -106,7 +108,7 @@ class DashboardForm(QMainWindow):
     def get_all_selected_clients(self, ip_only=False):
         clients = self.ui.desktop_layout.selectedItems()
         if len(clients) == 0:
-            QMessageBox.warning(self, '提示', '未选择任何目标')
+            QMessageBox.warning(self, 'Warning', 'No targets selected')
             return []
         client_infos = []
         for client in clients:
@@ -142,7 +144,7 @@ class DashboardForm(QMainWindow):
         if result == send_message_group_dialog.Accepted:
             message = send_message_group_dialog.ui.send_message_input.toPlainText()
             self.class_broadcast_object.send_text(targets, message)
-            self.__log_append(f'发送消息：{message}')
+            self.__log_append(f'Message send: {message}')
 
     def remote_command(self):
         targets = self.get_all_selected_clients(ip_only=True)
@@ -153,16 +155,17 @@ class DashboardForm(QMainWindow):
         if result == remote_command_group_dialog.Accepted:
             command = remote_command_group_dialog.ui.command_select.selectedItems()
             if len(command) == 0:
-                QMessageBox.critical(self, '错误', '选择命令为空')
+                QMessageBox.critical(self, 'Warning', 'No command selected')
                 return
             command = command[0]
             selected_label = command.text()
             selected_command = command.data(Qt.UserRole)
-            confirm = QMessageBox.question(self, '确认', f'是否确认发送 {selected_label} 命令？', QMessageBox.Yes | QMessageBox.No)
+            confirm = QMessageBox.question(self, 'Confirm', f'Confirm to send command: {selected_label} ?',
+                                           QMessageBox.Yes | QMessageBox.No)
             if confirm != QMessageBox.Yes:
                 return
             self.class_broadcast_object.send_command(targets, selected_command)
-            QMessageBox.information(self, '提示', '发送成功')
+            QMessageBox.information(self, 'Info', 'Command successfully send')
 
     def toggle_remote_spy(self, working):
         if working:
@@ -171,7 +174,7 @@ class DashboardForm(QMainWindow):
                 self.ui.remote_spy.setChecked(False)
                 return
             if len(targets) > 1:
-                QMessageBox.warning(self, '提示', '仅支持同时控制一台计算机')
+                QMessageBox.warning(self, 'Warning', 'Only support to control one client each time')
                 self.ui.remote_spy.setChecked(False)
                 return
             self.class_broadcast_object.remote_spy_start_notify(targets[0])

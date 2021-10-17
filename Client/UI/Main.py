@@ -57,9 +57,10 @@ class MainForm(QWidget):
     # noinspection PyArgumentList
     def init_tray(self):
         self.tray_icon_menu = QMenu(self)
-        self.tray_icon_menu.addAction(QAction('显示工具栏', self, triggered=self.show))
-        self.tray_icon_menu.addAction(QAction('修改网络配置', self, triggered=lambda: self.show_network_config_window()))
-        self.tray_icon_menu.addAction(QAction('退出程序', self, triggered=self.close))
+        self.tray_icon_menu.addAction(QAction('Show Tool Bar', self, triggered=self.show))
+        self.tray_icon_menu.addAction(
+            QAction('Configure Network', self, triggered=lambda: self.show_network_config_window()))
+        self.tray_icon_menu.addAction(QAction('Exit', self, triggered=self.close))
         self.tray_icon = QSystemTrayIcon(self)
         self.tray_icon.setIcon(QIcon(':/Core/Resources/Logo.png'))
         self.tray_icon.setContextMenu(self.tray_icon_menu)
@@ -67,11 +68,15 @@ class MainForm(QWidget):
         self.tray_icon.show()
 
     def show_network_config_window(self):
-        reply = QMessageBox.question(self, '提示', '是否确认要修改网络配置？此操作可能会导致客户端无法正常启动！', QMessageBox.Yes, QMessageBox.No)
+        reply = QMessageBox.question(self, 'Warning',
+                                     'Are you sure to modify the network configuration? This operation may cause the ' +
+                                     'client to fail to start normally!',
+                                     QMessageBox.Yes, QMessageBox.No)
         if reply == QMessageBox.Yes:
             result = self.config.modify_network_device()
             if result:
-                QMessageBox.information(self, '提示', '修改成功！请重启软件以生效', QMessageBox.Ok)
+                QMessageBox.information(self, 'Info', 'Configuration success! Please restart the client to take effect',
+                                        QMessageBox.Ok)
 
     def show_file_send_window(self):
         self.file_send_window.show()
@@ -81,7 +86,7 @@ class MainForm(QWidget):
 
     def message_recieved(self, message):
         icon = QSystemTrayIcon.MessageIcon()
-        self.tray_icon.showMessage('消息', message, icon, 1000)
+        self.tray_icon.showMessage('Message', message, icon, 1000)
 
     def notify_console(self):
         self.private_message_object.notify_console()
@@ -132,7 +137,7 @@ class MainForm(QWidget):
             self.show()
 
     def closeEvent(self, event):
-        reply = QMessageBox.question(self, '提示', '是否退出？', QMessageBox.Yes, QMessageBox.No)
+        reply = QMessageBox.question(self, 'Warning', 'Are you sure to exit?', QMessageBox.Yes, QMessageBox.No)
         if reply == QMessageBox.Yes:
             if self.server_ip is not None:
                 self.private_message_object.offline_notify()

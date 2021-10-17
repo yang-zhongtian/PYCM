@@ -1,8 +1,7 @@
 <RCC>
   <qresource prefix="Core">
-    <file>MicrosoftYaHei.ttf</file>
-    <file>Style.qss</file>
     <file>Resources/ClientBlank.png</file>
+    <file>Style.qss</file>
     <file>Resources/Logo.ico</file>
     <file>Resources/Logo.png</file>
   </qresource>

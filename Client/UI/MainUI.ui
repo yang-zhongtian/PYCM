@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>324</width>
+    <width>322</width>
     <height>70</height>
    </rect>
   </property>
@@ -72,8 +72,7 @@
        <widget class="QLabel" name="title_label">
         <property name="font">
          <font>
-          <family>微软雅黑</family>
-          <pointsize>11</pointsize>
+          <pointsize>12</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -91,7 +90,7 @@ color: rgb(255, 255, 255);</string>
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,1,2,1">
         <property name="spacing">
          <number>5</number>
         </property>
@@ -113,18 +112,13 @@ color: rgb(255, 255, 255);</string>
            <bool>false</bool>
           </property>
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-           </font>
-          </property>
           <property name="text">
-           <string>举手</string>
+           <string>Hands Up</string>
           </property>
          </widget>
         </item>
@@ -139,13 +133,8 @@ color: rgb(255, 255, 255);</string>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-           </font>
-          </property>
           <property name="text">
-           <string>发送文件</string>
+           <string>File</string>
           </property>
          </widget>
         </item>
@@ -155,18 +144,13 @@ color: rgb(255, 255, 255);</string>
            <bool>false</bool>
           </property>
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-           </font>
-          </property>
           <property name="text">
-           <string>私信</string>
+           <string>Messaging</string>
           </property>
          </widget>
         </item>
@@ -178,13 +162,8 @@ color: rgb(255, 255, 255);</string>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-           </font>
-          </property>
           <property name="text">
-           <string>隐藏</string>
+           <string>Hide</string>
           </property>
          </widget>
         </item>
@@ -198,7 +177,56 @@ color: rgb(255, 255, 255);</string>
  <resources>
   <include location="../Resources.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>notify_button</sender>
+   <signal>clicked()</signal>
+   <receiver>MainForm</receiver>
+   <slot>notify_console()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>42</x>
+     <y>50</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>161</x>
+     <y>34</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>send_file_button</sender>
+   <signal>clicked()</signal>
+   <receiver>MainForm</receiver>
+   <slot>show_file_send_window()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>122</x>
+     <y>50</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>161</x>
+     <y>34</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>hide_button</sender>
+   <signal>clicked()</signal>
+   <receiver>MainForm</receiver>
+   <slot>hide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>281</x>
+     <y>50</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>161</x>
+     <y>34</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
   <slot>show_file_send_window()</slot>
   <slot>notify_console()</slot>

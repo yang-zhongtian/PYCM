@@ -45,7 +45,9 @@ Console: Used for one host user, ex: teacher, host.
 ### Console
 ![Dashboard](ScreenShot/Console/Dashboard.png)
 
-![MessageSend](ScreenShot/Console/MessageSend.png) ![RemoteCommand](ScreenShot/Console/RemoteCommand.png)
+![MessageSend](ScreenShot/Console/MessageSend.png) 
+
+![RemoteCommand](ScreenShot/Console/RemoteCommand.png)
 
 ### Client
 ![Main](ScreenShot/Client/Main.png)

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>网络设置</string>
+   <string>Network Settings</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../Resources.qrc">
@@ -25,11 +25,6 @@
      <width>391</width>
      <height>41</height>
     </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>微软雅黑</family>
-    </font>
    </property>
    <property name="orientation">
     <enum>Qt::Horizontal</enum>
@@ -52,7 +47,6 @@
    </property>
    <property name="font">
     <font>
-     <family>微软雅黑</family>
      <pointsize>10</pointsize>
     </font>
    </property>

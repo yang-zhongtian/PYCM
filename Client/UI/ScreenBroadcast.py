@@ -35,7 +35,8 @@ class ScreenBroadcastForm(QWidget):
     def screen_shot(self):
         frame = self.ui.screen_display.pixmap()
         frame = frame.toImage()
-        file_path, _ = QFileDialog.getSaveFileName(self, '打开文件', str(pathlib.Path.home()), 'JPEG Image(*.jpg)')
+        file_path, _ = QFileDialog.getSaveFileName(self, 'Select Path To Save', str(pathlib.Path.home()),
+                                                   'JPEG Image(*.jpg)')
         if file_path:
             frame.save(file_path, 'JPEG')
 

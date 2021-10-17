@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>395</width>
-    <height>282</height>
+    <height>288</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>消息发送</string>
+   <string>Messaging</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../Resources.qrc">
@@ -32,13 +32,8 @@
   <layout class="QVBoxLayout" name="verticalLayout_3" stretch="3,0">
    <item>
     <widget class="QGroupBox" name="send_message_group">
-     <property name="font">
-      <font>
-       <family>微软雅黑</family>
-      </font>
-     </property>
      <property name="title">
-      <string>消息编辑</string>
+      <string>Message Input</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="leftMargin">
@@ -54,18 +49,20 @@
        <number>8</number>
       </property>
       <item>
-       <widget class="QPlainTextEdit" name="send_message_input"/>
+       <widget class="QPlainTextEdit" name="send_message_input">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="font">
-      <font>
-       <family>微软雅黑</family>
-      </font>
-     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>

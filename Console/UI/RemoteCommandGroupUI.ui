@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>398</width>
-    <height>288</height>
+    <height>294</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>远程命令</string>
+   <string>Remote Command</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../Resources.qrc">
@@ -32,13 +32,8 @@
   <layout class="QVBoxLayout" name="verticalLayout_3" stretch="5,0">
    <item>
     <widget class="QGroupBox" name="command_group">
-     <property name="font">
-      <font>
-       <family>微软雅黑</family>
-      </font>
-     </property>
      <property name="title">
-      <string>命令选择</string>
+      <string>Command Select</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="leftMargin">
@@ -57,7 +52,8 @@
        <widget class="QListWidget" name="command_select">
         <property name="font">
          <font>
-          <family>微软雅黑</family>
+          <weight>75</weight>
+          <bold>true</bold>
          </font>
         </property>
        </widget>
@@ -67,11 +63,6 @@
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="font">
-      <font>
-       <family>微软雅黑</family>
-      </font>
-     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>

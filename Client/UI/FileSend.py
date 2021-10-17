@@ -50,7 +50,7 @@ class DraggableQListWidget(QTableWidget):
         self.setAcceptDrops(True)
         self.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.setColumnCount(3)
-        self.setHorizontalHeaderLabels(['文件名', '文件大小', '发送状态'])
+        self.setHorizontalHeaderLabels(['File Name', 'File Size', 'Status'])
         self.verticalHeader().setVisible(False)
         self.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
         self.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
@@ -85,7 +85,7 @@ class DraggableQListWidget(QTableWidget):
             self.setRowCount(current_row + 1)
             self.setItem(current_row, 0, file_name_and_icon)
             self.setItem(current_row, 1, QTableWidgetItem(self.parse_file_size(file_info.size())))
-            self.setItem(current_row, 2, QTableWidgetItem('就绪'))
+            self.setItem(current_row, 2, QTableWidgetItem('Ready'))
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasUrls:
@@ -128,7 +128,7 @@ class FileSendForm(QWidget):
         self.ui.file_list_container.addWidget(self.ui.file_list)
 
     def show_add_file_dialog(self):
-        files, _ = QFileDialog.getOpenFileNames(self, '选择添加的文件', os.path.expanduser('~'), 'All Files (*)')
+        files, _ = QFileDialog.getOpenFileNames(self, 'Select Files', os.path.expanduser('~'), 'All Files (*)')
         if files:
             self.ui.file_list.batch_add_files(list(map(QFileInfo, files)))
 
@@ -141,10 +141,10 @@ class FileSendForm(QWidget):
     def send_all(self):
         file_list = [self.ui.file_list.item(row, 0).text() for row in range(self.ui.file_list.rowCount())]
         self.__compress_thread = FileCompressThread(file_list)
-        self.__compress_thread.file_finished.connect(partial(self.update_status, '已压缩'))
+        self.__compress_thread.file_finished.connect(partial(self.update_status, 'Compressed'))
         self.__compress_thread.file_buffer.connect(self.submit_compressed_file)
         self.is_sending = True
-        self.ui.file_send_progress_label.setText('压缩中')
+        self.ui.file_send_progress_label.setText('Compressing')
         self.__compress_thread.start()
 
     def submit_compressed_file(self, file_buffer):
@@ -159,16 +159,16 @@ class FileSendForm(QWidget):
         if index + 1 < current_row_count:
             self.update_send_status((index + 1) / current_row_count)
         else:
-            self.ui.file_send_progress_label.setText('发送中')
+            self.ui.file_send_progress_label.setText('Submitting')
             self.update_send_status(0)
 
     def update_send_status(self, progress):
         progress = int(progress * 100)
         self.ui.file_send_progress_bar.setValue(progress)
         if progress >= 100:
-            QMessageBox.information(self, '提示', '发送成功！')
+            QMessageBox.information(self, 'Info', 'Submit Success!')
             self.ui.file_send_progress_bar.setValue(0)
-            self.ui.file_send_progress_label.setText('就绪')
+            self.ui.file_send_progress_label.setText('Ready')
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasUrls:

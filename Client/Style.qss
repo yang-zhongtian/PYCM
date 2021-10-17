@@ -29,6 +29,7 @@ Resetting everything helps to unify styles across different operating systems
   border-style: none;
   border-image: none;
   outline: 0;
+  font-family: "阿里巴巴普惠体";
 }
 
 /* specific reset for elements inside QToolBar */
@@ -2213,81 +2214,3 @@ PlotWidget {
   padding: 0px;
 }
 
-/* Translation Fix --------------------------------------------------------
-
---------------------------------------------------------------------------- */
-QPushButton[text="OK"] {
-    qproperty-text: "好的";
-}
-
-QPushButton[text="Open"] {
-    qproperty-text: "打开";
-}
-
-QPushButton[text="Save"] {
-    qproperty-text: "保存";
-}
-
-QPushButton[text="Cancel"] {
-    qproperty-text: "取消";
-}
-
-QPushButton[text="Close"] {
-    qproperty-text: "关闭";
-}
-
-QPushButton[text="Discard"] {
-    qproperty-text: "不保存";
-}
-
-QPushButton[text="Don't Save"] {
-    qproperty-text: "不保存";
-}
-
-QPushButton[text="Apply"] {
-    qproperty-text: "应用";
-}
-
-QPushButton[text="Reset"] {
-    qproperty-text: "重置";
-}
-
-QPushButton[text="Restore Defaults"] {
-    qproperty-text: "恢复默认";
-}
-
-QPushButton[text="Help"] {
-    qproperty-text: "帮助";
-}
-
-QPushButton[text="Save All"] {
-    qproperty-text: "保存全部";
-}
-
-QPushButton[text="&Yes"] {
-    qproperty-text: "是";
-}
-
-QPushButton[text="Yes to &All"] {
-    qproperty-text: "全部都是";
-}
-
-QPushButton[text="&No"] {
-    qproperty-text: "否";
-}
-
-QPushButton[text="N&o to All"] {
-    qproperty-text: "全部都不";
-}
-
-QPushButton[text="Abort"] {
-    qproperty-text: "终止";
-}
-
-QPushButton[text="Retry"] {
-    qproperty-text: "重试";
-}
-
-QPushButton[text="Ignore"] {
-    qproperty-text: "忽略";
-}

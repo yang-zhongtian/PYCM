@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_RemoteCommandGroupDialog(object):
     def setupUi(self, RemoteCommandGroupDialog):
         RemoteCommandGroupDialog.setObjectName("RemoteCommandGroupDialog")
-        RemoteCommandGroupDialog.resize(398, 288)
+        RemoteCommandGroupDialog.resize(398, 294)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -26,24 +26,19 @@ class Ui_RemoteCommandGroupDialog(object):
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(RemoteCommandGroupDialog)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.command_group = QtWidgets.QGroupBox(RemoteCommandGroupDialog)
-        font = QtGui.QFont()
-        font.setFamily("微软雅黑")
-        self.command_group.setFont(font)
         self.command_group.setObjectName("command_group")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.command_group)
         self.horizontalLayout_2.setContentsMargins(11, 11, 11, 11)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.command_select = QtWidgets.QListWidget(self.command_group)
         font = QtGui.QFont()
-        font.setFamily("微软雅黑")
+        font.setBold(True)
+        font.setWeight(75)
         self.command_select.setFont(font)
         self.command_select.setObjectName("command_select")
         self.horizontalLayout_2.addWidget(self.command_select)
         self.verticalLayout_3.addWidget(self.command_group)
         self.buttonBox = QtWidgets.QDialogButtonBox(RemoteCommandGroupDialog)
-        font = QtGui.QFont()
-        font.setFamily("微软雅黑")
-        self.buttonBox.setFont(font)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
         self.buttonBox.setCenterButtons(True)
@@ -58,6 +53,6 @@ class Ui_RemoteCommandGroupDialog(object):
 
     def retranslateUi(self, RemoteCommandGroupDialog):
         _translate = QtCore.QCoreApplication.translate
-        RemoteCommandGroupDialog.setWindowTitle(_translate("RemoteCommandGroupDialog", "远程命令"))
-        self.command_group.setTitle(_translate("RemoteCommandGroupDialog", "命令选择"))
+        RemoteCommandGroupDialog.setWindowTitle(_translate("RemoteCommandGroupDialog", "Remote Command"))
+        self.command_group.setTitle(_translate("RemoteCommandGroupDialog", "Command Select"))
 import Resources_rc
