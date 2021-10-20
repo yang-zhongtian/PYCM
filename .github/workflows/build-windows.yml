@@ -34,6 +34,8 @@ jobs:
                  --windows-company-name=HCC --windows-uac-admin --windows-disable-console `
                  --windows-product-name=PYCM-Console --windows-product-version=${{ steps.tag.outputs.result }} `
                  --windows-file-description=PYCM-Console --windows-file-version=${{ steps.tag.outputs.result }} `
+                 --include-data-file=Alibaba-PuHuiTi-Regular.ttf=Alibaba-PuHuiTi-Regular.ttf `
+                 --include-data-file=Alibaba-PuHuiTi-Bold.ttf=Alibaba-PuHuiTi-Bold.ttf `
                  --plugin-enable=qt-plugins --assume-yes-for-downloads `
                  --output-dir=Build Main.py
       - name: Check build
