@@ -6,6 +6,7 @@ import socket
 from .MainUI import Ui_MainForm
 from .FileSend import FileSendForm
 from .ScreenBroadcast import ScreenBroadcastForm
+from .About import AboutDialog
 
 
 # noinspection PyAttributeOutsideInit
@@ -60,6 +61,7 @@ class MainForm(QWidget):
         self.tray_icon_menu.addAction(QAction('Show Tool Bar', self, triggered=self.show))
         self.tray_icon_menu.addAction(
             QAction('Configure Network', self, triggered=lambda: self.show_network_config_window()))
+        self.tray_icon_menu.addAction(QAction('About', self, triggered=lambda: self.show_about()))
         self.tray_icon_menu.addAction(QAction('Exit', self, triggered=self.close))
         self.tray_icon = QSystemTrayIcon(self)
         self.tray_icon.setIcon(QIcon(':/Core/Resources/Logo.png'))
@@ -80,6 +82,9 @@ class MainForm(QWidget):
 
     def show_file_send_window(self):
         self.file_send_window.show()
+
+    def show_about(self):
+        AboutDialog(self).exec_()
 
     def start_remote_spy(self):
         self.remote_spy_thread.start()
