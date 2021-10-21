@@ -29,10 +29,8 @@ jobs:
           pip install nuitka
       - name: Add build info
         working-directory: Console
-        env:
-          RELEASE_TAG: ${{ steps.tag.outputs.result }}
         run: |
-          "BUILD_INFO = 'Windows v$RELEASE_TAG (MSVC, 64-bit)'" | Out-File -FilePath BuildInfo.py -Encoding UTF8
+          "BUILD_INFO = 'Windows v"+${{ steps.tag.outputs.result }}+" (MSVC, 64-bit)'" | Out-File -FilePath BuildInfo.py -Encoding UTF8
       - name: Build
         working-directory: Console
         run: |
@@ -84,7 +82,7 @@ jobs:
         env:
           RELEASE_TAG: ${{ steps.tag.outputs.result }}
         run: |
-          "BUILD_INFO = 'Windows v$RELEASE_TAG (MSVC, 64-bit)'" | Out-File -FilePath BuildInfo.py -Encoding UTF8
+          "BUILD_INFO = 'Windows v"+${{ steps.tag.outputs.result }}+" (MSVC, 64-bit)'" | Out-File -FilePath BuildInfo.py -Encoding UTF8
       - name: Build
         working-directory: Client
         run: |
