@@ -35,13 +35,11 @@ jobs:
           "BUILD_INFO = 'Windows v$RELEASE_TAG (MSVC, 64-bit)'" | Out-File -FilePath BuildInfo.py -Encoding UTF8
       - name: Build
         working-directory: Console
-        env:
-          RELEASE_TAG: ${{ steps.tag.outputs.result }}
         run: |
           nuitka --standalone --msvc=14.0 --lto=yes --windows-icon-from-ico=Resources/Logo.ico `
                  --windows-company-name=HCC --windows-uac-admin --windows-disable-console `
-                 --windows-product-name=PYCM-Console --windows-product-version="$RELEASE_TAG" `
-                 --windows-file-description=PYCM-Console --windows-file-version="$RELEASE_TAG" `
+                 --windows-product-name=PYCM-Console --windows-product-version=${{ steps.tag.outputs.result }} `
+                 --windows-file-description=PYCM-Console --windows-file-version=${{ steps.tag.outputs.result }} `
                  --include-data-file=Alibaba-PuHuiTi-Regular.ttf=Alibaba-PuHuiTi-Regular.ttf `
                  --include-data-file=Alibaba-PuHuiTi-Bold.ttf=Alibaba-PuHuiTi-Bold.ttf `
                  --plugin-enable=qt-plugins --assume-yes-for-downloads `
@@ -89,13 +87,11 @@ jobs:
           "BUILD_INFO = 'Windows v$RELEASE_TAG (MSVC, 64-bit)'" | Out-File -FilePath BuildInfo.py -Encoding UTF8
       - name: Build
         working-directory: Client
-        env:
-          RELEASE_TAG: ${{ steps.tag.outputs.result }}
         run: |
           nuitka --standalone --msvc=14.0 --lto=yes --windows-icon-from-ico=Resources/Logo.ico `
                  --windows-company-name=HCC --windows-uac-admin --windows-disable-console `
-                 --windows-product-name=PYCM-Client --windows-product-version="$RELEASE_TAG" `
-                 --windows-file-description=PYCM-Client --windows-file-version="$RELEASE_TAG" `
+                 --windows-product-name=PYCM-Client --windows-product-version=${{ steps.tag.outputs.result }} `
+                 --windows-file-description=PYCM-Client --windows-file-version=${{ steps.tag.outputs.result }} `
                  --include-data-file=Alibaba-PuHuiTi-Regular.ttf=Alibaba-PuHuiTi-Regular.ttf `
                  --include-data-file=Alibaba-PuHuiTi-Bold.ttf=Alibaba-PuHuiTi-Bold.ttf `
                  --plugin-enable=qt-plugins --assume-yes-for-downloads `
