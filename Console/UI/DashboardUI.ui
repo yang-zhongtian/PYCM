@@ -422,6 +422,8 @@ padding-bottom: 5px;
    <addaction name="separator"/>
    <addaction name="client_scroll_in"/>
    <addaction name="client_scroll_out"/>
+   <addaction name="separator"/>
+   <addaction name="about"/>
   </widget>
   <action name="client_sort">
    <property name="text">
@@ -446,6 +448,11 @@ padding-bottom: 5px;
   <action name="client_rename">
    <property name="text">
     <string>Rename</string>
+   </property>
+  </action>
+  <action name="about">
+   <property name="text">
+    <string>About</string>
    </property>
   </action>
  </widget>
@@ -613,6 +620,22 @@ padding-bottom: 5px;
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>about</sender>
+   <signal>triggered()</signal>
+   <receiver>DashboardForm</receiver>
+   <slot>show_about()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>651</x>
+     <y>389</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>clear_client_selection()</slot>
@@ -623,5 +646,6 @@ padding-bottom: 5px;
   <slot>remote_command()</slot>
   <slot>toggle_remote_spy(bool)</slot>
   <slot>client_rename()</slot>
+  <slot>show_about()</slot>
  </slots>
 </ui>

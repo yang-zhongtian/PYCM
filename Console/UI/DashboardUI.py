@@ -200,6 +200,8 @@ class Ui_DashboardForm(object):
         self.client_scroll_out.setObjectName("client_scroll_out")
         self.client_rename = QtWidgets.QAction(DashboardForm)
         self.client_rename.setObjectName("client_rename")
+        self.about = QtWidgets.QAction(DashboardForm)
+        self.about.setObjectName("about")
         self.toolBar.addAction(self.client_sort)
         self.toolBar.addAction(self.client_select_all)
         self.toolBar.addSeparator()
@@ -207,6 +209,8 @@ class Ui_DashboardForm(object):
         self.toolBar.addSeparator()
         self.toolBar.addAction(self.client_scroll_in)
         self.toolBar.addAction(self.client_scroll_out)
+        self.toolBar.addSeparator()
+        self.toolBar.addAction(self.about)
 
         self.retranslateUi(DashboardForm)
         self.client_select_all.triggered.connect(self.desktop_layout.selectAll)
@@ -219,6 +223,7 @@ class Ui_DashboardForm(object):
         self.clear_log_area.clicked.connect(self.log_area.clear)
         self.remote_spy.clicked['bool'].connect(DashboardForm.toggle_remote_spy)
         self.client_rename.triggered.connect(DashboardForm.client_rename)
+        self.about.triggered.connect(DashboardForm.show_about)
         QtCore.QMetaObject.connectSlotsByName(DashboardForm)
 
     def retranslateUi(self, DashboardForm):
@@ -237,4 +242,5 @@ class Ui_DashboardForm(object):
         self.client_scroll_in.setText(_translate("DashboardForm", "Zoom In"))
         self.client_scroll_out.setText(_translate("DashboardForm", "Zoom Out"))
         self.client_rename.setText(_translate("DashboardForm", "Rename"))
+        self.about.setText(_translate("DashboardForm", "About"))
 import Resources_rc

@@ -1,4 +1,4 @@
-name: Build Windows
+name: Build-Windows
 
 on:
   push:
@@ -27,6 +27,10 @@ jobs:
           pip install wheel
           pip install -r requirements.txt
           pip install nuitka
+      - name: Add build info
+        working-directory: Console
+        run: |
+          "BUILD_INFO = 'Windows v${{ steps.tag.outputs.result }} (MSVC, 64-bit)'" | Out-File -FilePath BuildInfo.py -Encoding UTF8
       - name: Build
         working-directory: Console
         run: |
@@ -45,11 +49,11 @@ jobs:
         uses: papeloto/action-zip@v1
         with:
           files: Console/Build/Main.dist/
-          dest: PYCM-Console-${{ runner.os }}.zip
+          dest: PYCM-Console-Windows.zip
       - name: Upload to release
         uses: softprops/action-gh-release@v1
         with:
-          files: PYCM-Console-${{ runner.os }}.zip
+          files: PYCM-Console-Windows.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   Build-Client:
@@ -91,10 +95,10 @@ jobs:
         uses: papeloto/action-zip@v1
         with:
           files: Client/Build/Main.dist/
-          dest: PYCM-Client-${{ runner.os }}.zip
+          dest: PYCM-Client-Windows.zip
       - name: Upload to release
         uses: softprops/action-gh-release@v1
         with:
-          files: PYCM-Client-${{ runner.os }}.zip
+          files: PYCM-Client-Windows.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

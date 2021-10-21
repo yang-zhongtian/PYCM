@@ -8,6 +8,7 @@ from .DashboardUI import Ui_DashboardForm
 from .SendMessageGroup import SendMessageGroupForm
 from .RemoteCommandGroup import RemoteCommandGroupForm
 from .RemoteSpy import RemoteSpyForm
+from .About import AboutDialog
 
 
 class DashboardForm(QMainWindow):
@@ -191,6 +192,9 @@ class DashboardForm(QMainWindow):
         else:
             self.screen_broadcast_thread.safe_stop()
             self.class_broadcast_object.screen_broadcast_nodity(False)
+
+    def show_about(self):
+        AboutDialog(self).exec_()
 
     def closeEvent(self, event):
         self.toggle_broadcast(False)
