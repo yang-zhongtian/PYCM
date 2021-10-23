@@ -22,6 +22,7 @@ QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
 QApplication.setAttribute(Qt.AA_DisableWindowContextHelpButton)
 app = QApplication(sys.argv)
 app.setStyleSheet(Theme.load_stylesheet())
+app.setQuitOnLastWindowClosed(False)
 
 config = Config()
 
@@ -57,6 +58,7 @@ class DashboardWindow(DashboardForm):
         network_device = network_devices_select_dialog.get_selected_device()
         self.init_network_device(network_device)
         self.init_threads()
+        self.init_tray()
         self.show()
         self.start_all_threadings()
 

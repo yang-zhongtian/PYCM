@@ -58,3 +58,6 @@ class ClassBroadcast(QObject):
             self.send_data(ClassBroadcastFlag.StartScreenBroadcast, b'')
         else:
             self.send_data(ClassBroadcastFlag.StopScreenBroadcast, b'')
+
+    def remote_quit_notify(self, clients):
+        self.batch_send(ClassBroadcastFlag.RemoteQuit, clients, b'')

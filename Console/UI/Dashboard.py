@@ -1,13 +1,16 @@
+import os.path
+
 from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication, QDialog, QListWidgetItem, QLabel, QMessageBox, \
-    QInputDialog, QLineEdit
-from PyQt5.QtCore import Qt, QSize
-from PyQt5.QtGui import QIcon
+    QInputDialog, QLineEdit, QSystemTrayIcon, QAction, QMenu
+from PyQt5.QtCore import Qt, QSize, QEvent
+from PyQt5.QtGui import QIcon, QDesktopServices
 import time
 from functools import partial
 from .DashboardUI import Ui_DashboardForm
 from .SendMessageGroup import SendMessageGroupForm
 from .RemoteCommandGroup import RemoteCommandGroupForm
 from .RemoteSpy import RemoteSpyForm
+from .FileReceive import FileReceiveForm
 from .About import AboutDialog
 
 
@@ -25,7 +28,11 @@ class DashboardForm(QMainWindow):
         self.ui.remote_spy.setProperty('class', 'big_button')
         self.ui.remote_command.setProperty('class', 'big_button')
         self.ui.file_transfer.setProperty('class', 'big_button')
+        self.ui.log_area.anchorClicked.connect(lambda x: QDesktopServices.openUrl(x))
+        self.tray_icon_menu = QMenu(self)
+        self.tray_icon = QSystemTrayIcon(self)
         self.remote_spy_window = RemoteSpyForm(self)
+        self.file_receive_window = FileReceiveForm(self)
 
     def init_connections(self):
         self.private_message_thread.client_login_logout.connect(self.__logger)
@@ -38,6 +45,17 @@ class DashboardForm(QMainWindow):
         self.config.save('Network/Local/IP', device['IP'])
         self.config.save('Network/Local/MAC', device['MAC'])
 
+    # noinspection PyArgumentList
+    def init_tray(self):
+        self.tray_icon_menu.addAction(QAction('Show Dashboard', self, triggered=lambda: self.show_window()))
+        self.tray_icon_menu.addAction(QAction('About', self, triggered=lambda: self.show_about()))
+        self.tray_icon_menu.addAction(QAction('Exit', self, triggered=self.close))
+        self.tray_icon.setIcon(QIcon(':/Core/Resources/Logo.png'))
+        self.tray_icon.setContextMenu(self.tray_icon_menu)
+        self.tray_icon.activated[QSystemTrayIcon.ActivationReason].connect(lambda x: self.show_window(x))
+        self.__update_tray_tooltip()
+        self.tray_icon.show()
+
     def __mark_status(self, name, status):
         self.threadings[name] = status
 
@@ -46,11 +64,16 @@ class DashboardForm(QMainWindow):
             self.mac_binding[ip] = mac
             self.__log_append(f'{self.get_client_label_by_ip(ip)} logged on')
             self.__add_client_desktop(ip)
+            self.__update_tray_tooltip()
         elif type_ == 'offline':
             self.__log_append(f'{self.get_client_label_by_ip(ip)} logged off')
             self.__remove_client_desktop(ip)
+            self.__update_tray_tooltip()
         elif type_ == 'file_recieved':
-            self.__log_append(f'Received file from: {self.get_client_label_by_ip(ip)}')
+            client = self.get_client_label_by_ip(ip)
+            file_path = os.path.join(self.file_receive_window.ui.receive_folder.text(), mac)
+            self.__log_append(f"File received: {client}, <a href='file:///{file_path}'>Open</a>")
+            self.file_receive_window.add_received_file(mac, client, file_path)
         elif type_ == 'client_notify':
             self.__log_append(f'Hands up: {self.get_client_label_by_ip(ip)}')
 
@@ -80,6 +103,12 @@ class DashboardForm(QMainWindow):
         if client_ip in self.clients.keys():
             self.clients[client_ip].setIcon(QIcon(client_desktop))
 
+    def __update_tray_tooltip(self):
+        local_ip = self.config.get_item('Network/Local/IP')
+        self.tray_icon.setToolTip('PYCM Console\n' +
+                                  f'Local IP: {local_ip}\n' +
+                                  f'Online: {len(self.clients)} Clients')
+
     def client_rename(self):
         target = self.get_all_selected_clients()
         if not target:
@@ -99,6 +128,20 @@ class DashboardForm(QMainWindow):
                 else:
                     self.config.save(f'Client/ClientLabel/{target["mac"]}', new_label)
                 client.setText(self.get_client_label_by_ip(target['ip']))
+
+    def client_quit(self):
+        targets = self.get_all_selected_clients()
+        if not targets:
+            return
+        selected_label = [client['label'] for client in targets]
+        confirm = QMessageBox.warning(self, 'Confirm',
+                                      f'Are you sure to quit these clients: {" ".join(selected_label)}?\n' +
+                                      'This action is irreversible!', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if confirm != QMessageBox.Yes:
+            return
+        targets = [client['ip'] for client in targets]
+        self.class_broadcast_object.remote_quit_notify(targets)
+        QMessageBox.information(self, 'Info', 'Quit client command send successfully')
 
     def get_client_label_by_ip(self, ip):
         label = self.config.get_item(f'Client/ClientLabel/{self.mac_binding.get(ip)}')
@@ -166,7 +209,7 @@ class DashboardForm(QMainWindow):
             if confirm != QMessageBox.Yes:
                 return
             self.class_broadcast_object.send_command(targets, selected_command)
-            QMessageBox.information(self, 'Info', 'Command successfully send')
+            QMessageBox.information(self, 'Info', 'Command send successfully')
 
     def toggle_remote_spy(self, working):
         if working:
@@ -193,11 +236,30 @@ class DashboardForm(QMainWindow):
             self.screen_broadcast_thread.safe_stop()
             self.class_broadcast_object.screen_broadcast_nodity(False)
 
+    def show_file_receive(self):
+        self.file_receive_window.activateWindow()
+        self.file_receive_window.showNormal()
+
     def show_about(self):
         AboutDialog(self).exec_()
+
+    def show_window(self, reason=None):
+        if reason is not None and reason != QSystemTrayIcon.Trigger:
+            return
+        self.activateWindow()
+        self.showNormal()
+
+    def changeEvent(self, event):
+        if event.type() == QEvent.WindowStateChange:
+            if self.windowState() == Qt.WindowMinimized:
+                event.ignore()
+                self.hide()
 
     def closeEvent(self, event):
         self.toggle_broadcast(False)
         self.remote_spy_thread.safe_stop()
         self.class_broadcast_object.console_quit_notify()
-        event.accept()
+        if self.tray_icon.isVisible():
+            self.tray_icon.hide()
+        self.tray_icon = None
+        QApplication.instance().quit()

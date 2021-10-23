@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QObject, QBuffer, QIODevice, Qt
-from PyQt5.QtGui import QImage
+from PyQt5.QtGui import QImage, QPainter, QCursor
 from Module.Packages import ScreenBroadcastFlag
 import socket
 import struct
@@ -34,11 +34,18 @@ class ScreenBroadcast(QObject):
         pack_index = 0
         payload_size = self.socket_buffer - struct.calcsize('!2i')
         target = (self.socket_ip, self.socket_port)
+        cursor = QCursor()
         while self.working:
             try:
                 with mss() as sct:
                     frame = sct.grab(sct.monitors[1])
+                    cursor_pos = cursor.pos()
                     img = QImage(frame.rgb, frame.width, frame.height, QImage.Format_RGB888)
+                    painter = QPainter()
+                    painter.begin(img)
+                    painter.setBrush(Qt.red)
+                    painter.drawEllipse(cursor_pos, 5, 5)
+                    painter.end()
                     buffer = QBuffer()
                     buffer.open(QIODevice.ReadWrite)
                     img.save(buffer, 'JPEG', quality=self.quality)

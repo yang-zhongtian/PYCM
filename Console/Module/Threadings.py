@@ -23,7 +23,7 @@ class PrivateMessageThread(QThread):
     client_login_logout = pyqtSignal(str, str, str)
     client_desktop_recieved = pyqtSignal(str, object)
     client_notify_recieved = pyqtSignal(str)
-    client_file_recieved = pyqtSignal(str)
+    client_file_recieved = pyqtSignal(str, str)
 
     def __init__(self, config: object, parent: object = None):
         super(PrivateMessageThread, self).__init__()

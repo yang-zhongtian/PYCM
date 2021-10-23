@@ -60,9 +60,12 @@ class ClassBroadcast(QObject):
                 if unpacked_flag in (
                         ClassBroadcastFlag.Message,
                         ClassBroadcastFlag.Command,
-                        ClassBroadcastFlag.RemoteSpyStart
+                        ClassBroadcastFlag.RemoteSpyStart,
+                        ClassBroadcastFlag.RemoteQuit
                 ):
                     data = self.batch_send_decode(unpacked_data)
+                    if data is None:
+                        continue
                     if unpacked_flag == ClassBroadcastFlag.Message:
                         message = base64.b64decode(data).decode('utf-8')
                         self.parent.message_recieved.emit(str(message))
@@ -70,14 +73,16 @@ class ClassBroadcast(QObject):
                         message = base64.b64decode(data).decode('utf-8')
                         self.execute_remote_command(str(message))
                     elif unpacked_flag == ClassBroadcastFlag.RemoteSpyStart:
-                        if data is not None:
-                            self.parent.start_remote_spy.emit()
+                        self.parent.start_remote_spy.emit()
+                    elif unpacked_flag == ClassBroadcastFlag.RemoteQuit:
+                        self.parent.quit_self.emit()
+                        return
                 elif unpacked_flag == ClassBroadcastFlag.StartScreenBroadcast:
                     self.parent.toggle_screen_broadcats.emit(True)
                 elif unpacked_flag == ClassBroadcastFlag.StopScreenBroadcast:
                     self.parent.toggle_screen_broadcats.emit(False)
                 elif unpacked_flag == ClassBroadcastFlag.ConsoleQuit:
                     self.parent.reset_all.emit()
-                    return None
+                    return
             except Exception as e:
                 logging.warning(f'Failed to decode socket data: {e}')

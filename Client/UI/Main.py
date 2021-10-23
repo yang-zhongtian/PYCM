@@ -16,6 +16,7 @@ class MainForm(QWidget):
     _start_pos = None
     _end_pos = None
     _is_tracking = False
+    _force_quit = False
 
     def __init__(self, parent=None):
         super(MainForm, self).__init__()
@@ -51,6 +52,7 @@ class MainForm(QWidget):
         self.class_broadcast_thread.message_recieved.connect(self.message_recieved)
         self.class_broadcast_thread.reset_all.connect(lambda: self.reset_all_threadings())
         self.class_broadcast_thread.toggle_screen_broadcats.connect(self.__toggle_screen_broadcast)
+        self.class_broadcast_thread.quit_self.connect(self.quit_self)
         self.class_broadcast_thread.start_remote_spy.connect(self.start_remote_spy)
         self.screen_broadcast_thread.frame_recieved.connect(self.screen_broadcast_window.update_frame)
         self.screen_spy_timer.timeout.connect(lambda: self.private_message_object.screen_spy_send())
@@ -67,13 +69,14 @@ class MainForm(QWidget):
         self.tray_icon.setIcon(QIcon(':/Core/Resources/Logo.png'))
         self.tray_icon.setContextMenu(self.tray_icon_menu)
         self.tray_icon.activated[QSystemTrayIcon.ActivationReason].connect(self.iconActivated)
+        self.update_tray_tooltip()
         self.tray_icon.show()
 
     def show_network_config_window(self):
         reply = QMessageBox.question(self, 'Warning',
                                      'Are you sure to modify the network configuration? This operation may cause the ' +
                                      'client to fail to start normally!',
-                                     QMessageBox.Yes, QMessageBox.No)
+                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if reply == QMessageBox.Yes:
             result = self.config.modify_network_device()
             if result:
@@ -103,6 +106,7 @@ class MainForm(QWidget):
         self.private_message_object.online_notify()
         self.class_broadcast_thread.start()
         self.ui.title_label.setText('PYCM Client - Online')
+        self.update_tray_tooltip()
         self.ui.notify_button.setEnabled(True)
         self.ui.send_file_button.setEnabled(True)
         self.ui.private_message_button.setEnabled(True)
@@ -120,6 +124,16 @@ class MainForm(QWidget):
         else:
             self.screen_broadcast_thread.safe_stop()
             self.screen_broadcast_window.hide()
+
+    def update_tray_tooltip(self):
+        local_ip = self.config.get_item('Network/Local/IP')
+        self.tray_icon.setToolTip('PYCM Client\n' +
+                                  f'Local IP: {local_ip}\n' +
+                                  f'Status: {"Online" if self.server_ip is not None else "Offline"}')
+
+    def quit_self(self):
+        self._force_quit = True
+        self.close()
 
     def mouseMoveEvent(self, e: QMouseEvent):
         if self._start_pos and self._is_tracking:
@@ -142,13 +156,14 @@ class MainForm(QWidget):
             self.show()
 
     def closeEvent(self, event):
-        reply = QMessageBox.question(self, 'Warning', 'Are you sure to exit?', QMessageBox.Yes, QMessageBox.No)
-        if reply == QMessageBox.Yes:
-            if self.server_ip is not None:
-                self.private_message_object.offline_notify()
-            if self.tray_icon.isVisible():
-                self.tray_icon.hide()
-            self.tray_icon = None
-            QApplication.instance().quit()
-        else:
-            event.ignore()
+        if not self._force_quit:
+            reply = QMessageBox.question(self, 'Warning', 'Are you sure to exit?', QMessageBox.Yes, QMessageBox.No)
+            if reply != QMessageBox.Yes:
+                event.ignore()
+                return
+        if self.server_ip is not None:
+            self.private_message_object.offline_notify()
+        if self.tray_icon.isVisible():
+            self.tray_icon.hide()
+        self.tray_icon = None
+        QApplication.instance().quit()

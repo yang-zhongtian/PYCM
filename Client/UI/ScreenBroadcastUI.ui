@@ -34,6 +34,12 @@
     <layout class="QHBoxLayout" name="control_box_layout">
      <item>
       <widget class="QPushButton" name="freeze_frame">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>Freeze Screen</string>
        </property>
@@ -44,6 +50,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="full_screen">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>Full Screen</string>
        </property>
@@ -54,8 +66,33 @@
      </item>
      <item>
       <widget class="QPushButton" name="screen_shot">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>Screen Shot</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="always_on_top">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Always On Top</string>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -103,8 +140,8 @@
      <y>25</y>
     </hint>
     <hint type="destinationlabel">
-     <x>186</x>
-     <y>41</y>
+     <x>162</x>
+     <y>81</y>
     </hint>
    </hints>
   </connection>
@@ -119,8 +156,8 @@
      <y>23</y>
     </hint>
     <hint type="destinationlabel">
-     <x>470</x>
-     <y>44</y>
+     <x>395</x>
+     <y>92</y>
     </hint>
    </hints>
   </connection>
@@ -131,12 +168,28 @@
    <slot>screen_shot()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>801</x>
-     <y>18</y>
+     <x>711</x>
+     <y>30</y>
     </hint>
     <hint type="destinationlabel">
-     <x>811</x>
-     <y>45</y>
+     <x>632</x>
+     <y>84</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>always_on_top</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>ScreenBroadcast</receiver>
+   <slot>toggle_always_on_top(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>858</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>840</x>
+     <y>136</y>
     </hint>
    </hints>
   </connection>
@@ -145,5 +198,6 @@
   <slot>freeze_frame(bool)</slot>
   <slot>show_full_screen(bool)</slot>
   <slot>screen_shot()</slot>
+  <slot>toggle_always_on_top(bool)</slot>
  </slots>
 </ui>

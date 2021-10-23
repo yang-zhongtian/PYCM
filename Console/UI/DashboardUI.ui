@@ -232,7 +232,7 @@ padding-bottom: 5px;
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="8,0">
+        <layout class="QVBoxLayout" name="verticalLayout_4">
          <property name="leftMargin">
           <number>0</number>
          </property>
@@ -246,129 +246,168 @@ padding-bottom: 5px;
           <number>0</number>
          </property>
          <item>
-          <widget class="QWidget" name="desktop_widget_container" native="true">
-           <layout class="QVBoxLayout" name="verticalLayout_2">
-            <property name="leftMargin">
-             <number>0</number>
+          <widget class="QSplitter" name="splitter">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="handleWidth">
+            <number>4</number>
+           </property>
+           <widget class="QWidget" name="desktop_widget_container" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>1</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="topMargin">
-             <number>0</number>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>5</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QListWidget" name="desktop_layout">
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="editTriggers">
+                <set>QAbstractItemView::DoubleClicked</set>
+               </property>
+               <property name="showDropIndicator" stdset="0">
+                <bool>false</bool>
+               </property>
+               <property name="dragEnabled">
+                <bool>false</bool>
+               </property>
+               <property name="dragDropMode">
+                <enum>QAbstractItemView::DragDrop</enum>
+               </property>
+               <property name="defaultDropAction">
+                <enum>Qt::IgnoreAction</enum>
+               </property>
+               <property name="selectionMode">
+                <enum>QAbstractItemView::ContiguousSelection</enum>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>240</width>
+                 <height>135</height>
+                </size>
+               </property>
+               <property name="movement">
+                <enum>QListView::Free</enum>
+               </property>
+               <property name="resizeMode">
+                <enum>QListView::Adjust</enum>
+               </property>
+               <property name="viewMode">
+                <enum>QListView::IconMode</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="log_widget_container" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QListWidget" name="desktop_layout">
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="editTriggers">
-               <set>QAbstractItemView::DoubleClicked</set>
-              </property>
-              <property name="showDropIndicator" stdset="0">
-               <bool>false</bool>
-              </property>
-              <property name="dragEnabled">
-               <bool>false</bool>
-              </property>
-              <property name="dragDropMode">
-               <enum>QAbstractItemView::DragDrop</enum>
-              </property>
-              <property name="defaultDropAction">
-               <enum>Qt::IgnoreAction</enum>
-              </property>
-              <property name="selectionMode">
-               <enum>QAbstractItemView::ContiguousSelection</enum>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>240</width>
-                <height>135</height>
-               </size>
-              </property>
-              <property name="movement">
-               <enum>QListView::Free</enum>
-              </property>
-              <property name="resizeMode">
-               <enum>QListView::Adjust</enum>
-              </property>
-              <property name="viewMode">
-               <enum>QListView::IconMode</enum>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QWidget" name="log_widget_container" native="true">
-           <layout class="QVBoxLayout" name="verticalLayout_3">
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QTextEdit" name="log_area">
-              <property name="font">
-               <font>
-                <pointsize>10</pointsize>
-               </font>
-              </property>
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="action_buttons_layout">
-              <item>
-               <widget class="QPushButton" name="send_message_button">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Messaging</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="clear_log_area">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>Clear Log</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <property name="leftMargin">
+              <number>5</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QTextBrowser" name="log_area">
+               <property name="font">
+                <font>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+               <property name="openLinks">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="action_buttons_layout_2">
+               <item>
+                <widget class="QPushButton" name="file_receive_config">
+                 <property name="text">
+                  <string>File Receive</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="client_quit">
+                 <property name="text">
+                  <string>Quit Client</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="action_buttons_layout_1">
+               <item>
+                <widget class="QPushButton" name="send_message_button">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Messaging</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="clear_log_area">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Clear Log</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
           </widget>
          </item>
         </layout>
@@ -531,12 +570,12 @@ padding-bottom: 5px;
    <slot>send_message()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1117</x>
+     <x>1060</x>
      <y>724</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1145</x>
-     <y>745</y>
+     <x>1080</x>
+     <y>724</y>
     </hint>
    </hints>
   </connection>
@@ -547,12 +586,12 @@ padding-bottom: 5px;
    <slot>toggle_broadcast(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>191</x>
-     <y>84</y>
+     <x>128</x>
+     <y>73</y>
     </hint>
     <hint type="destinationlabel">
-     <x>188</x>
-     <y>111</y>
+     <x>139</x>
+     <y>73</y>
     </hint>
    </hints>
   </connection>
@@ -563,28 +602,12 @@ padding-bottom: 5px;
    <slot>remote_command()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>970</x>
-     <y>84</y>
+     <x>777</x>
+     <y>72</y>
     </hint>
     <hint type="destinationlabel">
-     <x>876</x>
-     <y>79</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>clear_log_area</sender>
-   <signal>clicked()</signal>
-   <receiver>log_area</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1225</x>
-     <y>722</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1225</x>
-     <y>539</y>
+     <x>807</x>
+     <y>69</y>
     </hint>
    </hints>
   </connection>
@@ -595,12 +618,12 @@ padding-bottom: 5px;
    <slot>toggle_remote_spy(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>647</x>
-     <y>84</y>
+     <x>530</x>
+     <y>76</y>
     </hint>
     <hint type="destinationlabel">
-     <x>506</x>
-     <y>79</y>
+     <x>518</x>
+     <y>75</y>
     </hint>
    </hints>
   </connection>
@@ -636,6 +659,54 @@ padding-bottom: 5px;
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>file_receive_config</sender>
+   <signal>clicked()</signal>
+   <receiver>DashboardForm</receiver>
+   <slot>show_file_receive()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1054</x>
+     <y>684</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1064</x>
+     <y>685</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>client_quit</sender>
+   <signal>clicked()</signal>
+   <receiver>DashboardForm</receiver>
+   <slot>client_quit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1239</x>
+     <y>684</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1205</x>
+     <y>652</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>clear_log_area</sender>
+   <signal>clicked()</signal>
+   <receiver>log_area</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1272</x>
+     <y>722</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1272</x>
+     <y>663</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>clear_client_selection()</slot>
@@ -647,5 +718,7 @@ padding-bottom: 5px;
   <slot>toggle_remote_spy(bool)</slot>
   <slot>client_rename()</slot>
   <slot>show_about()</slot>
+  <slot>show_file_receive()</slot>
+  <slot>client_quit()</slot>
  </slots>
 </ui>

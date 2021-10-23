@@ -16,7 +16,7 @@ class ScreenBroadcastForm(QWidget):
         self.ui = Ui_ScreenBroadcast()
         self.ui.setupUi(self)
         self.ui.screen_display.move(0, 0)
-        self.setWindowFlags(Qt.WindowMinMaxButtonsHint)
+        self.setWindowFlags(Qt.WindowMinMaxButtonsHint | Qt.WindowStaysOnTopHint)
 
     def update_frame(self, frame):
         if not self.freeze:
@@ -39,6 +39,9 @@ class ScreenBroadcastForm(QWidget):
                                                    'JPEG Image(*.jpg)')
         if file_path:
             frame.save(file_path, 'JPEG')
+
+    def toggle_always_on_top(self, on_top):
+        self.windowHandle().setFlag(Qt.WindowStaysOnTopHint, on_top)
 
     def paintEvent(self, event):
         container_size = self.ui.screen_widget.size()

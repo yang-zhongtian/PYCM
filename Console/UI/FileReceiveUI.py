@@ -1,0 +1,101 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'FileReceiveUI.ui'
+#
+# Created by: PyQt5 UI code generator 5.12.3
+#
+# WARNING! All changes made in this file will be lost!
+
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+
+class Ui_FileReceiveDialog(object):
+    def setupUi(self, FileReceiveDialog):
+        FileReceiveDialog.setObjectName("FileReceiveDialog")
+        FileReceiveDialog.resize(708, 428)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(FileReceiveDialog.sizePolicy().hasHeightForWidth())
+        FileReceiveDialog.setSizePolicy(sizePolicy)
+        FileReceiveDialog.setMinimumSize(QtCore.QSize(0, 0))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(":/Core/Resources/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        FileReceiveDialog.setWindowIcon(icon)
+        self.verticalLayout_1 = QtWidgets.QVBoxLayout(FileReceiveDialog)
+        self.verticalLayout_1.setObjectName("verticalLayout_1")
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.receive_folder_label = QtWidgets.QLabel(FileReceiveDialog)
+        self.receive_folder_label.setObjectName("receive_folder_label")
+        self.horizontalLayout.addWidget(self.receive_folder_label)
+        self.receive_folder = QtWidgets.QLineEdit(FileReceiveDialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.receive_folder.sizePolicy().hasHeightForWidth())
+        self.receive_folder.setSizePolicy(sizePolicy)
+        self.receive_folder.setReadOnly(True)
+        self.receive_folder.setObjectName("receive_folder")
+        self.horizontalLayout.addWidget(self.receive_folder)
+        self.receive_folder_change = QtWidgets.QPushButton(FileReceiveDialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.receive_folder_change.sizePolicy().hasHeightForWidth())
+        self.receive_folder_change.setSizePolicy(sizePolicy)
+        self.receive_folder_change.setObjectName("receive_folder_change")
+        self.horizontalLayout.addWidget(self.receive_folder_change)
+        self.receive_folder_open = QtWidgets.QPushButton(FileReceiveDialog)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.receive_folder_open.sizePolicy().hasHeightForWidth())
+        self.receive_folder_open.setSizePolicy(sizePolicy)
+        self.receive_folder_open.setObjectName("receive_folder_open")
+        self.horizontalLayout.addWidget(self.receive_folder_open)
+        self.verticalLayout_1.addLayout(self.horizontalLayout)
+        self.received_files = QtWidgets.QTableWidget(FileReceiveDialog)
+        self.received_files.setObjectName("received_files")
+        self.received_files.setColumnCount(3)
+        self.received_files.setRowCount(0)
+        item = QtWidgets.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignCenter)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.received_files.setHorizontalHeaderItem(0, item)
+        item = QtWidgets.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignCenter)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.received_files.setHorizontalHeaderItem(1, item)
+        item = QtWidgets.QTableWidgetItem()
+        item.setTextAlignment(QtCore.Qt.AlignCenter)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        item.setFont(font)
+        self.received_files.setHorizontalHeaderItem(2, item)
+        self.received_files.verticalHeader().setVisible(False)
+        self.verticalLayout_1.addWidget(self.received_files)
+
+        self.retranslateUi(FileReceiveDialog)
+        self.receive_folder_change.clicked.connect(FileReceiveDialog.change_receive_folder)
+        self.receive_folder_open.clicked.connect(FileReceiveDialog.open_receive_folder)
+        QtCore.QMetaObject.connectSlotsByName(FileReceiveDialog)
+
+    def retranslateUi(self, FileReceiveDialog):
+        _translate = QtCore.QCoreApplication.translate
+        FileReceiveDialog.setWindowTitle(_translate("FileReceiveDialog", "File Receive"))
+        self.receive_folder_label.setText(_translate("FileReceiveDialog", "Receive Folder: "))
+        self.receive_folder_change.setText(_translate("FileReceiveDialog", "Change"))
+        self.receive_folder_open.setText(_translate("FileReceiveDialog", "Open"))
+        item = self.received_files.horizontalHeaderItem(0)
+        item.setText(_translate("FileReceiveDialog", "File Name"))
+        item = self.received_files.horizontalHeaderItem(1)
+        item.setText(_translate("FileReceiveDialog", "From"))
+        item = self.received_files.horizontalHeaderItem(2)
+        item.setText(_translate("FileReceiveDialog", "Action"))
+import Resources_rc

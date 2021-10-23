@@ -29,7 +29,7 @@ class FileMerger(object):
             file_name = f'[{file_timestamp}] {self.root_parent.get_client_label_by_ip(ip)}.zip'
             open(os.path.join(self.file_upload_path, file_name), 'wb').write(file_data)
             self.file_buffer.pop(ip)
-            return True
+            return file_name
         return False
 
 
@@ -79,6 +79,6 @@ class PrivateMessage(object):
                     status = file_merger.update_chuck(socket_addr[0], file_index, file_amount,
                                                       file_buffer[:file_buffer_length])
                     if status:
-                        self.parent.client_file_recieved.emit(socket_addr[0])
+                        self.parent.client_file_recieved.emit(socket_addr[0], status)
             except Exception as e:
                 logging.warning(f'Failed to decode socket data: {e}')

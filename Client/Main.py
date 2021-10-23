@@ -69,6 +69,7 @@ class MainWindow(MainForm):
         self.private_message_object = PrivateMessage(self.config)
         self.init_connections()
         self.ui.title_label.setText('PYCM Client - Offline')
+        self.update_tray_tooltip()
         self.ui.notify_button.setEnabled(False)
         self.ui.send_file_button.setEnabled(False)
         self.ui.private_message_button.setEnabled(False)

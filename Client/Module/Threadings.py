@@ -11,6 +11,7 @@ class ClassBroadcastThread(QThread):
     reset_all = pyqtSignal()
     toggle_screen_broadcats = pyqtSignal(bool)
     start_remote_spy = pyqtSignal()
+    quit_self = pyqtSignal()
 
     def __init__(self, config):
         super(ClassBroadcastThread, self).__init__()

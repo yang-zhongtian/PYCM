@@ -10,6 +10,7 @@ class ClassBroadcastFlag(object):
     ConsoleQuit = 4
     Command = 5
     RemoteSpyStart = 6
+    RemoteQuit = 7
 
 
 class PrivateMessageFlag(object):
