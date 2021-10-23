@@ -30,7 +30,6 @@ class PrivateMessageThread(QThread):
         self.socket_ip = config.get_item('Network/Local/IP')
         self.socket_port = config.get_item('Network/PrivateMessage/Port')
         self.socket_buffer_size = config.get_item('Network/PrivateMessage/Buffer')
-        self.file_upload_path = config.get_item('Client/FileUploadPath')
         self.config = config
         self.socket = PrivateMessage(self, parent, self.socket_ip, self.socket_port, self.socket_buffer_size)
 

@@ -167,8 +167,7 @@ class FileSendForm(QWidget):
         self.ui.file_send_progress_bar.setValue(progress)
         if progress >= 100:
             QMessageBox.information(self, 'Info', 'Submit Success!')
-            self.ui.file_send_progress_bar.setValue(0)
-            self.ui.file_send_progress_label.setText('Ready')
+            self.close()
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasUrls:

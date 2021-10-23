@@ -28,7 +28,7 @@ class MainForm(QWidget):
         self.setFixedSize(322, 70)
         desktop = QApplication.desktop()
         self.move(int(desktop.width() - 422), 65)
-        self.file_send_window = FileSendForm(parent)
+        self.file_send_window = None
         self.screen_broadcast_window = ScreenBroadcastForm(parent)
         self.init_tray()
 
@@ -84,6 +84,7 @@ class MainForm(QWidget):
                                         QMessageBox.Ok)
 
     def show_file_send_window(self):
+        self.file_send_window = FileSendForm(self.parent)
         self.file_send_window.show()
 
     def show_about(self):
@@ -157,7 +158,8 @@ class MainForm(QWidget):
 
     def closeEvent(self, event):
         if not self._force_quit:
-            reply = QMessageBox.question(self, 'Warning', 'Are you sure to exit?', QMessageBox.Yes, QMessageBox.No)
+            reply = QMessageBox.question(self, 'Warning', 'Are you sure to exit?', QMessageBox.Yes | QMessageBox.No,
+                                         QMessageBox.No)
             if reply != QMessageBox.Yes:
                 event.ignore()
                 return

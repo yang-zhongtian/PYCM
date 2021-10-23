@@ -10,12 +10,11 @@ from Module.Packages import PrivateMessageFlag
 
 class FileMerger(object):
     file_buffer = None
-    file_upload_path = None
 
-    def __init__(self, file_upload_path, root_parent=None):
+    def __init__(self, config, root_parent=None):
         self.chuck_count = None
         self.file_buffer = {}
-        self.file_upload_path = file_upload_path
+        self.config = config
         self.root_parent = root_parent
 
     def update_chuck(self, ip, index, amount, buffer):
@@ -27,7 +26,7 @@ class FileMerger(object):
             file_data = b''.join(map(lambda x: x[1], file_buffer_sorted))
             file_timestamp = time.strftime("%Y%m%d-%H.%M.%S", time.localtime(time.time()))
             file_name = f'[{file_timestamp}] {self.root_parent.get_client_label_by_ip(ip)}.zip'
-            open(os.path.join(self.file_upload_path, file_name), 'wb').write(file_data)
+            open(os.path.join(self.config.get_item('Client/FileUploadPath'), file_name), 'wb').write(file_data)
             self.file_buffer.pop(ip)
             return file_name
         return False
@@ -55,7 +54,7 @@ class PrivateMessage(object):
     def start(self):
         payload_size = self.socket_buffer_size - struct.calcsize('!2i')
         chuck_size = self.socket_buffer_size - struct.calcsize('!5i')
-        file_merger = FileMerger(self.parent.file_upload_path, self.root_parent)
+        file_merger = FileMerger(self.parent.config, self.root_parent)
         while True:
             try:
                 socket_data, socket_addr = self.socket_obj.recvfrom(self.socket_buffer_size)

@@ -78,7 +78,7 @@ class DashboardForm(QMainWindow):
             self.__log_append(f'Hands up: {self.get_client_label_by_ip(ip)}')
 
     def __log_append(self, message):
-        self.ui.log_area.append(f'[{time.strftime("%H:%M", time.localtime(time.time()))}] {message}')
+        self.ui.log_area.append(f'[{time.strftime("%H:%M", time.localtime(time.time()))}] <b>{message}</b>')
 
     def __add_client_desktop(self, client_ip):
         if client_ip in self.clients.keys():
@@ -256,6 +256,11 @@ class DashboardForm(QMainWindow):
                 self.hide()
 
     def closeEvent(self, event):
+        reply = QMessageBox.question(self, 'Warning', 'Are you sure to exit?', QMessageBox.Yes | QMessageBox.No,
+                                     QMessageBox.No)
+        if reply != QMessageBox.Yes:
+            event.ignore()
+            return
         self.toggle_broadcast(False)
         self.remote_spy_thread.safe_stop()
         self.class_broadcast_object.console_quit_notify()
