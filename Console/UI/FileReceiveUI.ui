@@ -29,7 +29,7 @@
    <iconset resource="../Resources.qrc">
     <normaloff>:/Core/Resources/Logo.png</normaloff>:/Core/Resources/Logo.png</iconset>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_1" stretch="0,0">
+  <layout class="QVBoxLayout" name="verticalLayout_1" stretch="0,0,0">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -82,6 +82,18 @@
    </item>
    <item>
     <widget class="QTableWidget" name="received_files">
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
      <attribute name="verticalHeaderVisible">
       <bool>false</bool>
      </attribute>
@@ -111,19 +123,16 @@
        <set>AlignCenter</set>
       </property>
      </column>
-     <column>
-      <property name="text">
-       <string>Action</string>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="textAlignment">
-       <set>AlignCenter</set>
-      </property>
-     </column>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="show_selected_file_guide">
+     <property name="text">
+      <string>Double click a row to open the file</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
     </widget>
    </item>
   </layout>
@@ -164,9 +173,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>received_files</sender>
+   <signal>itemDoubleClicked(QTableWidgetItem*)</signal>
+   <receiver>FileReceiveDialog</receiver>
+   <slot>open_selected_file(QTableWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>286</x>
+     <y>244</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>304</x>
+     <y>237</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>change_receive_folder()</slot>
   <slot>open_receive_folder()</slot>
+  <slot>open_selected_file(QTableWidgetItem*)</slot>
  </slots>
 </ui>

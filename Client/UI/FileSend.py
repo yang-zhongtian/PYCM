@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QTableWidget, QTableWidgetItem, QAbstractItemView, QHeaderView, \
+from PyQt5.QtWidgets import QDialog, QTableWidget, QTableWidgetItem, QAbstractItemView, QHeaderView, \
     QFileIconProvider, QApplication, QFileDialog, QMessageBox
 from PyQt5.QtCore import Qt, QFileInfo, QThread, pyqtSignal
 from PyQt5.QtGui import QIcon
@@ -108,8 +108,9 @@ class DraggableQListWidget(QTableWidget):
             event.ignore()
 
 
-class FileSendForm(QWidget):
+class FileSendForm(QDialog):
     is_sending = False
+    is_finished = False
     __compress_thread = None
     __file_send_thread = None
     parent = None
@@ -119,11 +120,9 @@ class FileSendForm(QWidget):
         self.parent = parent
         self.ui = Ui_FileSendForm()
         self.ui.setupUi(self)
-        self.setWindowModality(Qt.ApplicationModal)
         self.__repaint_ui()
 
     def __repaint_ui(self):
-        self.ui.file_list.deleteLater()
         self.ui.file_list = DraggableQListWidget()
         self.ui.file_list_container.addWidget(self.ui.file_list)
 
@@ -165,7 +164,8 @@ class FileSendForm(QWidget):
     def update_send_status(self, progress):
         progress = int(progress * 100)
         self.ui.file_send_progress_bar.setValue(progress)
-        if progress >= 100:
+        if progress >= 100 and not self.is_finished:
+            self.is_finished = True
             QMessageBox.information(self, 'Info', 'Submit Success!')
             self.close()
 

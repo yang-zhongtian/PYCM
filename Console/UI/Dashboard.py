@@ -2,8 +2,8 @@ import os.path
 
 from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication, QDialog, QListWidgetItem, QLabel, QMessageBox, \
     QInputDialog, QLineEdit, QSystemTrayIcon, QAction, QMenu
-from PyQt5.QtCore import Qt, QSize, QEvent
-from PyQt5.QtGui import QIcon, QDesktopServices
+from PyQt5.QtCore import Qt, QSize, QEvent, QUrl
+from PyQt5.QtGui import QIcon
 import time
 from functools import partial
 from .DashboardUI import Ui_DashboardForm
@@ -28,7 +28,6 @@ class DashboardForm(QMainWindow):
         self.ui.remote_spy.setProperty('class', 'big_button')
         self.ui.remote_command.setProperty('class', 'big_button')
         self.ui.file_transfer.setProperty('class', 'big_button')
-        self.ui.log_area.anchorClicked.connect(lambda x: QDesktopServices.openUrl(x))
         self.tray_icon_menu = QMenu(self)
         self.tray_icon = QSystemTrayIcon(self)
         self.remote_spy_window = RemoteSpyForm(self)
@@ -71,9 +70,8 @@ class DashboardForm(QMainWindow):
             self.__update_tray_tooltip()
         elif type_ == 'file_recieved':
             client = self.get_client_label_by_ip(ip)
-            file_path = os.path.join(self.file_receive_window.ui.receive_folder.text(), mac)
-            self.__log_append(f"File received: {client}, <a href='file:///{file_path}'>Open</a>")
-            self.file_receive_window.add_received_file(mac, client, file_path)
+            self.__log_append(f'File received: {client}, <a href="{mac}">Detail</a>')
+            self.file_receive_window.add_received_file(mac, client)
         elif type_ == 'client_notify':
             self.__log_append(f'Hands up: {self.get_client_label_by_ip(ip)}')
 
@@ -236,7 +234,12 @@ class DashboardForm(QMainWindow):
             self.screen_broadcast_thread.safe_stop()
             self.class_broadcast_object.screen_broadcast_nodity(False)
 
-    def show_file_receive(self):
+    def show_file_receive(self, file_url: QUrl = None):
+        if file_url is not None and type(file_url) != bool:
+            item = self.file_receive_window.ui.received_files.findItems(file_url.url(), Qt.MatchExactly)
+            if len(item) > 0:
+                item_row = item[0].row()
+                self.file_receive_window.ui.received_files.selectRow(item_row)
         self.file_receive_window.activateWindow()
         self.file_receive_window.showNormal()
 

@@ -28,7 +28,6 @@ class MainForm(QWidget):
         self.setFixedSize(322, 70)
         desktop = QApplication.desktop()
         self.move(int(desktop.width() - 422), 65)
-        self.file_send_window = None
         self.screen_broadcast_window = ScreenBroadcastForm(parent)
         self.init_tray()
 
@@ -84,8 +83,7 @@ class MainForm(QWidget):
                                         QMessageBox.Ok)
 
     def show_file_send_window(self):
-        self.file_send_window = FileSendForm(self.parent)
-        self.file_send_window.show()
+        FileSendForm(self.parent).exec_()
 
     def show_about(self):
         AboutDialog(self).exec_()

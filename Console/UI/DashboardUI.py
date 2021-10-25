@@ -248,6 +248,7 @@ class Ui_DashboardForm(object):
         self.file_receive_config.clicked.connect(DashboardForm.show_file_receive)
         self.client_quit.clicked.connect(DashboardForm.client_quit)
         self.clear_log_area.clicked.connect(self.log_area.clear)
+        self.log_area.anchorClicked['QUrl'].connect(DashboardForm.show_file_receive)
         QtCore.QMetaObject.connectSlotsByName(DashboardForm)
 
     def retranslateUi(self, DashboardForm):
@@ -258,6 +259,11 @@ class Ui_DashboardForm(object):
         self.remote_spy.setText(_translate("DashboardForm", "Remote View"))
         self.remote_command.setText(_translate("DashboardForm", "Remote Command"))
         self.file_transfer.setText(_translate("DashboardForm", "File Transfer"))
+        self.log_area.setHtml(_translate("DashboardForm", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'SimSun\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
         self.file_receive_config.setText(_translate("DashboardForm", "File Receive"))
         self.client_quit.setText(_translate("DashboardForm", "Quit Client"))
         self.send_message_button.setText(_translate("DashboardForm", "Messaging"))
