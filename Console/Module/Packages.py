@@ -11,6 +11,7 @@ class ClassBroadcastFlag(object):
     Command = 5
     RemoteSpyStart = 6
     RemoteQuit = 7
+    ClientFileRecieved = 8
 
 
 class PrivateMessageFlag(object):
@@ -18,8 +19,9 @@ class PrivateMessageFlag(object):
     ClientLogout = 2
     ClientMessage = 3
     ClientScreen = 4
-    ClientFile = 5
-    ClientNotify = 6
+    ClientFileInfo = 5
+    ClientFileData = 6
+    ClientNotify = 7
 
 
 class RemoteSpyFlag(object):

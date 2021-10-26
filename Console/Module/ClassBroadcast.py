@@ -61,3 +61,6 @@ class ClassBroadcast(QObject):
 
     def remote_quit_notify(self, clients):
         self.batch_send(ClassBroadcastFlag.RemoteQuit, clients, b'')
+
+    def client_file_recieved_notify(self, client):
+        self.batch_send(ClassBroadcastFlag.ClientFileRecieved, [client], b'')

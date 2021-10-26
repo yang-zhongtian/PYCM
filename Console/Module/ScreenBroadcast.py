@@ -53,7 +53,6 @@ class ScreenBroadcast(QObject):
                     buffer.close()
                     rounds = len(img_encoded) // payload_size
                     looped_size = rounds * payload_size
-                    logging.debug(f'Screen broadcast index: {pack_index}, rounds: {rounds}')
                     header = struct.pack('!4i', ScreenBroadcastFlag.PackInfo, pack_index, len(img_encoded), rounds)
                     self.socket_obj.sendto(header, target)
                     for i in range(rounds):

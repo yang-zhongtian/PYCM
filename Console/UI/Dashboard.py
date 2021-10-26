@@ -72,6 +72,7 @@ class DashboardForm(QMainWindow):
             client = self.get_client_label_by_ip(ip)
             self.__log_append(f'File received: {client}, <a href="{mac}">Detail</a>')
             self.file_receive_window.add_received_file(mac, client)
+            self.class_broadcast_object.client_file_recieved_notify(ip)
         elif type_ == 'client_notify':
             self.__log_append(f'Hands up: {self.get_client_label_by_ip(ip)}')
 

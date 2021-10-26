@@ -29,6 +29,7 @@ class MainForm(QWidget):
         desktop = QApplication.desktop()
         self.move(int(desktop.width() - 422), 65)
         self.screen_broadcast_window = ScreenBroadcastForm(parent)
+        self.file_send_window = FileSendForm(self.parent)
         self.init_tray()
 
     def load_network_device(self):
@@ -52,6 +53,7 @@ class MainForm(QWidget):
         self.class_broadcast_thread.reset_all.connect(lambda: self.reset_all_threadings())
         self.class_broadcast_thread.toggle_screen_broadcats.connect(self.__toggle_screen_broadcast)
         self.class_broadcast_thread.quit_self.connect(self.quit_self)
+        self.class_broadcast_thread.client_file_recieved.connect(lambda: self.file_send_window.file_recieved())
         self.class_broadcast_thread.start_remote_spy.connect(self.start_remote_spy)
         self.screen_broadcast_thread.frame_recieved.connect(self.screen_broadcast_window.update_frame)
         self.screen_spy_timer.timeout.connect(lambda: self.private_message_object.screen_spy_send())
@@ -83,7 +85,8 @@ class MainForm(QWidget):
                                         QMessageBox.Ok)
 
     def show_file_send_window(self):
-        FileSendForm(self.parent).exec_()
+        self.file_send_window = FileSendForm(self.parent)
+        self.file_send_window.show()
 
     def show_about(self):
         AboutDialog(self).exec_()

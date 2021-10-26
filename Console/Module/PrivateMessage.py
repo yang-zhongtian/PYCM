@@ -21,15 +21,19 @@ class FileMerger(object):
         if ip not in self.file_buffer.keys():
             self.file_buffer[ip] = {'chuck_count': amount, 'buffers': []}
         self.file_buffer[ip]['buffers'].append((index, buffer))
+
+    def write_file(self, ip, cksum):
         if len(self.file_buffer[ip]['buffers']) >= self.file_buffer[ip]['chuck_count']:
             file_buffer_sorted = sorted(self.file_buffer[ip]['buffers'], key=lambda x: x[0])
             file_data = b''.join(map(lambda x: x[1], file_buffer_sorted))
-            file_timestamp = time.strftime("%Y%m%d-%H.%M.%S", time.localtime(time.time()))
-            file_name = f'[{file_timestamp}] {self.root_parent.get_client_label_by_ip(ip)}.zip'
-            open(os.path.join(self.config.get_item('Client/FileUploadPath'), file_name), 'wb').write(file_data)
-            self.file_buffer.pop(ip)
-            return file_name
-        return False
+            if zlib.crc32(file_data) == cksum:
+                file_timestamp = time.strftime("%Y%m%d-%H.%M.%S", time.localtime(time.time()))
+                file_name = f'[{file_timestamp}] {self.root_parent.get_client_label_by_ip(ip)}.zip'
+                open(os.path.join(self.config.get_item('Client/FileUploadPath'), file_name), 'wb').write(file_data)
+                self.file_buffer.pop(ip)
+                return file_name
+        self.file_buffer.pop(ip)
+        return None
 
 
 class PrivateMessage(object):
@@ -72,12 +76,14 @@ class PrivateMessage(object):
                     self.parent.client_desktop_recieved.emit(socket_addr[0], QPixmap.fromImage(image))
                 elif unpacked_flag == PrivateMessageFlag.ClientNotify:
                     self.parent.client_notify_recieved.emit(socket_addr[0])
-                elif unpacked_flag == PrivateMessageFlag.ClientFile:
+                elif unpacked_flag == PrivateMessageFlag.ClientFileData:
                     file_index, file_buffer_length, file_amount, file_buffer = struct.unpack(f'!3i{chuck_size}s',
                                                                                              unpacked_data)
-                    status = file_merger.update_chuck(socket_addr[0], file_index, file_amount,
-                                                      file_buffer[:file_buffer_length])
-                    if status:
+                    file_merger.update_chuck(socket_addr[0], file_index, file_amount, file_buffer[:file_buffer_length])
+                elif unpacked_flag == PrivateMessageFlag.ClientFileInfo:
+                    file_cksum = struct.unpack('!l', unpacked_data)[0]
+                    status = file_merger.write_file(socket_addr[0], file_cksum)
+                    if status is not None:
                         self.parent.client_file_recieved.emit(socket_addr[0], status)
             except Exception as e:
                 logging.warning(f'Failed to decode socket data: {e}')

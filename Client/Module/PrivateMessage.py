@@ -68,6 +68,8 @@ class PrivateMessage(QObject):
             else:
                 file_payload = file_buffer[index * chuck_size:]
             chuck_pack = struct.pack(f'!3i{chuck_size}s', index, len(file_payload), chuck_count, file_payload)
-            self.send_data(PrivateMessageFlag.ClientFile, chuck_pack)
+            self.send_data(PrivateMessageFlag.ClientFileData, chuck_pack)
             self.file_send_progress.emit((index + 1) / chuck_count)
             time.sleep(0.01)
+        cksum_pack = struct.pack('!l', zlib.crc32(file_buffer))
+        self.send_data(PrivateMessageFlag.ClientFileInfo, cksum_pack)

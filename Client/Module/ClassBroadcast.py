@@ -61,7 +61,8 @@ class ClassBroadcast(QObject):
                         ClassBroadcastFlag.Message,
                         ClassBroadcastFlag.Command,
                         ClassBroadcastFlag.RemoteSpyStart,
-                        ClassBroadcastFlag.RemoteQuit
+                        ClassBroadcastFlag.RemoteQuit,
+                        ClassBroadcastFlag.ClientFileRecieved
                 ):
                     data = self.batch_send_decode(unpacked_data)
                     if data is None:
@@ -77,6 +78,8 @@ class ClassBroadcast(QObject):
                     elif unpacked_flag == ClassBroadcastFlag.RemoteQuit:
                         self.parent.quit_self.emit()
                         return
+                    elif unpacked_flag == ClassBroadcastFlag.ClientFileRecieved:
+                        self.parent.client_file_recieved.emit()
                 elif unpacked_flag == ClassBroadcastFlag.StartScreenBroadcast:
                     self.parent.toggle_screen_broadcats.emit(True)
                 elif unpacked_flag == ClassBroadcastFlag.StopScreenBroadcast:
