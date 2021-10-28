@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ScreenBroadcast</class>
- <widget class="QWidget" name="ScreenBroadcast">
+ <class>ScreenBroadcastForm</class>
+ <widget class="QWidget" name="ScreenBroadcastForm">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -132,7 +132,7 @@
   <connection>
    <sender>freeze_frame</sender>
    <signal>clicked(bool)</signal>
-   <receiver>ScreenBroadcast</receiver>
+   <receiver>ScreenBroadcastForm</receiver>
    <slot>freeze_frame(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -148,7 +148,7 @@
   <connection>
    <sender>full_screen</sender>
    <signal>clicked(bool)</signal>
-   <receiver>ScreenBroadcast</receiver>
+   <receiver>ScreenBroadcastForm</receiver>
    <slot>show_full_screen(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -164,7 +164,7 @@
   <connection>
    <sender>screen_shot</sender>
    <signal>clicked()</signal>
-   <receiver>ScreenBroadcast</receiver>
+   <receiver>ScreenBroadcastForm</receiver>
    <slot>screen_shot()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -180,7 +180,7 @@
   <connection>
    <sender>always_on_top</sender>
    <signal>clicked(bool)</signal>
-   <receiver>ScreenBroadcast</receiver>
+   <receiver>ScreenBroadcastForm</receiver>
    <slot>toggle_always_on_top(bool)</slot>
    <hints>
     <hint type="sourcelabel">

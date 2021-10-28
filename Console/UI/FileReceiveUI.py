@@ -99,5 +99,5 @@ class Ui_FileReceiveDialog(object):
         item.setText(_translate("FileReceiveDialog", "File Name"))
         item = self.received_files.horizontalHeaderItem(1)
         item.setText(_translate("FileReceiveDialog", "From"))
-        self.show_selected_file_guide.setText(_translate("FileReceiveDialog", "Double click a row to open the file"))
+        self.show_selected_file_guide.setText(_translate("FileReceiveDialog", "Double click the row to open file"))
 import Resources_rc

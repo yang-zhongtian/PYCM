@@ -40,6 +40,7 @@ jobs:
                  --windows-file-description=PYCM-Console --windows-file-version=${{ steps.tag.outputs.result }} `
                  --include-data-file=Alibaba-PuHuiTi-Regular.ttf=Alibaba-PuHuiTi-Regular.ttf `
                  --include-data-file=Alibaba-PuHuiTi-Bold.ttf=Alibaba-PuHuiTi-Bold.ttf `
+                 --include-data-file=Translation/*.qm=Translation/ `
                  --plugin-enable=qt-plugins --assume-yes-for-downloads `
                  --output-dir=Build Main.py
       - name: Check build
@@ -92,6 +93,7 @@ jobs:
                  --windows-file-description=PYCM-Client --windows-file-version=${{ steps.tag.outputs.result }} `
                  --include-data-file=Alibaba-PuHuiTi-Regular.ttf=Alibaba-PuHuiTi-Regular.ttf `
                  --include-data-file=Alibaba-PuHuiTi-Bold.ttf=Alibaba-PuHuiTi-Bold.ttf `
+                 --include-data-file=Translation/*.qm=Translation/ `
                  --plugin-enable=qt-plugins --assume-yes-for-downloads `
                  --output-dir=Build Main.py
       - name: Check build

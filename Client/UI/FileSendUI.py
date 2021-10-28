@@ -13,6 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_FileSendForm(object):
     def setupUi(self, FileSendForm):
         FileSendForm.setObjectName("FileSendForm")
+        FileSendForm.setWindowModality(QtCore.Qt.ApplicationModal)
         FileSendForm.resize(619, 436)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/Core/Resources/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)

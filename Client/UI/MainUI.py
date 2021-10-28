@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainForm(object):
     def setupUi(self, MainForm):
         MainForm.setObjectName("MainForm")
-        MainForm.resize(322, 70)
+        MainForm.resize(351, 70)
         MainForm.setMinimumSize(QtCore.QSize(322, 70))
         MainForm.setMaximumSize(QtCore.QSize(397, 75))
         icon = QtGui.QIcon()
@@ -82,9 +82,9 @@ class Ui_MainForm(object):
         self.hide_button.setSizePolicy(sizePolicy)
         self.hide_button.setObjectName("hide_button")
         self.horizontalLayout.addWidget(self.hide_button)
-        self.horizontalLayout.setStretch(0, 2)
+        self.horizontalLayout.setStretch(0, 1)
         self.horizontalLayout.setStretch(1, 1)
-        self.horizontalLayout.setStretch(2, 2)
+        self.horizontalLayout.setStretch(2, 1)
         self.horizontalLayout.setStretch(3, 1)
         self.verticalLayout_2.addLayout(self.horizontalLayout)
         self.verticalLayout.addWidget(self.Container)
@@ -97,7 +97,7 @@ class Ui_MainForm(object):
 
     def retranslateUi(self, MainForm):
         _translate = QtCore.QCoreApplication.translate
-        MainForm.setWindowTitle(_translate("MainForm", "客户端"))
+        MainForm.setWindowTitle(_translate("MainForm", "Client"))
         self.title_label.setText(_translate("MainForm", "PYCM Client - Offline"))
         self.notify_button.setText(_translate("MainForm", "Hands Up"))
         self.send_file_button.setText(_translate("MainForm", "File"))

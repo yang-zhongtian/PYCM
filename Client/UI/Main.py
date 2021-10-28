@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QWidget, QSystemTrayIcon, QAction, QMenu, QMessageBox, QApplication
-from PyQt5.QtCore import Qt, QPoint, QTimer, pyqtSignal
+from PyQt5.QtCore import Qt, QPoint, QTimer, pyqtSignal, QCoreApplication
 from PyQt5.QtGui import QMouseEvent, QIcon
 import psutil
 import socket
@@ -17,6 +17,7 @@ class MainForm(QWidget):
     _end_pos = None
     _is_tracking = False
     _force_quit = False
+    _translate = QCoreApplication.translate
 
     def __init__(self, parent=None):
         super(MainForm, self).__init__()
@@ -61,11 +62,12 @@ class MainForm(QWidget):
     # noinspection PyArgumentList
     def init_tray(self):
         self.tray_icon_menu = QMenu(self)
-        self.tray_icon_menu.addAction(QAction('Show Tool Bar', self, triggered=self.show))
-        self.tray_icon_menu.addAction(
-            QAction('Configure Network', self, triggered=lambda: self.show_network_config_window()))
-        self.tray_icon_menu.addAction(QAction('About', self, triggered=lambda: self.show_about()))
-        self.tray_icon_menu.addAction(QAction('Exit', self, triggered=self.close))
+        self.tray_icon_menu.addAction(QAction(self._translate('MainForm', 'Show Tool Bar'), self, triggered=self.show))
+        self.tray_icon_menu.addAction(QAction(self._translate('MainForm', 'Configure Network'),
+                                              self, triggered=lambda: self.show_network_config_window()))
+        self.tray_icon_menu.addAction(QAction(self._translate('MainForm', 'About'),
+                                              self, triggered=lambda: self.show_about()))
+        self.tray_icon_menu.addAction(QAction(self._translate('MainForm', 'Exit'), self, triggered=self.close))
         self.tray_icon = QSystemTrayIcon(self)
         self.tray_icon.setIcon(QIcon(':/Core/Resources/Logo.png'))
         self.tray_icon.setContextMenu(self.tray_icon_menu)
@@ -74,14 +76,17 @@ class MainForm(QWidget):
         self.tray_icon.show()
 
     def show_network_config_window(self):
-        reply = QMessageBox.question(self, 'Warning',
-                                     'Are you sure to modify the network configuration? This operation may cause the ' +
-                                     'client to fail to start normally!',
+        reply = QMessageBox.question(self, self._translate('MainForm', 'Warning'),
+                                     self._translate('MainForm',
+                                                     'Are you sure to modify the network configuration? ' +
+                                                     'This operation may cause the client to fail to start normally!'),
                                      QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if reply == QMessageBox.Yes:
             result = self.config.modify_network_device()
             if result:
-                QMessageBox.information(self, 'Info', 'Configuration success! Please restart the client to take effect',
+                QMessageBox.information(self, self._translate('MainForm', 'Info'),
+                                        self._translate('MainForm', 'Configuration success! ' +
+                                                        'Please restart the client to take effect'),
                                         QMessageBox.Ok)
 
     def show_file_send_window(self):
@@ -96,7 +101,7 @@ class MainForm(QWidget):
 
     def message_recieved(self, message):
         icon = QSystemTrayIcon.MessageIcon()
-        self.tray_icon.showMessage('Message', message, icon, 1000)
+        self.tray_icon.showMessage(self._translate('MainForm', 'Message'), message, icon, 1000)
 
     def notify_console(self):
         self.private_message_object.notify_console()
@@ -107,7 +112,7 @@ class MainForm(QWidget):
         self.remote_spy_thread.set_socket_ip(self.server_ip)
         self.private_message_object.online_notify()
         self.class_broadcast_thread.start()
-        self.ui.title_label.setText('PYCM Client - Online')
+        self.ui.title_label.setText(self._translate('MainForm', 'PYCM Client - Online'))
         self.update_tray_tooltip()
         self.ui.notify_button.setEnabled(True)
         self.ui.send_file_button.setEnabled(True)
@@ -129,9 +134,13 @@ class MainForm(QWidget):
 
     def update_tray_tooltip(self):
         local_ip = self.config.get_item('Network/Local/IP')
-        self.tray_icon.setToolTip('PYCM Client\n' +
-                                  f'Local IP: {local_ip}\n' +
-                                  f'Status: {"Online" if self.server_ip is not None else "Offline"}')
+        if self.server_ip:
+            online_status = self._translate('MainForm', 'Online')
+        else:
+            online_status = self._translate('MainForm', 'Offline')
+        self.tray_icon.setToolTip(self._translate('MainForm', 'PYCM Client\n') +
+                                  self._translate('MainForm', 'Local IP: %s\n') % local_ip +
+                                  self._translate('MainForm', 'Status: %s') % online_status)
 
     def quit_self(self):
         self._force_quit = True
@@ -159,8 +168,9 @@ class MainForm(QWidget):
 
     def closeEvent(self, event):
         if not self._force_quit:
-            reply = QMessageBox.question(self, 'Warning', 'Are you sure to exit?', QMessageBox.Yes | QMessageBox.No,
-                                         QMessageBox.No)
+            reply = QMessageBox.question(self, self._translate('MainForm', 'Warning'),
+                                         self._translate('MainForm', 'Are you sure to exit?'),
+                                         QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
             if reply != QMessageBox.Yes:
                 event.ignore()
                 return

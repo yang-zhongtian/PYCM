@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from PyQtPatch import *
 from PyQt5.QtWidgets import QWidget, QApplication
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QCoreApplication, QTranslator
 import sys
 import os
 import logging
@@ -10,6 +10,7 @@ from Module.LoadConfig import Config
 
 import Resources_rc
 import Theme
+from Translation import LoadTranslation
 
 from UI.Main import MainForm
 
@@ -23,6 +24,14 @@ app.setStyleSheet(Theme.load_stylesheet())
 app.setQuitOnLastWindowClosed(False)
 
 config = Config()
+translator = QTranslator(app)
+qt_translator = QTranslator(app)
+language = LoadTranslation.load_translation()
+if language is not None:
+    translator.load(language, 'Translation')
+    qt_translator.load('qtbase_' + language, 'Translation')
+    app.installTranslator(translator)
+    app.installTranslator(qt_translator)
 
 debug_flag_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'DEBUG'))
 logging.basicConfig(level=logging.DEBUG if os.path.isfile(debug_flag_path) else logging.CRITICAL,
@@ -38,6 +47,7 @@ class MainWindow(MainForm):
     screen_broadcast_thread = None
     remote_spy_thread = None
     private_message_object = None
+    _translate = QCoreApplication.translate
 
     def __init__(self):
         super(MainWindow, self).__init__(self)
@@ -68,7 +78,7 @@ class MainWindow(MainForm):
         self.remote_spy_thread = RemoteSpyThread(self.config)
         self.private_message_object = PrivateMessage(self.config)
         self.init_connections()
-        self.ui.title_label.setText('PYCM Client - Offline')
+        self.ui.title_label.setText(self._translate('MainForm', 'PYCM Client - Offline'))
         self.update_tray_tooltip()
         self.ui.notify_button.setEnabled(False)
         self.ui.send_file_button.setEnabled(False)

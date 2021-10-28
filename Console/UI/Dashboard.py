@@ -2,7 +2,7 @@ import os.path
 
 from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication, QDialog, QListWidgetItem, QLabel, QMessageBox, \
     QInputDialog, QLineEdit, QSystemTrayIcon, QAction, QMenu
-from PyQt5.QtCore import Qt, QSize, QEvent, QUrl
+from PyQt5.QtCore import Qt, QSize, QEvent, QUrl, QCoreApplication
 from PyQt5.QtGui import QIcon
 import time
 from functools import partial
@@ -15,6 +15,8 @@ from .About import AboutDialog
 
 
 class DashboardForm(QMainWindow):
+    _translate = QCoreApplication.translate
+
     def __init__(self, parent=None):
         super(DashboardForm, self).__init__(parent)
         self.ui = Ui_DashboardForm()
@@ -27,7 +29,7 @@ class DashboardForm(QMainWindow):
         self.ui.toggle_broadcast.setProperty('class', 'big_button')
         self.ui.remote_spy.setProperty('class', 'big_button')
         self.ui.remote_command.setProperty('class', 'big_button')
-        self.ui.file_transfer.setProperty('class', 'big_button')
+        self.ui.file_share.setProperty('class', 'big_button')
         self.tray_icon_menu = QMenu(self)
         self.tray_icon = QSystemTrayIcon(self)
         self.remote_spy_window = RemoteSpyForm(self)
@@ -46,9 +48,11 @@ class DashboardForm(QMainWindow):
 
     # noinspection PyArgumentList
     def init_tray(self):
-        self.tray_icon_menu.addAction(QAction('Show Dashboard', self, triggered=lambda: self.show_window()))
-        self.tray_icon_menu.addAction(QAction('About', self, triggered=lambda: self.show_about()))
-        self.tray_icon_menu.addAction(QAction('Exit', self, triggered=self.close))
+        self.tray_icon_menu.addAction(QAction(self._translate('DashboardForm', 'Show Dashboard'),
+                                              self, triggered=lambda: self.show_window()))
+        self.tray_icon_menu.addAction(QAction(self._translate('DashboardForm', 'About'),
+                                              self, triggered=lambda: self.show_about()))
+        self.tray_icon_menu.addAction(QAction(self._translate('DashboardForm', 'Exit'), self, triggered=self.close))
         self.tray_icon.setIcon(QIcon(':/Core/Resources/Logo.png'))
         self.tray_icon.setContextMenu(self.tray_icon_menu)
         self.tray_icon.activated[QSystemTrayIcon.ActivationReason].connect(lambda x: self.show_window(x))
@@ -61,20 +65,21 @@ class DashboardForm(QMainWindow):
     def __logger(self, type_, ip, mac=None):
         if type_ == 'online':
             self.mac_binding[ip] = mac
-            self.__log_append(f'{self.get_client_label_by_ip(ip)} logged on')
+            self.__log_append(self._translate('DashboardForm', '%s logged on') % self.get_client_label_by_ip(ip))
             self.__add_client_desktop(ip)
             self.__update_tray_tooltip()
         elif type_ == 'offline':
-            self.__log_append(f'{self.get_client_label_by_ip(ip)} logged off')
+            self.__log_append(self._translate('DashboardForm', '%s logged off') % self.get_client_label_by_ip(ip))
             self.__remove_client_desktop(ip)
             self.__update_tray_tooltip()
         elif type_ == 'file_recieved':
             client = self.get_client_label_by_ip(ip)
-            self.__log_append(f'File received: {client}, <a href="{mac}">Detail</a>')
+            self.__log_append(self._translate('DashboardForm',
+                                              'File received: %s, <a href="%s">Detail</a>') % (client, mac))
             self.file_receive_window.add_received_file(mac, client)
             self.class_broadcast_object.client_file_recieved_notify(ip)
         elif type_ == 'client_notify':
-            self.__log_append(f'Hands up: {self.get_client_label_by_ip(ip)}')
+            self.__log_append(self._translate('DashboardForm', 'Hands up: %s') % self.get_client_label_by_ip(ip))
 
     def __log_append(self, message):
         self.ui.log_area.append(f'[{time.strftime("%H:%M", time.localtime(time.time()))}] <b>{message}</b>')
@@ -104,21 +109,23 @@ class DashboardForm(QMainWindow):
 
     def __update_tray_tooltip(self):
         local_ip = self.config.get_item('Network/Local/IP')
-        self.tray_icon.setToolTip('PYCM Console\n' +
-                                  f'Local IP: {local_ip}\n' +
-                                  f'Online: {len(self.clients)} Clients')
+        self.tray_icon.setToolTip(self._translate('DashboardForm', 'PYCM Console\n') +
+                                  self._translate('DashboardForm', 'Local IP: %s\n') % local_ip +
+                                  self._translate('DashboardForm', 'Online: %d Clients') % len(self.clients))
 
     def client_rename(self):
         target = self.get_all_selected_clients()
         if not target:
             return
         if len(target) > 1:
-            QMessageBox.warning(self, 'Warning', 'Only support to rename one client each time')
+            QMessageBox.warning(self, self._translate('DashboardForm', 'Warning'),
+                                self._translate('DashboardForm', 'Only support to rename one client each time'))
             return
         target = target[0]
         client = self.clients[target['ip']]
-        new_label, confirm = QInputDialog.getText(self, 'Rename client',
-                                                  'Please input the new name, leave blank for restoring to default',
+        new_label, confirm = QInputDialog.getText(self, self._translate('DashboardForm', 'Rename client'),
+                                                  self._translate('DashboardForm', 'Please input the new name, ' +
+                                                                  'leave blank for restoring to default'),
                                                   QLineEdit.Normal, target['label'])
         if confirm:
             if new_label != target['label']:
@@ -133,14 +140,19 @@ class DashboardForm(QMainWindow):
         if not targets:
             return
         selected_label = [client['label'] for client in targets]
-        confirm = QMessageBox.warning(self, 'Confirm',
-                                      f'Are you sure to quit these clients: {" ".join(selected_label)}?\n' +
-                                      'This action is irreversible!', QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        confirm = QMessageBox.warning(self, self._translate('DashboardForm', 'Confirm'),
+                                      self._translate('DashboardForm',
+                                                      'Are you sure to quit these clients: %s?\n') % ' '.join(
+                                          selected_label) +
+                                      self._translate('DashboardForm', 'This action is irreversible!'),
+                                      QMessageBox.Yes | QMessageBox.No,
+                                      QMessageBox.No)
         if confirm != QMessageBox.Yes:
             return
         targets = [client['ip'] for client in targets]
         self.class_broadcast_object.remote_quit_notify(targets)
-        QMessageBox.information(self, 'Info', 'Quit client command send successfully')
+        QMessageBox.information(self, self._translate('DashboardForm', 'Info'),
+                                self._translate('DashboardForm', 'Quit client command send successfully'))
 
     def get_client_label_by_ip(self, ip):
         label = self.config.get_item(f'Client/ClientLabel/{self.mac_binding.get(ip)}')
@@ -151,7 +163,8 @@ class DashboardForm(QMainWindow):
     def get_all_selected_clients(self, ip_only=False):
         clients = self.ui.desktop_layout.selectedItems()
         if len(clients) == 0:
-            QMessageBox.warning(self, 'Warning', 'No targets selected')
+            QMessageBox.warning(self, self._translate('DashboardForm', 'Warning'),
+                                self._translate('DashboardForm', 'No targets selected'))
             return []
         client_infos = []
         for client in clients:
@@ -187,7 +200,7 @@ class DashboardForm(QMainWindow):
         if result == send_message_group_dialog.Accepted:
             message = send_message_group_dialog.ui.send_message_input.toPlainText()
             self.class_broadcast_object.send_text(targets, message)
-            self.__log_append(f'Message send: {message}')
+            self.__log_append(self._translate('DashboardForm', 'Message send: %s') % message)
 
     def remote_command(self):
         targets = self.get_all_selected_clients(ip_only=True)
@@ -198,17 +211,21 @@ class DashboardForm(QMainWindow):
         if result == remote_command_group_dialog.Accepted:
             command = remote_command_group_dialog.ui.command_select.selectedItems()
             if len(command) == 0:
-                QMessageBox.critical(self, 'Warning', 'No command selected')
+                QMessageBox.critical(self, self._translate('DashboardForm', 'Warning'),
+                                     self._translate('DashboardForm', 'No command selected'))
                 return
             command = command[0]
             selected_label = command.text()
             selected_command = command.data(Qt.UserRole)
-            confirm = QMessageBox.question(self, 'Confirm', f'Confirm to send command: {selected_label} ?',
+            confirm = QMessageBox.question(self, self._translate('DashboardForm', 'Confirm'),
+                                           self._translate('DashboardForm',
+                                                           'Confirm to send command: %s ?') % selected_label,
                                            QMessageBox.Yes | QMessageBox.No)
             if confirm != QMessageBox.Yes:
                 return
             self.class_broadcast_object.send_command(targets, selected_command)
-            QMessageBox.information(self, 'Info', 'Command send successfully')
+            QMessageBox.information(self, self._translate('DashboardForm', 'Info'),
+                                    self._translate('DashboardForm', 'Command send successfully'))
 
     def toggle_remote_spy(self, working):
         if working:
@@ -217,7 +234,8 @@ class DashboardForm(QMainWindow):
                 self.ui.remote_spy.setChecked(False)
                 return
             if len(targets) > 1:
-                QMessageBox.warning(self, 'Warning', 'Only support to control one client each time')
+                QMessageBox.warning(self, self._translate('DashboardForm', 'Warning'),
+                                    self._translate('DashboardForm', 'Only support to view one client each time'))
                 self.ui.remote_spy.setChecked(False)
                 return
             self.class_broadcast_object.remote_spy_start_notify(targets[0])
@@ -260,8 +278,9 @@ class DashboardForm(QMainWindow):
                 self.hide()
 
     def closeEvent(self, event):
-        reply = QMessageBox.question(self, 'Warning', 'Are you sure to exit?', QMessageBox.Yes | QMessageBox.No,
-                                     QMessageBox.No)
+        reply = QMessageBox.question(self, self._translate('DashboardForm', 'Warning'),
+                                     self._translate('DashboardForm', 'Are you sure to exit?'),
+                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if reply != QMessageBox.Yes:
             event.ignore()
             return

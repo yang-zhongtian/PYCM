@@ -79,7 +79,7 @@ class Config(object):
             return False
         network_device_select_form = NetworkDeviceSelectForm()
         while network_device_select_form.exec_() != network_device_select_form.Accepted:
-            QMessageBox.critical(None, '提示', '请选择网络设备！')
+            QMessageBox.critical(None, 'Warning', 'Please select a network device!')
         self.__default_config['Network']['Local']['Device'] = network_device_select_form.get_selected_device()
         self.__default_tree.clear()
         self.__generate_default_tree(self.__default_config)

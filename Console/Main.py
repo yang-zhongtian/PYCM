@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from PyQtPatch import *
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QTranslator
 import sys
 import os
 import logging
@@ -10,6 +10,7 @@ from Module.LoadConfig import Config
 
 import Resources_rc
 import Theme
+from Translation import LoadTranslation
 
 from UI.Login import LoginForm
 from UI.Dashboard import DashboardForm
@@ -25,6 +26,14 @@ app.setStyleSheet(Theme.load_stylesheet())
 app.setQuitOnLastWindowClosed(False)
 
 config = Config()
+translator = QTranslator(app)
+qt_translator = QTranslator(app)
+language = LoadTranslation.load_translation()
+if language is not None:
+    translator.load(language, 'Translation')
+    qt_translator.load('qtbase_' + language, 'Translation')
+    app.installTranslator(translator)
+    app.installTranslator(qt_translator)
 
 debug_flag_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'DEBUG'))
 is_debug = os.path.isfile(debug_flag_path)

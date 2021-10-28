@@ -128,7 +128,7 @@
    <item>
     <widget class="QLabel" name="show_selected_file_guide">
      <property name="text">
-      <string>Double click a row to open the file</string>
+      <string>Double click the row to open file</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

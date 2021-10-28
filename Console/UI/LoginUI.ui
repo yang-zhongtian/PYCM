@@ -9,9 +9,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>352</width>
+    <width>341</width>
     <height>232</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>341</width>
+    <height>232</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>341</width>
+    <height>232</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>PYCM Login</string>
@@ -23,7 +35,7 @@
   <widget class="QLineEdit" name="username">
    <property name="geometry">
     <rect>
-     <x>140</x>
+     <x>133</x>
      <y>70</y>
      <width>181</width>
      <height>31</height>
@@ -36,7 +48,7 @@
   <widget class="QLineEdit" name="password">
    <property name="geometry">
     <rect>
-     <x>140</x>
+     <x>133</x>
      <y>120</y>
      <width>181</width>
      <height>31</height>
@@ -90,7 +102,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Username: </string>
+    <string>Username:</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_password">
@@ -119,7 +131,7 @@
     <rect>
      <x>30</x>
      <y>170</y>
-     <width>291</width>
+     <width>284</width>
      <height>41</height>
     </rect>
    </property>

@@ -1,19 +1,20 @@
 from PyQt5.QtWidgets import QWidget, QFileDialog
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QCoreApplication
 import pathlib
-from .ScreenBroadcastUI import Ui_ScreenBroadcast
+from .ScreenBroadcastUI import Ui_ScreenBroadcastForm
 
 
 class ScreenBroadcastForm(QWidget):
     parent = None
     freeze = False
     first_frame = True
+    _translate = QCoreApplication.translate
 
     def __init__(self, parent=None):
         super(ScreenBroadcastForm, self).__init__()
         self.parent = parent
         self.frame_proportion = 9 / 16
-        self.ui = Ui_ScreenBroadcast()
+        self.ui = Ui_ScreenBroadcastForm()
         self.ui.setupUi(self)
         self.ui.screen_display.move(0, 0)
         self.setWindowFlags(Qt.WindowMinMaxButtonsHint | Qt.WindowStaysOnTopHint)
@@ -35,8 +36,9 @@ class ScreenBroadcastForm(QWidget):
     def screen_shot(self):
         frame = self.ui.screen_display.pixmap()
         frame = frame.toImage()
-        file_path, _ = QFileDialog.getSaveFileName(self, 'Select Path To Save', str(pathlib.Path.home()),
-                                                   'JPEG Image(*.jpg)')
+        file_path, _ = QFileDialog.getSaveFileName(self, self._translate('ScreenBroadcastForm', 'Select Path To Save'),
+                                                   str(pathlib.Path.home()),
+                                                   self._translate('ScreenBroadcastForm', 'JPEG Image(*.jpg)'))
         if file_path:
             frame.save(file_path, 'JPEG')
 
