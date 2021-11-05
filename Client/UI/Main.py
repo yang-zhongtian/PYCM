@@ -5,6 +5,7 @@ import psutil
 import socket
 from .MainUI import Ui_MainForm
 from .FileSend import FileSendForm
+from .FileClient import FileClientDialog
 from .ScreenBroadcast import ScreenBroadcastForm
 from .About import AboutDialog
 
@@ -32,6 +33,7 @@ class MainForm(QWidget):
         self.screen_broadcast_window = ScreenBroadcastForm(parent)
         self.file_send_window = FileSendForm(self.parent)
         self.init_tray()
+        self.init_file_button()
 
     def load_network_device(self):
         network_devices = psutil.net_if_addrs()
@@ -75,6 +77,13 @@ class MainForm(QWidget):
         self.update_tray_tooltip()
         self.tray_icon.show()
 
+    # noinspection PyArgumentList
+    def init_file_button(self):
+        self.file_button_menu = QMenu()
+        self.file_button_menu.addAction(QAction(self._translate('MainForm', 'File Client'), self,
+                                                triggered=lambda: self.show_file_client_window()))
+        self.ui.file_button.setMenu(self.file_button_menu)
+
     def show_network_config_window(self):
         reply = QMessageBox.question(self, self._translate('MainForm', 'Warning'),
                                      self._translate('MainForm',
@@ -92,6 +101,10 @@ class MainForm(QWidget):
     def show_file_send_window(self):
         self.file_send_window = FileSendForm(self.parent)
         self.file_send_window.show()
+
+    def show_file_client_window(self):
+        file_client = FileClientDialog(self.parent)
+        file_client.exec_()
 
     def show_about(self):
         AboutDialog(self).exec_()
@@ -115,7 +128,7 @@ class MainForm(QWidget):
         self.ui.title_label.setText(self._translate('MainForm', 'PYCM Client - Online'))
         self.update_tray_tooltip()
         self.ui.notify_button.setEnabled(True)
-        self.ui.send_file_button.setEnabled(True)
+        self.ui.file_button.setEnabled(True)
         self.ui.private_message_button.setEnabled(True)
         self.screen_spy_timer.start(3000)
 

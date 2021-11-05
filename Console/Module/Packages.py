@@ -32,3 +32,13 @@ class RemoteSpyFlag(object):
 class ScreenBroadcastFlag(object):
     PackInfo = 1
     PackData = 2
+
+
+class FileServerFlag(object):
+    ListDir = 1
+    DownloadFile = 2
+
+
+class FileClientFlag(object):
+    ListDir = 1
+    DownloadFile = 2

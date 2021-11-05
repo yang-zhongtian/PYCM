@@ -6,7 +6,6 @@ from threading import Thread
 import zlib
 import logging
 from Module.Packages import RemoteSpyFlag
-import traceback
 
 
 class RemoteSpy(object):

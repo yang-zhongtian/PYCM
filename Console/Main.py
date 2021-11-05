@@ -16,7 +16,8 @@ from UI.Login import LoginForm
 from UI.Dashboard import DashboardForm
 from UI.NetworkDeviceSelect import NetworkDeviceSelectForm
 
-from Module.Threadings import NetworkDiscoverThread, PrivateMessageThread, ScreenBroadcastThread, RemoteSpyThread
+from Module.Threadings import NetworkDiscoverThread, PrivateMessageThread, ScreenBroadcastThread, RemoteSpyThread, \
+    FileServerThread
 from Module.ClassBroadcast import ClassBroadcast
 
 QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
@@ -50,6 +51,7 @@ class DashboardWindow(DashboardForm):
     private_message_thread = None
     screen_broadcast_thread = None
     remote_spy_thread = None
+    file_server_thread = None
     send_message_group_dialog = None
     network_devices_select_dialog = None
 
@@ -77,6 +79,7 @@ class DashboardWindow(DashboardForm):
         self.private_message_thread = PrivateMessageThread(self.config, self)
         self.screen_broadcast_thread = ScreenBroadcastThread(self.config)
         self.remote_spy_thread = RemoteSpyThread(self.config)
+        self.file_server_thread = FileServerThread(self.config)
         self.init_connections()
 
 

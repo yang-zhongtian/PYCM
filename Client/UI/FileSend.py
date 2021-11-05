@@ -91,13 +91,13 @@ class DraggableQListWidget(QTableWidget):
             self.setItem(current_row, 2, QTableWidgetItem(self._translate('FileSendForm', 'Ready')))
 
     def dragEnterEvent(self, event):
-        if event.mimeData().hasUrls:
+        if event.mimeData().hasUrls():
             event.accept()
         else:
             event.ignore()
 
     def dragMoveEvent(self, event):
-        if event.mimeData().hasUrls:
+        if event.mimeData().hasUrls():
             event.accept()
         else:
             event.ignore()

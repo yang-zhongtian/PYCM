@@ -22,7 +22,8 @@ class DashboardForm(QMainWindow):
         self.ui = Ui_DashboardForm()
         self.threadings = {'net_discover_thread': False,
                            'private_message_thread': False,
-                           'remote_spy_thread': False}
+                           'remote_spy_thread': False,
+                           'file_server_thread': False}
         self.clients = {}
         self.mac_binding = {}
         self.ui.setupUi(self)

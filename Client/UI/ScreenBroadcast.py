@@ -1,6 +1,5 @@
 from PyQt5.QtWidgets import QWidget, QFileDialog
-from PyQt5.QtCore import Qt, QCoreApplication
-import pathlib
+from PyQt5.QtCore import Qt, QCoreApplication, QDir
 from .ScreenBroadcastUI import Ui_ScreenBroadcastForm
 
 
@@ -37,7 +36,7 @@ class ScreenBroadcastForm(QWidget):
         frame = self.ui.screen_display.pixmap()
         frame = frame.toImage()
         file_path, _ = QFileDialog.getSaveFileName(self, self._translate('ScreenBroadcastForm', 'Select Path To Save'),
-                                                   str(pathlib.Path.home()),
+                                                   str(QDir.homePath()),
                                                    self._translate('ScreenBroadcastForm', 'JPEG Image(*.jpg)'))
         if file_path:
             frame.save(file_path, 'JPEG')

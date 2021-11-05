@@ -81,7 +81,7 @@ class MainWindow(MainForm):
         self.ui.title_label.setText(self._translate('MainForm', 'PYCM Client - Offline'))
         self.update_tray_tooltip()
         self.ui.notify_button.setEnabled(False)
-        self.ui.send_file_button.setEnabled(False)
+        self.ui.file_button.setEnabled(False)
         self.ui.private_message_button.setEnabled(False)
         self.server_ip = None
         self.net_discover_thread.start()

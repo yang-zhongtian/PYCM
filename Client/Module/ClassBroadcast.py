@@ -3,6 +3,7 @@ import socket
 import time
 import struct
 import base64
+import pickle
 import subprocess
 import logging
 from Module.Packages import ClassBroadcastFlag
@@ -43,8 +44,7 @@ class ClassBroadcast(QObject):
     def batch_send_decode(self, unpacked_data):
         integer_length = struct.calcsize('!i')
         targets_length = struct.unpack('!i', unpacked_data[:integer_length])[0]
-        targets = unpacked_data[integer_length:integer_length + targets_length].split(b'\x00')
-        targets = [socket.inet_ntoa(item) for item in targets]
+        targets = pickle.loads(unpacked_data[integer_length:integer_length + targets_length])
         if self.current_ip in targets:
             data = unpacked_data[integer_length + targets_length:]
             return data

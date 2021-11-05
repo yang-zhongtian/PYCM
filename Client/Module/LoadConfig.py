@@ -31,7 +31,10 @@ class Config(object):
                 },
                 'RemoteSpy': {
                     'Port': 4093
-                }
+                },
+                'FileServer': {
+                    'Port': 4096
+                },
             }
         }
         self.__default_tree = []

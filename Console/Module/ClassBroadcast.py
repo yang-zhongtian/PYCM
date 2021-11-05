@@ -2,6 +2,7 @@ from PyQt5.QtCore import QObject
 import socket
 import struct
 import base64
+import pickle
 from Module.Packages import ClassBroadcastFlag
 
 
@@ -35,7 +36,7 @@ class ClassBroadcast(QObject):
         self.socket_obj.sendto(socket_data, (self.socket_ip, self.socket_port))
 
     def batch_send(self, flag, clients, payload):
-        targets = b'\x00'.join([socket.inet_aton(ip) for ip in clients])
+        targets = pickle.dumps(clients)
         full_data = struct.pack(f'!i{len(targets)}s{len(payload)}s', len(targets), targets, payload)
         self.send_data(flag, full_data)
 

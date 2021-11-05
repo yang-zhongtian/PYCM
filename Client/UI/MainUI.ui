@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>351</width>
+    <width>322</width>
     <height>70</height>
    </rect>
   </property>
@@ -123,7 +123,7 @@ color: rgb(255, 255, 255);</string>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="send_file_button">
+         <widget class="QPushButton" name="file_button">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -173,6 +173,16 @@ color: rgb(255, 255, 255);</string>
     </widget>
    </item>
   </layout>
+  <action name="action_send_file">
+   <property name="text">
+    <string>Send File</string>
+   </property>
+  </action>
+  <action name="action_file_client">
+   <property name="text">
+    <string>File Client</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="../Resources.qrc"/>
@@ -186,22 +196,6 @@ color: rgb(255, 255, 255);</string>
    <hints>
     <hint type="sourcelabel">
      <x>42</x>
-     <y>50</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>161</x>
-     <y>34</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>send_file_button</sender>
-   <signal>clicked()</signal>
-   <receiver>MainForm</receiver>
-   <slot>show_file_send_window()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>122</x>
      <y>50</y>
     </hint>
     <hint type="destinationlabel">

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="zh_CN" sourcelanguage="en_US">
+<!DOCTYPE TS><TS version="2.0" language="zh_CN" sourcelanguage="en_US">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -32,6 +31,24 @@
         <location filename="../UI/About.py" line="22"/>
         <source>Build Info: %s</source>
         <translation>编译信息：%s</translation>
+    </message>
+</context>
+<context>
+    <name>FileClient</name>
+    <message>
+        <location filename="../UI/FileClientUI.py" line="76"/>
+        <source>File Client</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/FileClientUI.py" line="77"/>
+        <source>/</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/FileClientUI.py" line="78"/>
+        <source>Go</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -125,118 +142,128 @@
 <context>
     <name>MainForm</name>
     <message>
-        <location filename="../UI/MainUI.py" line="101"/>
+        <location filename="../UI/MainUI.py" line="104"/>
         <source>PYCM Client - Offline</source>
         <translation>PYCM 客户端 - 离线</translation>
     </message>
     <message>
-        <location filename="../UI/MainUI.py" line="102"/>
+        <location filename="../UI/MainUI.py" line="105"/>
         <source>Hands Up</source>
         <translation>举手</translation>
     </message>
     <message>
-        <location filename="../UI/MainUI.py" line="103"/>
+        <location filename="../UI/MainUI.py" line="106"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../UI/MainUI.py" line="104"/>
+        <location filename="../UI/MainUI.py" line="107"/>
         <source>Messaging</source>
         <translation>消息</translation>
     </message>
     <message>
-        <location filename="../UI/MainUI.py" line="105"/>
+        <location filename="../UI/MainUI.py" line="108"/>
         <source>Hide</source>
         <translation>隐藏</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="65"/>
+        <location filename="../UI/Main.py" line="66"/>
         <source>Show Tool Bar</source>
         <translation>显示工具栏</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="66"/>
+        <location filename="../UI/Main.py" line="67"/>
         <source>Configure Network</source>
         <translation>修改网络配置</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="68"/>
+        <location filename="../UI/Main.py" line="69"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="70"/>
+        <location filename="../UI/Main.py" line="71"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="171"/>
+        <location filename="../UI/Main.py" line="176"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="79"/>
+        <location filename="../UI/Main.py" line="80"/>
         <source>Are you sure to modify the network configuration? This operation may cause the client to fail to start normally!</source>
         <translation>你是否确定要修改网络配置？此操作可能会导致客户端无法正常启动！</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="87"/>
+        <location filename="../UI/Main.py" line="88"/>
         <source>Info</source>
         <translation>信息</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="87"/>
+        <location filename="../UI/Main.py" line="88"/>
         <source>Configuration success! Please restart the client to take effect</source>
         <translation>修改配置成功！请重启客户端以生效</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="104"/>
+        <location filename="../UI/Main.py" line="109"/>
         <source>Message</source>
         <translation>消息</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="115"/>
+        <location filename="../UI/Main.py" line="120"/>
         <source>PYCM Client - Online</source>
         <translation>PYCM 客户端 - 在线</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="138"/>
+        <location filename="../UI/Main.py" line="143"/>
         <source>Online</source>
         <translation>在线</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="140"/>
+        <location filename="../UI/Main.py" line="145"/>
         <source>Offline</source>
         <translation>离线</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="141"/>
+        <location filename="../UI/Main.py" line="146"/>
         <source>PYCM Client
 </source>
         <translation>PYCM 客户端
 </translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="141"/>
+        <location filename="../UI/Main.py" line="146"/>
         <source>Local IP: %s
 </source>
         <translation>本机IP：%s
 </translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="141"/>
+        <location filename="../UI/Main.py" line="146"/>
         <source>Status: %s</source>
         <translation>状态：%s</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="171"/>
+        <location filename="../UI/Main.py" line="176"/>
         <source>Are you sure to exit?</source>
         <translation>你是否确定要退出？</translation>
     </message>
     <message>
-        <location filename="../UI/MainUI.py" line="100"/>
+        <location filename="../UI/MainUI.py" line="103"/>
         <source>Client</source>
         <translation>客户端</translation>
+    </message>
+    <message>
+        <location filename="../UI/MainUI.py" line="109"/>
+        <source>Send File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/MainUI.py" line="110"/>
+        <source>File Client</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -4,6 +4,7 @@ from Module.NetworkDiscover import NetworkDiscover
 from Module.PrivateMessage import PrivateMessage
 from Module.ScreenBroadcast import ScreenBroadcast
 from Module.RemoteSpy import RemoteSpy
+from Module.FileServer import FileServer
 
 
 class NetworkDiscoverThread(QThread):
@@ -38,7 +39,7 @@ class PrivateMessageThread(QThread):
 
 
 class ScreenBroadcastThread(QThread):
-    def __init__(self, config):
+    def __init__(self, config: object):
         super(ScreenBroadcastThread, self).__init__()
         self.current_ip = config.get_item('Network/Local/IP')
         self.socket_ip = config.get_item('Network/ScreenBroadcast/IP')
@@ -68,4 +69,19 @@ class RemoteSpyThread(QThread):
         self.socket.stop()
 
     def run(self):
+        self.socket.start()
+
+
+class FileServerThread(QThread):
+    def __init__(self, config: object):
+        super(FileServerThread, self).__init__()
+        self.socket_port = config.get_item('Network/FileServer/Port')
+        self.socket = FileServer(self, self.socket_port)
+
+    def safe_stop(self):
+        self.socket.working = False
+        self.socket.stop()
+
+    def run(self):
+        self.socket.working = True
         self.socket.start()

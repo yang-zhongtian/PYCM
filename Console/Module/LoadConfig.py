@@ -30,7 +30,10 @@ class Config(object):
                 },
                 'RemoteSpy': {
                     'Port': 4093
-                }
+                },
+                'FileServer': {
+                    'Port': 4096
+                },
             },
             'Login': {
                 'Username': 'admin',
