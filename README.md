@@ -6,6 +6,8 @@
 [![GitHub license](https://img.shields.io/github/license/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM)
 ![Build windows](https://github.com/yangzhongtian001/PYCM/actions/workflows/build-windows.yml/badge.svg)
 
+[English](README.md) [简体中文](README.zh-CN.md)
+
 ## Mirror Repository
 
 * [Github(Master)](https://github.com/yangzhongtian001/PYCM)
@@ -15,8 +17,8 @@
 
 ## Introduction
 
-This program is an e-classroom management system written by python. It contains both client(student side) and console(
-teacher size). GUI written by PyQt5, supporting all platforms.
+This program is an e-classroom management system written by python.
+It contains both `client(student side)` and `console(teacher side)`. GUI written by `PyQt5`, supporting all platforms.
 
 ## Features
 
@@ -25,8 +27,8 @@ teacher size). GUI written by PyQt5, supporting all platforms.
 * [x] Cient screen spyby Console
 * [X] Console side file share
 * [x] Client side file submitting
-* [x] Console side message sending. Supporting both private & public messages.
-* [ ] Client notify
+* [x] Console side message sending
+* [ ] Client side message sending
 * [x] Nuitka packaging
 
 ## Programs
