@@ -41,20 +41,6 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="button_forward">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="icon">
-        <iconset resource="../Resources.qrc">
-         <normaloff>:/Theme/Resources/arrow_right_focus.png</normaloff>:/Theme/Resources/arrow_right_focus.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QLineEdit" name="location">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
@@ -63,20 +49,10 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>/</string>
+        <string notr="true">/</string>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="button_go">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>Go</string>
+       <property name="readOnly">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -90,7 +66,7 @@
         <set>QAbstractItemView::NoEditTriggers</set>
        </property>
        <property name="dragDropMode">
-        <enum>QAbstractItemView::NoDragDrop</enum>
+        <enum>QAbstractItemView::DragDrop</enum>
        </property>
        <property name="defaultDropAction">
         <enum>Qt::IgnoreAction</enum>
@@ -98,11 +74,17 @@
        <property name="selectionMode">
         <enum>QAbstractItemView::ContiguousSelection</enum>
        </property>
-       <property name="movement">
-        <enum>QListView::Static</enum>
+       <property name="gridSize">
+        <size>
+         <width>100</width>
+         <height>100</height>
+        </size>
        </property>
        <property name="viewMode">
         <enum>QListView::IconMode</enum>
+       </property>
+       <property name="uniformItemSizes">
+        <bool>true</bool>
        </property>
        <property name="wordWrap">
         <bool>true</bool>
@@ -116,6 +98,23 @@
        </property>
        <property name="text">
         <string>Download</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QProgressBar" name="download_progress">
+       <property name="value">
+        <number>0</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="warning">
+       <property name="text">
+        <string>Folder download is not supported</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -134,8 +133,8 @@
    <slot>download()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>392</x>
-     <y>417</y>
+     <x>404</x>
+     <y>393</y>
     </hint>
     <hint type="destinationlabel">
      <x>385</x>
@@ -159,9 +158,43 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>button_back</sender>
+   <signal>clicked()</signal>
+   <receiver>FileClient</receiver>
+   <slot>go_back()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>31</x>
+     <y>24</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>48</x>
+     <y>23</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>file_area</sender>
+   <signal>itemDoubleClicked(QListWidgetItem*)</signal>
+   <receiver>FileClient</receiver>
+   <slot>switch_dir()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>202</x>
+     <y>169</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>260</x>
+     <y>185</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>download()</slot>
   <slot>update_selection()</slot>
+  <slot>switch_dir()</slot>
+  <slot>go_back()</slot>
  </slots>
 </ui>

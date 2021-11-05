@@ -1,3 +1,22 @@
+# -*- coding: utf-8 -*-
+"""
+    This file is part of PYCM project
+    Copyright (C)2021 Richard Yang <zhongtian.yang@qq.com>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"""
+
 import os
 import glob
 import argparse
@@ -19,10 +38,8 @@ def auto_generate(args):
 
 
 parser = argparse.ArgumentParser(description='PYCM Translation File Generator')
-subparsers = parser.add_subparsers(help='Generator')
-automode = subparsers.add_parser('auto', help='Generate translation file by auto')
-automode.add_argument('--lang', type=str, default='zh_CN', help='The target language for translation')
-automode.set_defaults(func=auto_generate)
+parser.add_argument('--lang', type=str, default='zh_CN', help='The target language for translation')
+parser.set_defaults(func=auto_generate)
 
 args = parser.parse_args()
 args.func(args)

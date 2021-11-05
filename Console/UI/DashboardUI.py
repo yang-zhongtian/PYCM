@@ -254,6 +254,7 @@ class Ui_DashboardForm(object):
         self.client_quit.clicked.connect(DashboardForm.client_quit)
         self.clear_log_area.clicked.connect(self.log_area.clear)
         self.log_area.anchorClicked['QUrl'].connect(DashboardForm.show_file_receive)
+        self.file_share.clicked.connect(DashboardForm.show_file_server)
         QtCore.QMetaObject.connectSlotsByName(DashboardForm)
 
     def retranslateUi(self, DashboardForm):

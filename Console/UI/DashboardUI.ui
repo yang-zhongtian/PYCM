@@ -727,6 +727,22 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>file_share</sender>
+   <signal>clicked()</signal>
+   <receiver>DashboardForm</receiver>
+   <slot>show_file_server()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1133</x>
+     <y>70</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1143</x>
+     <y>72</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>clear_client_selection()</slot>
@@ -740,5 +756,6 @@ p, li { white-space: pre-wrap; }
   <slot>show_about()</slot>
   <slot>show_file_receive()</slot>
   <slot>client_quit()</slot>
+  <slot>show_file_server()</slot>
  </slots>
 </ui>

@@ -1,3 +1,22 @@
+# -*- coding: utf-8 -*-
+"""
+    This file is part of PYCM project
+    Copyright (C)2021 Richard Yang <zhongtian.yang@qq.com>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"""
+
 from PyQt5.QtWidgets import QWidget, QSystemTrayIcon, QAction, QMenu, QMessageBox, QApplication
 from PyQt5.QtCore import Qt, QPoint, QTimer, pyqtSignal, QCoreApplication
 from PyQt5.QtGui import QMouseEvent, QIcon
@@ -58,6 +77,7 @@ class MainForm(QWidget):
         self.class_broadcast_thread.quit_self.connect(self.quit_self)
         self.class_broadcast_thread.client_file_recieved.connect(lambda: self.file_send_window.file_recieved())
         self.class_broadcast_thread.start_remote_spy.connect(self.start_remote_spy)
+        self.class_broadcast_thread.toggle_file_server.connect(self.toggle_file_client)
         self.screen_broadcast_thread.frame_recieved.connect(self.screen_broadcast_window.update_frame)
         self.screen_spy_timer.timeout.connect(lambda: self.private_message_object.screen_spy_send())
 
@@ -80,8 +100,12 @@ class MainForm(QWidget):
     # noinspection PyArgumentList
     def init_file_button(self):
         self.file_button_menu = QMenu()
-        self.file_button_menu.addAction(QAction(self._translate('MainForm', 'File Client'), self,
-                                                triggered=lambda: self.show_file_client_window()))
+        self.file_client_action = QAction(self._translate('MainForm', 'File Client'), self,
+                                          triggered=lambda: self.show_file_client_window())
+        self.file_client_action.setEnabled(False)
+        file_send_action = QAction(self._translate('MainForm', 'Send File'), self,
+                                   triggered=lambda: self.show_file_send_window())
+        self.file_button_menu.addActions([self.file_client_action, file_send_action])
         self.ui.file_button.setMenu(self.file_button_menu)
 
     def show_network_config_window(self):
@@ -158,6 +182,12 @@ class MainForm(QWidget):
     def quit_self(self):
         self._force_quit = True
         self.close()
+
+    def toggle_file_client(self, working):
+        if working:
+            self.file_client_action.setEnabled(True)
+        else:
+            self.file_client_action.setEnabled(False)
 
     def mouseMoveEvent(self, e: QMouseEvent):
         if self._start_pos and self._is_tracking:

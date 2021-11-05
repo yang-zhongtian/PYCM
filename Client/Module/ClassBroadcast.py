@@ -1,3 +1,22 @@
+# -*- coding: utf-8 -*-
+"""
+    This file is part of PYCM project
+    Copyright (C)2021 Richard Yang <zhongtian.yang@qq.com>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"""
+
 from PyQt5.QtCore import QObject
 import socket
 import time
@@ -87,5 +106,10 @@ class ClassBroadcast(QObject):
                 elif unpacked_flag == ClassBroadcastFlag.ConsoleQuit:
                     self.parent.reset_all.emit()
                     return
+                elif unpacked_flag == ClassBroadcastFlag.ToggleFileServer:
+                    if unpacked_data == b'1':
+                        self.parent.toggle_file_server.emit(True)
+                    else:
+                        self.parent.toggle_file_server.emit(False)
             except Exception as e:
                 logging.warning(f'Failed to decode socket data: {e}')

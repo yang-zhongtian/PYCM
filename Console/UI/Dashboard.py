@@ -1,4 +1,21 @@
-import os.path
+# -*- coding: utf-8 -*-
+"""
+    This file is part of PYCM project
+    Copyright (C)2021 Richard Yang <zhongtian.yang@qq.com>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"""
 
 from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication, QDialog, QListWidgetItem, QLabel, QMessageBox, \
     QInputDialog, QLineEdit, QSystemTrayIcon, QAction, QMenu
@@ -11,6 +28,7 @@ from .SendMessageGroup import SendMessageGroupForm
 from .RemoteCommandGroup import RemoteCommandGroupForm
 from .RemoteSpy import RemoteSpyForm
 from .FileReceive import FileReceiveForm
+from .FileServer import FileServerForm
 from .About import AboutDialog
 
 
@@ -22,8 +40,7 @@ class DashboardForm(QMainWindow):
         self.ui = Ui_DashboardForm()
         self.threadings = {'net_discover_thread': False,
                            'private_message_thread': False,
-                           'remote_spy_thread': False,
-                           'file_server_thread': False}
+                           'remote_spy_thread': False}
         self.clients = {}
         self.mac_binding = {}
         self.ui.setupUi(self)
@@ -35,6 +52,7 @@ class DashboardForm(QMainWindow):
         self.tray_icon = QSystemTrayIcon(self)
         self.remote_spy_window = RemoteSpyForm(self)
         self.file_receive_window = FileReceiveForm(self)
+        self.file_server_window = FileServerForm(self)
 
     def init_connections(self):
         self.private_message_thread.client_login_logout.connect(self.__logger)
@@ -263,6 +281,9 @@ class DashboardForm(QMainWindow):
         self.file_receive_window.activateWindow()
         self.file_receive_window.showNormal()
 
+    def show_file_server(self):
+        self.file_server_window.show()
+
     def show_about(self):
         AboutDialog(self).exec_()
 
@@ -287,6 +308,8 @@ class DashboardForm(QMainWindow):
             return
         self.toggle_broadcast(False)
         self.remote_spy_thread.safe_stop()
+        self.file_server_thread.safe_stop()
+        self.class_broadcast_object.file_server_status_notify(False)
         self.class_broadcast_object.console_quit_notify()
         if self.tray_icon.isVisible():
             self.tray_icon.hide()
