@@ -26,5 +26,4 @@ def load_translation():
     language = QLocale.system().name()
     if language in SUPPORTED_TRANSLATION:
         return language
-    else:
-        return None
+    return None

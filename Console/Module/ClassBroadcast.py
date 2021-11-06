@@ -22,6 +22,7 @@ import socket
 import struct
 import base64
 import pickle
+import zlib
 from Module.Packages import ClassBroadcastFlag
 
 
@@ -57,7 +58,8 @@ class ClassBroadcast(QObject):
 
     def batch_send(self, flag, clients, payload):
         targets = pickle.dumps(clients)
-        full_data = struct.pack(f'!i{len(targets)}s{len(payload)}s', len(targets), targets, payload)
+        cksum = zlib.crc32(targets)
+        full_data = struct.pack(f'!iL{len(targets)}s{len(payload)}s', len(targets), cksum, targets, payload)
         self.send_data(flag, full_data)
 
     def send_text(self, clients, text):

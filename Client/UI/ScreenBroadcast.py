@@ -49,7 +49,10 @@ class ScreenBroadcastForm(QWidget):
         self.freeze = freeze
 
     def show_full_screen(self, fullscreen=True):
-        self.showFullScreen() if fullscreen else self.showNormal()
+        if fullscreen:
+            self.showFullScreen()
+        else:
+            self.showNormal()
 
     def screen_shot(self):
         frame = self.ui.screen_display.pixmap()

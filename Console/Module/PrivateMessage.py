@@ -101,7 +101,7 @@ class PrivateMessage(object):
                                                                                              unpacked_data)
                     file_merger.update_chuck(socket_addr[0], file_index, file_amount, file_buffer[:file_buffer_length])
                 elif unpacked_flag == PrivateMessageFlag.ClientFileInfo:
-                    file_cksum = struct.unpack('!l', unpacked_data)[0]
+                    file_cksum = struct.unpack('!L', unpacked_data)[0]
                     status = file_merger.write_file(socket_addr[0], file_cksum)
                     if status is not None:
                         self.parent.client_file_recieved.emit(socket_addr[0], status)

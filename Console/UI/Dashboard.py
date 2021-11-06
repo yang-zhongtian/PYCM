@@ -68,13 +68,13 @@ class DashboardForm(QMainWindow):
     # noinspection PyArgumentList
     def init_tray(self):
         self.tray_icon_menu.addAction(QAction(self._translate('DashboardForm', 'Show Dashboard'),
-                                              self, triggered=lambda: self.show_window()))
+                                              self, triggered=self.show_window))
         self.tray_icon_menu.addAction(QAction(self._translate('DashboardForm', 'About'),
-                                              self, triggered=lambda: self.show_about()))
+                                              self, triggered=self.show_about))
         self.tray_icon_menu.addAction(QAction(self._translate('DashboardForm', 'Exit'), self, triggered=self.close))
         self.tray_icon.setIcon(QIcon(':/Core/Resources/Logo.png'))
         self.tray_icon.setContextMenu(self.tray_icon_menu)
-        self.tray_icon.activated[QSystemTrayIcon.ActivationReason].connect(lambda x: self.show_window(x))
+        self.tray_icon.activated[QSystemTrayIcon.ActivationReason].connect(self.show_window)
         self.__update_tray_tooltip()
         self.tray_icon.show()
 
@@ -288,7 +288,7 @@ class DashboardForm(QMainWindow):
         AboutDialog(self).exec_()
 
     def show_window(self, reason=None):
-        if reason is not None and reason != QSystemTrayIcon.Trigger:
+        if reason is not False and reason != QSystemTrayIcon.DoubleClick:
             return
         self.activateWindow()
         self.showNormal()

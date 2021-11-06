@@ -4,6 +4,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/network)
 [![GitHub stars](https://img.shields.io/github/stars/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/stargazers)
 [![GitHub license](https://img.shields.io/github/license/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM)
+[![Code Factor](https://www.codefactor.io/repository/github/yangzhongtian001/pycm/badge/master)](https://www.codefactor.io/repository/github/yangzhongtian001/pycm/overview/master)
 ![Build windows](https://github.com/yangzhongtian001/PYCM/actions/workflows/build-windows.yml/badge.svg)
 
 [English](README.md) [简体中文](README.zh-CN.md)
@@ -39,13 +40,13 @@ It contains both `client(student side)` and `console(teacher side)`. GUI written
 ## Release Install Guide
 
 * Download release version [here](https://github.com/yangzhongtian001/PYCM/releases).
-* Run `Main.exe` or `Main.app`
+* Run `ConsoleMain` or `ClientMain`
 
 ## Dev Install Guide
 
 * Clone repository.
 * Run `pip install -r requirements.txt` to install required libraries.
-* Run `python Main.py` to start application.
+* Run `python ConsoleMain.py` or `python ClientMain.py` to start application.
 
 ## Screenshot
 

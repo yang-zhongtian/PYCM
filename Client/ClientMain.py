@@ -41,7 +41,6 @@ app = QApplication(sys.argv)
 app.setStyleSheet(Theme.load_stylesheet())
 app.setQuitOnLastWindowClosed(False)
 
-config = Config()
 translator = QTranslator(app)
 qt_translator = QTranslator(app)
 language = LoadTranslation.load_translation()
@@ -50,6 +49,8 @@ if language is not None:
     qt_translator.load('qtbase_' + language, 'Translation')
     app.installTranslator(translator)
     app.installTranslator(qt_translator)
+
+config = Config()
 
 debug_flag_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'DEBUG'))
 logging.basicConfig(level=logging.DEBUG if os.path.isfile(debug_flag_path) else logging.CRITICAL,

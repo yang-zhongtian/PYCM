@@ -107,62 +107,62 @@
         <translation>就绪</translation>
     </message>
     <message>
-        <location filename="../UI/FileSend.py" line="73"/>
+        <location filename="../UI/FileSend.py" line="76"/>
         <source>File Name</source>
         <translation>文件名</translation>
     </message>
     <message>
-        <location filename="../UI/FileSend.py" line="73"/>
+        <location filename="../UI/FileSend.py" line="76"/>
         <source>File Size</source>
         <translation>文件大小</translation>
     </message>
     <message>
-        <location filename="../UI/FileSend.py" line="73"/>
+        <location filename="../UI/FileSend.py" line="76"/>
         <source>Status</source>
         <translation>状态</translation>
     </message>
     <message>
-        <location filename="../UI/FileSend.py" line="153"/>
+        <location filename="../UI/FileSend.py" line="155"/>
         <source>Select Files</source>
         <translation>选择文件</translation>
     </message>
     <message>
-        <location filename="../UI/FileSend.py" line="153"/>
+        <location filename="../UI/FileSend.py" line="155"/>
         <source>All Files (*)</source>
         <translation>全部文件 (*)</translation>
     </message>
     <message>
-        <location filename="../UI/FileSend.py" line="168"/>
+        <location filename="../UI/FileSend.py" line="170"/>
         <source>Compressed</source>
         <translation>已压缩</translation>
     </message>
     <message>
-        <location filename="../UI/FileSend.py" line="172"/>
+        <location filename="../UI/FileSend.py" line="174"/>
         <source>Compressing</source>
         <translation>压缩中</translation>
     </message>
     <message>
-        <location filename="../UI/FileSend.py" line="187"/>
+        <location filename="../UI/FileSend.py" line="189"/>
         <source>Submitting</source>
         <translation>提交中</translation>
     </message>
     <message>
-        <location filename="../UI/FileSend.py" line="196"/>
+        <location filename="../UI/FileSend.py" line="198"/>
         <source>Processing</source>
         <translation>处理中</translation>
     </message>
     <message>
-        <location filename="../UI/FileSend.py" line="201"/>
+        <location filename="../UI/FileSend.py" line="203"/>
         <source>Finished</source>
         <translation>完成</translation>
     </message>
     <message>
-        <location filename="../UI/FileSend.py" line="202"/>
+        <location filename="../UI/FileSend.py" line="204"/>
         <source>Info</source>
         <translation>信息</translation>
     </message>
     <message>
-        <location filename="../UI/FileSend.py" line="202"/>
+        <location filename="../UI/FileSend.py" line="204"/>
         <source>Submit Success!</source>
         <translation>提交成功！</translation>
     </message>
@@ -195,22 +195,22 @@
         <translation>隐藏</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="87"/>
+        <location filename="../UI/Main.py" line="86"/>
         <source>Show Tool Bar</source>
         <translation>显示工具栏</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="88"/>
+        <location filename="../UI/Main.py" line="87"/>
         <source>Configure Network</source>
         <translation>修改网络配置</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="90"/>
+        <location filename="../UI/Main.py" line="89"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="92"/>
+        <location filename="../UI/Main.py" line="91"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
@@ -220,17 +220,17 @@
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="112"/>
+        <location filename="../UI/Main.py" line="111"/>
         <source>Are you sure to modify the network configuration? This operation may cause the client to fail to start normally!</source>
         <translation>你是否确定要修改网络配置？此操作可能会导致客户端无法正常启动！</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="120"/>
+        <location filename="../UI/Main.py" line="119"/>
         <source>Info</source>
         <translation>信息</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="120"/>
+        <location filename="../UI/Main.py" line="119"/>
         <source>Configuration success! Please restart the client to take effect</source>
         <translation>修改配置成功！请重启客户端以生效</translation>
     </message>
@@ -305,12 +305,12 @@
 <context>
     <name>ScreenBroadcastForm</name>
     <message>
-        <location filename="../UI/ScreenBroadcast.py" line="57"/>
+        <location filename="../UI/ScreenBroadcast.py" line="60"/>
         <source>Select Path To Save</source>
         <translation>选择保存目录</translation>
     </message>
     <message>
-        <location filename="../UI/ScreenBroadcast.py" line="57"/>
+        <location filename="../UI/ScreenBroadcast.py" line="60"/>
         <source>JPEG Image(*.jpg)</source>
         <translation>JPEG 图片(*.jpg)</translation>
     </message>

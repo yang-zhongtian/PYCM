@@ -4,6 +4,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/network)
 [![GitHub stars](https://img.shields.io/github/stars/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/stargazers)
 [![GitHub license](https://img.shields.io/github/license/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM)
+[![Code Factor](https://www.codefactor.io/repository/github/yangzhongtian001/pycm/badge/master)](https://www.codefactor.io/repository/github/yangzhongtian001/pycm/overview/master)
 ![Build windows](https://github.com/yangzhongtian001/PYCM/actions/workflows/build-windows.yml/badge.svg)
 
 [English](README.md) [简体中文](README.zh-CN.md)
@@ -38,13 +39,13 @@
 ## 发布版安装指南
 
 * 下载发布版本于 [这里](https://github.com/yangzhongtian001/PYCM/releases)
-* 运行 `Main.exe` 或 `Main.app`
+* 运行 `ConsoleMain` 或 `ClientMain`
 
 ## 源码版安装指南
 
 * 克隆此仓库
 * 运行 `pip install -r requirements.txt` 以安装依赖组件
-* 运行 `python Main.py` 以启动程序
+* 运行 `python ConsoleMain.py` 或 `python ClientMain.py` 以启动程序
 
 ## 截图
 

@@ -25,7 +25,7 @@ from .LoginUI import Ui_LoginForm
 
 
 def encode_password(password):
-    return hashlib.md5(str(password).encode()).hexdigest()
+    return hashlib.sha256(str(password).encode()).hexdigest()
 
 
 class LoginForm(QDialog):

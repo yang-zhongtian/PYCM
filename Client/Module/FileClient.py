@@ -47,24 +47,28 @@ class FileClient(object):
 
     def list_dir(self, path='/'):
         encoded_path = base64.b64encode(str(path).encode('utf-8'))
-        target_head = struct.pack('!2i', FileClientFlag.ListDir, len(encoded_path))
+        cksum = zlib.crc32(encoded_path)
+        target_head = struct.pack('!2iL', FileClientFlag.ListDir, len(encoded_path), cksum)
         self.socket_obj.send(target_head)
         target_path = struct.pack(f'!{len(encoded_path)}s', encoded_path)
         self.socket_obj.send(target_path)
-        data = self.socket_obj.recv(struct.calcsize('!2i'))
-        data_flag, data_len = struct.unpack('!2i', data)
+        data = self.socket_obj.recv(struct.calcsize('!2iL'))
+        data_flag, data_len, data_cksum = struct.unpack('!2iL', data)
         if data_flag != FileServerFlag.ListDir:
             return []
         result = b''
         while len(result) < data_len:
             data = self.socket_obj.recv(1024)
             result += data
+        if zlib.crc32(result) != data_cksum:
+            return []
         result = pickle.loads(result)
         return result
 
     def download(self, count_signal, recieve_signal, files):
         encoded_path = pickle.dumps(files)
-        target_head = struct.pack('!2i', FileClientFlag.DownloadFile, len(encoded_path))
+        cksum = zlib.crc32(encoded_path)
+        target_head = struct.pack('!2iL', FileClientFlag.DownloadFile, len(encoded_path), cksum)
         self.socket_obj.send(target_head)
         target_path = struct.pack(f'!{len(encoded_path)}s', encoded_path)
         self.socket_obj.send(target_path)

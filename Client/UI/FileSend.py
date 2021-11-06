@@ -55,8 +55,11 @@ class FileSendThread(QThread):
     def __init__(self, private_message_object, buffer):
         super(FileSendThread, self).__init__()
         self.private_message_object = private_message_object
-        self.private_message_object.file_send_progress.connect(lambda x: self.file_send_progress.emit(x))
+        self.private_message_object.file_send_progress.connect(self.update_progress)
         self.buffer = buffer
+
+    def update_progress(self, progress):
+        self.file_send_progress.emit(progress)
 
     def run(self):
         self.private_message_object.send_file(self.buffer)
@@ -87,8 +90,7 @@ class DraggableQListWidget(QTableWidget):
                 integer //= 1024
                 level += 1
                 return str_of_size(integer, remainder, level)
-            else:
-                return integer, remainder, level
+            return integer, remainder, level
 
         units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
         integer, remainder, level = str_of_size(file_size, 0, 0)

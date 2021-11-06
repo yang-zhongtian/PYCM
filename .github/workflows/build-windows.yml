@@ -42,14 +42,14 @@ jobs:
                  --include-data-file=Alibaba-PuHuiTi-Bold.ttf=Alibaba-PuHuiTi-Bold.ttf `
                  --include-data-file=Translation/*.qm=Translation/ `
                  --plugin-enable=qt-plugins --assume-yes-for-downloads `
-                 --output-dir=Build Main.py
+                 --output-dir=Build ConsoleMain.py
       - name: Check build
         working-directory: Console
-        run: if(!(Test-Path Build/Main.dist/Main.exe)){ exit 1 }
+        run: if(!(Test-Path Build/ConsoleMain.dist/ConsoleMain.exe)){ exit 1 }
       - name: Zip files
         uses: papeloto/action-zip@v1
         with:
-          files: Console/Build/Main.dist/
+          files: Console/Build/ConsoleMain.dist/
           dest: PYCM-Console-Windows.zip
       - name: Upload to release
         uses: softprops/action-gh-release@v1
@@ -95,14 +95,14 @@ jobs:
                  --include-data-file=Alibaba-PuHuiTi-Bold.ttf=Alibaba-PuHuiTi-Bold.ttf `
                  --include-data-file=Translation/*.qm=Translation/ `
                  --plugin-enable=qt-plugins --assume-yes-for-downloads `
-                 --output-dir=Build Main.py
+                 --output-dir=Build ClientMain.py
       - name: Check build
         working-directory: Client
-        run: if(!(Test-Path Build/Main.dist/Main.exe)){ exit 1 }
+        run: if(!(Test-Path Build/ClientMain.dist/ClientMain.exe)){ exit 1 }
       - name: Zip files
         uses: papeloto/action-zip@v1
         with:
-          files: Client/Build/Main.dist/
+          files: Client/Build/ClientMain.dist/
           dest: PYCM-Client-Windows.zip
       - name: Upload to release
         uses: softprops/action-gh-release@v1

@@ -23,6 +23,7 @@ import time
 import struct
 import base64
 import pickle
+import zlib
 import subprocess
 import logging
 from Module.Packages import ClassBroadcastFlag
@@ -59,14 +60,17 @@ class ClassBroadcast(QObject):
 
     @staticmethod
     def execute_remote_command(command):
-        subprocess.call(command, shell=True)
+        subprocess.call(command, shell=False)
 
     def batch_send_decode(self, unpacked_data):
-        integer_length = struct.calcsize('!i')
-        targets_length = struct.unpack('!i', unpacked_data[:integer_length])[0]
-        targets = pickle.loads(unpacked_data[integer_length:integer_length + targets_length])
+        header_length = struct.calcsize('!iL')
+        targets_length, chsum = struct.unpack('!iL', unpacked_data[:header_length])
+        raw_data = unpacked_data[header_length:header_length + targets_length]
+        if zlib.crc32(raw_data) != chsum:
+            return None
+        targets = pickle.loads(raw_data)
         if self.current_ip in targets:
-            data = unpacked_data[integer_length + targets_length:]
+            data = unpacked_data[header_length + targets_length:]
             return data
         return None
 
