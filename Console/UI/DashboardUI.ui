@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1304</width>
-    <height>779</height>
+    <width>927</width>
+    <height>547</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <iconset resource="../Resources.qrc">
     <normaloff>:/Core/Resources/Logo.png</normaloff>:/Core/Resources/Logo.png</iconset>
   </property>
-  <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+  <widget class="QWidget" name="central_widget">
+   <layout class="QVBoxLayout" name="central_layout">
     <property name="spacing">
      <number>4</number>
     </property>
@@ -35,7 +35,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="title">
       <property name="font">
        <font>
         <pointsize>16</pointsize>
@@ -98,7 +98,7 @@ padding-bottom: 5px;
         <property name="frameShadow">
          <enum>QFrame::Plain</enum>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout">
+        <layout class="QHBoxLayout" name="frame_header_layout">
          <property name="spacing">
           <number>8</number>
          </property>
@@ -232,7 +232,7 @@ padding-bottom: 5px;
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_4">
+        <layout class="QVBoxLayout" name="frame_body_layout">
          <property name="leftMargin">
           <number>0</number>
          </property>
@@ -246,7 +246,7 @@ padding-bottom: 5px;
           <number>0</number>
          </property>
          <item>
-          <widget class="QSplitter" name="splitter">
+          <widget class="QSplitter" name="frame_body_splitter">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -256,11 +256,11 @@ padding-bottom: 5px;
            <widget class="QWidget" name="desktop_widget_container" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>1</horstretch>
+              <horstretch>8</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_2">
+            <layout class="QVBoxLayout" name="desktop_widget_container_layout">
              <property name="leftMargin">
               <number>0</number>
              </property>
@@ -317,11 +317,11 @@ padding-bottom: 5px;
            <widget class="QWidget" name="log_widget_container" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
+              <horstretch>2</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_3">
+            <layout class="QVBoxLayout" name="log_widget_container_layout">
              <property name="leftMargin">
               <number>5</number>
              </property>
@@ -421,7 +421,7 @@ p, li { white-space: pre-wrap; }
     </item>
    </layout>
   </widget>
-  <widget class="QToolBar" name="toolBar">
+  <widget class="QToolBar" name="tool_bar">
    <property name="sizePolicy">
     <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
      <horstretch>0</horstretch>
@@ -449,8 +449,14 @@ p, li { white-space: pre-wrap; }
    <property name="movable">
     <bool>false</bool>
    </property>
+   <property name="allowedAreas">
+    <set>Qt::BottomToolBarArea</set>
+   </property>
    <property name="toolButtonStyle">
     <enum>Qt::ToolButtonTextOnly</enum>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
    </property>
    <attribute name="toolBarArea">
     <enum>BottomToolBarArea</enum>

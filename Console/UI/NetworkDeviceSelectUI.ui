@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>413</width>
-    <height>120</height>
+    <width>391</width>
+    <height>111</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>391</width>
+    <height>111</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>391</width>
+    <height>111</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Network Settings</string>
@@ -17,12 +29,12 @@
    <iconset resource="../Resources.qrc">
     <normaloff>:/Core/Resources/Logo.png</normaloff>:/Core/Resources/Logo.png</iconset>
   </property>
-  <widget class="QDialogButtonBox" name="buttonBox">
+  <widget class="QDialogButtonBox" name="operation_buttons">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>70</y>
-     <width>391</width>
+     <y>60</y>
+     <width>371</width>
      <height>41</height>
     </rect>
    </property>
@@ -41,13 +53,13 @@
     <rect>
      <x>20</x>
      <y>20</y>
-     <width>371</width>
-     <height>41</height>
+     <width>351</width>
+     <height>35</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <pointsize>11</pointsize>
     </font>
    </property>
   </widget>
@@ -57,7 +69,7 @@
  </resources>
  <connections>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>operation_buttons</sender>
    <signal>accepted()</signal>
    <receiver>NetworkDeviceSelectDialog</receiver>
    <slot>accept()</slot>
@@ -73,7 +85,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>operation_buttons</sender>
    <signal>rejected()</signal>
    <receiver>NetworkDeviceSelectDialog</receiver>
    <slot>reject()</slot>

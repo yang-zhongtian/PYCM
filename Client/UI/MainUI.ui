@@ -6,21 +6,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>322</width>
-    <height>70</height>
+    <width>330</width>
+    <height>54</height>
    </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>322</width>
-    <height>70</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>397</width>
-    <height>75</height>
-   </size>
   </property>
   <property name="windowTitle">
    <string>Client</string>
@@ -29,7 +17,7 @@
    <iconset resource="../Resources.qrc">
     <normaloff>:/Core/Resources/Logo.png</normaloff>:/Core/Resources/Logo.png</iconset>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="main_layout">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -46,13 +34,8 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QWidget" name="Container" native="true">
-     <property name="styleSheet">
-      <string notr="true">#Container{
-	background-color: rgb(255, 255, 255);
-}</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+    <widget class="QWidget" name="main_container" native="true">
+     <layout class="QVBoxLayout" name="main_container_layout">
       <property name="spacing">
        <number>0</number>
       </property>
@@ -72,7 +55,7 @@
        <widget class="QLabel" name="title_label">
         <property name="font">
          <font>
-          <pointsize>12</pointsize>
+          <pointsize>11</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -90,7 +73,7 @@ color: rgb(255, 255, 255);</string>
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,1,1,1">
+       <layout class="QHBoxLayout" name="tool_buttons_layout" stretch="1,1,1,1">
         <property name="spacing">
          <number>5</number>
         </property>
@@ -117,6 +100,11 @@ color: rgb(255, 255, 255);</string>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>Hands Up</string>
           </property>
@@ -132,6 +120,11 @@ color: rgb(255, 255, 255);</string>
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+           </font>
           </property>
           <property name="text">
            <string>File</string>
@@ -149,6 +142,11 @@ color: rgb(255, 255, 255);</string>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>Messaging</string>
           </property>
@@ -161,6 +159,11 @@ color: rgb(255, 255, 255);</string>
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>11</pointsize>
+           </font>
           </property>
           <property name="text">
            <string>Hide</string>

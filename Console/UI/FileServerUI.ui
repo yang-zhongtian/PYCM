@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>522</width>
-    <height>133</height>
+    <width>330</width>
+    <height>108</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,9 +29,9 @@
    <iconset resource="../Resources.qrc">
     <normaloff>:/Core/Resources/Logo.png</normaloff>:/Core/Resources/Logo.png</iconset>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_1" stretch="0,0,0">
+  <layout class="QVBoxLayout" name="main_layout" stretch="0,0,0">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="working_folder_layout">
      <item>
       <widget class="QLabel" name="working_folder_label">
        <property name="text">
@@ -71,7 +71,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <layout class="QHBoxLayout" name="server_info_layout">
      <item>
       <widget class="QLabel" name="server_info">
        <property name="text">

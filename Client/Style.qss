@@ -1011,7 +1011,7 @@ QPushButton {
   color: #19232D;
   border-radius: 4px;
   padding: 6px 6px;
-  height: 25px;
+  height: 20px;
   outline: none;
   border: none;
 }
@@ -2213,3 +2213,10 @@ PlotWidget {
   padding: 0px;
 }
 
+
+/* QMessageBox ------------------------------------------------------------
+
+--------------------------------------------------------------------------- */
+QMessageBox {
+  font-size: 16px;
+}

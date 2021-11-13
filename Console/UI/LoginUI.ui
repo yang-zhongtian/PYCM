@@ -9,20 +9,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>341</width>
-    <height>232</height>
+    <width>331</width>
+    <height>211</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>341</width>
-    <height>232</height>
+    <width>331</width>
+    <height>211</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>341</width>
-    <height>232</height>
+    <width>331</width>
+    <height>211</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -35,11 +35,16 @@
   <widget class="QLineEdit" name="username">
    <property name="geometry">
     <rect>
-     <x>133</x>
-     <y>70</y>
+     <x>120</x>
+     <y>61</y>
      <width>181</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="placeholderText">
     <string>Default: admin</string>
@@ -48,11 +53,16 @@
   <widget class="QLineEdit" name="password">
    <property name="geometry">
     <rect>
-     <x>133</x>
-     <y>120</y>
+     <x>120</x>
+     <y>101</y>
      <width>181</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="echoMode">
     <enum>QLineEdit::Password</enum>
@@ -65,14 +75,14 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>20</y>
-     <width>291</width>
+     <y>12</y>
+     <width>261</width>
      <height>31</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>16</pointsize>
+     <pointsize>17</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -91,8 +101,8 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>70</y>
-     <width>101</width>
+     <y>61</y>
+     <width>81</width>
      <height>31</height>
     </rect>
    </property>
@@ -109,8 +119,8 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>120</y>
-     <width>91</width>
+     <y>101</y>
+     <width>81</width>
      <height>31</height>
     </rect>
    </property>
@@ -130,14 +140,14 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>170</y>
-     <width>284</width>
+     <y>150</y>
+     <width>271</width>
      <height>41</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>10</pointsize>
+     <pointsize>11</pointsize>
     </font>
    </property>
    <property name="text">

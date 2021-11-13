@@ -47,7 +47,7 @@ class FileServer(object):
         self.socket_obj.bind(('', self.socket_port))
         self.socket_obj.listen(100)
         self.socket_inputs.append(self.socket_obj)
-        self.dir_filter = QDir.AllEntries | QDir.NoDotAndDotDot | QDir.NoSymLinks
+        self.dir_filter = QDir.Files | QDir.NoDotAndDotDot | QDir.NoSymLinks
 
     def start(self):
         self.__init_socket_obj()

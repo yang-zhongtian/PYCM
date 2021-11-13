@@ -63,7 +63,6 @@ class FileDownloadThread(QThread):
 class FileClientDialog(QDialog):
     _translate = QCoreApplication.translate
     file_download_thread = None
-    history_stack = []
 
     def __init__(self, parent=None):
         super(FileClientDialog, self).__init__(parent)
@@ -124,20 +123,6 @@ class FileClientDialog(QDialog):
                                     self._translate('FileClientDialog', 'File download finished'))
             self.ui.download_progress.setValue(0)
             self.ui.download_progress.setHidden(True)
-
-    def switch_dir(self, item):
-        item_data = item.data(Qt.UserRole)
-        if item_data[0] == 'dir':
-            self.history_stack.append(self.ui.location.text())
-            self.list_dir(item_data[1])
-
-    def go_back(self):
-        if len(self.history_stack) == 0:
-            return
-        target_dir = self.history_stack.pop()
-        if target_dir == '/' and self.ui.location.text() == '/':
-            return
-        self.list_dir(target_dir)
 
     def closeEvent(self, e):
         self.file_client.socket_obj.close()

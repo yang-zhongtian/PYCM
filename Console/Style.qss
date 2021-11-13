@@ -1011,7 +1011,7 @@ QPushButton {
   color: #E0E1E3;
   border-radius: 4px;
   padding: 6px 6px;
-  height: 25px;
+  height: 21px;
   outline: none;
   border: none;
 }
@@ -2211,4 +2211,11 @@ QAbstractView:selected {
 PlotWidget {
   /* Fix cut labels in plots #134 */
   padding: 0px;
+}
+
+/* QMessageBox ------------------------------------------------------------
+
+--------------------------------------------------------------------------- */
+QMessageBox {
+  font-size: 16px;
 }

@@ -64,6 +64,10 @@ def _apply_application_font():
     current_path = os.path.dirname(os.path.abspath(__file__))
     QFontDatabase.addApplicationFont(os.path.join(current_path, 'Alibaba-PuHuiTi-Regular.ttf'))
     QFontDatabase.addApplicationFont(os.path.join(current_path, 'Alibaba-PuHuiTi-Bold.ttf'))
+    app = QCoreApplication.instance()
+    font = app.font()
+    font.setPointSize(9)
+    app.setFont(font)
 
 
 def load_stylesheet():

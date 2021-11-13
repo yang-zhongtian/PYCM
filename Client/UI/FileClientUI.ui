@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>619</width>
-    <height>436</height>
+    <width>492</width>
+    <height>336</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,44 +20,7 @@
    <iconset resource="../Resources.qrc">
     <normaloff>:/Core/Resources/Logo.png</normaloff>:/Core/Resources/Logo.png</iconset>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QPushButton" name="button_back">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string notr="true"/>
-       </property>
-       <property name="icon">
-        <iconset resource="../Resources.qrc">
-         <normaloff>:/Theme/Resources/arrow_left_focus.png</normaloff>:/Theme/Resources/arrow_left_focus.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="location">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string notr="true">/</string>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
+  <layout class="QVBoxLayout" name="main_layout" stretch="1">
    <item>
     <layout class="QVBoxLayout" name="file_area_container">
      <item>
@@ -108,16 +71,6 @@
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QLabel" name="warning">
-       <property name="text">
-        <string>Folder download is not supported</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
     </layout>
    </item>
   </layout>
@@ -155,22 +108,6 @@
     <hint type="destinationlabel">
      <x>204</x>
      <y>330</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>button_back</sender>
-   <signal>clicked()</signal>
-   <receiver>FileClient</receiver>
-   <slot>go_back()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>31</x>
-     <y>24</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>48</x>
-     <y>23</y>
     </hint>
    </hints>
   </connection>
