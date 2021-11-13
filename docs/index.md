@@ -1,37 +1,42 @@
-## Welcome to GitHub Pages
+## Welcome to PYCM
 
-You can use the [editor on GitHub](https://github.com/yangzhongtian001/PYCM/edit/master/docs/index.md) to maintain and preview the content for your website in Markdown files.
+[English](index) [简体中文](index.zh-CN)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Introduction
 
-### Markdown
+This program is an e-classroom management system written by python.
+It contains both `client(student side)` and `console(teacher side)`. GUI written by `PyQt5`, supporting all platforms.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Features
 
-```markdown
-Syntax highlighted code block
+* [x] Auto LAN discover
+* [x] Console screen broadcasting
+* [x] Cient screen spyby Console
+* [X] Console side file share
+* [x] Client side file submitting
+* [x] Console side message sending
+* [ ] Client side message sending
+* [x] Nuitka packaging
 
-# Header 1
-## Header 2
-### Header 3
+## Programs
 
-- Bulleted
-- List
+* **Client:** Used for muti users, ex: students, visitors.
+* **Console:** Used for one host user, ex: teacher, host.
 
-1. Numbered
-2. List
+## Release Install Guide
 
-**Bold** and _Italic_ and `Code` text
+* Download release version [here](https://github.com/yangzhongtian001/PYCM/releases).
+* Run `ConsoleMain` or `ClientMain`
 
-[Link](url) and ![Image](src)
-```
+## Dev Install Guide
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+* Clone repository.
+* Run `pip install -r requirements.txt` to install required libraries.
+* Run `python ConsoleMain.py` or `python ClientMain.py` to start application.
 
-### Jekyll Themes
+## Contact
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/yangzhongtian001/PYCM/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+* Author: Richard Yang
+* Email: zhongtian.yang@qq.com
+* School: China Beijing National Day School
+* Club: HCC Computer Community
