@@ -1,4 +1,4 @@
-name: Build Mac
+name: Build Linux
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   Build-Console:
-    runs-on: macos-10.15
+    runs-on: ubuntu-16.04
     steps:
       - name: Extract tag name
         id: tag
@@ -30,12 +30,11 @@ jobs:
       - name: Add build info
         working-directory: Console
         run: |
-          echo "BUILD_INFO = 'macOS v"+${{ steps.tag.outputs.result }}+" (Clang, 64-bit)'" > BuildInfo.py
+          echo "BUILD_INFO = 'Linux v"+${{ steps.tag.outputs.result }}+" (GCC, 64-bit)'" > BuildInfo.py
       - name: Build
         working-directory: Console
         run: |
-          python -m nuitka --standalone --onefile --clang --lto=yes --macos-onefile-icon=Resources/Logo.ico \
-                           --macos-signed-app-name=org.hcc.pycm --macos-app-name=PYCM-Console \
+          python -m nuitka --standalone --onefile --lto=yes --linux-onefile-icon=Resources/Logo.ico \
                            --include-data-file=Alibaba-PuHuiTi-Regular.ttf=Alibaba-PuHuiTi-Regular.ttf \
                            --include-data-file=Alibaba-PuHuiTi-Bold.ttf=Alibaba-PuHuiTi-Bold.ttf \
                            --include-data-file=Translation/*.qm=Translation/ \
@@ -44,11 +43,11 @@ jobs:
       - name: Zip files
         uses: papeloto/action-zip@v1
         with:
-          files: Console/Build/ConsoleMain.dist/
-          dest: PYCM-Console-macOS.zip
+          files: Console/Build/ConsoleMain.bin
+          dest: PYCM-Console-Linux.zip
       - name: Upload to release
         uses: softprops/action-gh-release@v1
         with:
-          files: PYCM-Console-macOS.zip
+          files: PYCM-Console-Linux.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
