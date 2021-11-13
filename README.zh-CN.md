@@ -51,17 +51,21 @@
 
 ### Console(教师端)
 
-![控制台](Images/Console/Dashboard.png)
+![控制台](Images/Console/Dashboard.zh-CN.png)
 
-![发送消息](Images/Console/MessageSend.png)
+![发送消息](Images/Console/MessageSend.zh-CN.png)
 
-![远程命令](Images/Console/RemoteCommand.png)
+![远程命令](Images/Console/RemoteCommand.zh-CN.png)
 
 ### Client(学生端)
 
-![主程序](Images/Client/Main.png)
+![主程序](Images/Client/Main.zh-CN.png)
 
-![文件发送](Images/Client/FileTransfer.png)
+![文件发送](Images/Client/FileTransfer.zh-CN.png)
+
+## 已知问题
+1. 由于某些编译问题，目前仅提供 Windows 版二进制文件。如果你想要在 macOS 或 Linux 上使用，请考虑 [源码安装](#源码版安装指南)。
+2. 屏幕捕获功能在某些分辨率下会有异常。
 
 ## 联系
 

@@ -64,6 +64,10 @@ It contains both `client(student side)` and `console(teacher side)`. GUI written
 
 ![File transfer](Images/Client/FileTransfer.png)
 
+## Known Issues
+1. Due to some compiling issues, currently only Windows version of binary file is available. If you want to use it on macOS or Linux, consider following the [Dev Guide](#Dev Install Guide).
+2. The screen capturing module can have some problem under low screen resolution.
+
 ## Contact
 
 * Author: Richard Yang
