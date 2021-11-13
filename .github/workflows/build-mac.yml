@@ -1,0 +1,54 @@
+name: Build Mac
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  Build-Console:
+    runs-on: macos-10.15
+    steps:
+      - name: Extract tag name
+        id: tag
+        uses: actions/github-script@0.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            return context.payload.ref.replace('refs/tags/v', '');
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+          architecture: 'x64'
+      - name: Install requirements
+        run: |
+          pip install wheel
+          pip install -r requirements.txt
+          pip install nuitka
+      - name: Add build info
+        working-directory: Console
+        run: |
+          echo "BUILD_INFO = 'macOS v"+${{ steps.tag.outputs.result }}+" (Clang, 64-bit)'" > BuildInfo.py
+      - name: Build
+        working-directory: Console
+        run: |
+          python -m nuitka --standalone --onefile --clang --lto=yes --macos-onefile-icon=Resources/Logo.ico \
+                           --macos-signed-app-name=org.hcc.pycm --macos-app-name=PYCM-Console \
+                           --include-data-file=Alibaba-PuHuiTi-Regular.ttf=Alibaba-PuHuiTi-Regular.ttf \
+                           --include-data-file=Alibaba-PuHuiTi-Bold.ttf=Alibaba-PuHuiTi-Bold.ttf \
+                           --include-data-file=Translation/*.qm=Translation/ \
+                           --plugin-enable=qt-plugins --assume-yes-for-downloads \
+                           --output-dir=Build ConsoleMain.py
+      - name: Zip files
+        uses: papeloto/action-zip@v1
+        with:
+          files: Console/Build/ConsoleMain.dist/
+          dest: PYCM-Console-macOS.zip
+      - name: Upload to release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: PYCM-Console-macOS.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
