@@ -34,7 +34,7 @@ jobs:
       - name: Build
         working-directory: Console
         run: |
-          python -m nuitka --standalone --onefile --lto=yes --linux-onefile-icon=Resources/Logo.ico \
+          python -m nuitka --standalone --lto=yes --linux-onefile-icon=Resources/Logo.ico \
                            --include-data-file=Alibaba-PuHuiTi-Regular.ttf=Alibaba-PuHuiTi-Regular.ttf \
                            --include-data-file=Alibaba-PuHuiTi-Bold.ttf=Alibaba-PuHuiTi-Bold.ttf \
                            --include-data-file=Translation/*.qm=Translation/ \
@@ -43,7 +43,7 @@ jobs:
       - name: Zip files
         uses: papeloto/action-zip@v1
         with:
-          files: Console/Build/ConsoleMain.bin
+          files: Console/Build/ConsoleMain.dist/
           dest: PYCM-Console-Linux.zip
       - name: Upload to release
         uses: softprops/action-gh-release@v1
