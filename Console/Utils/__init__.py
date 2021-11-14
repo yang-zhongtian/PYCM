@@ -20,5 +20,5 @@
 import os
 import sys
 
-if hasattr(sys, 'frozen'):
+if getattr(sys, 'frozen', False):
     os.environ['PATH'] = sys._MEIPASS + ';' + os.environ['PATH']

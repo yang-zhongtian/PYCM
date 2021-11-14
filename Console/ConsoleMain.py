@@ -47,8 +47,8 @@ translator = QTranslator(app)
 qt_translator = QTranslator(app)
 language = LoadTranslation.load_translation()
 if language is not None:
-    translator.load(language, 'Translation')
-    qt_translator.load('qtbase_' + language, 'Translation')
+    translator.load(LoadTranslation.load_path(language))
+    qt_translator.load(LoadTranslation.load_path('qtbase_' + language))
     app.installTranslator(translator)
     app.installTranslator(qt_translator)
 

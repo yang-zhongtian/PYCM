@@ -18,6 +18,8 @@
 """
 
 from PyQt5.QtCore import QLocale
+import os
+import sys
 
 SUPPORTED_TRANSLATION = ['zh_CN']
 
@@ -27,3 +29,11 @@ def load_translation():
     if language in SUPPORTED_TRANSLATION:
         return language
     return None
+
+
+def load_path(translation):
+    if getattr(sys, 'frozen', False):
+        bundle_dir = sys._MEIPASS
+    else:
+        bundle_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
+    return os.path.join(bundle_dir, f'Translation/{translation}.qm')
