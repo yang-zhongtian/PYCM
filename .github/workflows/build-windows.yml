@@ -1,0 +1,96 @@
+name: Build-Windows
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  Build-Console:
+    runs-on: windows-2016
+    steps:
+      - name: Extract tag name
+        id: tag
+        uses: actions/github-script@0.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            return context.payload.ref.replace('refs/tags/v', '');
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+          architecture: 'x64'
+      - name: Install requirements
+        run: |
+          pip install wheel
+          pip install -r requirements.txt
+          pip install pyinstaller tinyaes
+      - name: Add build info
+        working-directory: Console
+        run: |
+          "BUILD_INFO = 'Windows v"+${{ steps.tag.outputs.result }}+" (64-bit)'" | Out-File -FilePath BuildInfo.py -Encoding UTF8
+      - name: Build
+        working-directory: Console
+        run: |
+          pyinstaller --key PYCM --noupx -i .\Resources\Core\Logo.ico `
+                      --add-data "Translation/*.qm;Translation" `
+                      --uac-admin --uac-uiaccess `
+                      --name PYCM-Console -w -D .\ConsoleMain.py
+      - name: Zip files
+        uses: papeloto/action-zip@v1
+        with:
+          files: Console/dist/PYCM-Console
+          dest: PYCM-Console-Windows.zip
+      - name: Upload to release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: PYCM-Console-Windows.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  Build-Client:
+    runs-on: windows-2016
+    steps:
+      - name: Extract tag name
+        id: tag
+        uses: actions/github-script@0.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            return context.payload.ref.replace('refs/tags/v', '');
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+          architecture: 'x64'
+      - name: Install requirements
+        run: |
+          pip install wheel
+          pip install -r requirements.txt
+          pip install pyinstaller tinyaes
+      - name: Add build info
+        working-directory: Client
+        env:
+          RELEASE_TAG: ${{ steps.tag.outputs.result }}
+        run: |
+          "BUILD_INFO = 'Windows v"+${{ steps.tag.outputs.result }}+" (64-bit)'" | Out-File -FilePath BuildInfo.py -Encoding UTF8
+      - name: Build
+        working-directory: Client
+        run: |
+          pyinstaller --key PYCM --noupx -i .\Resources\Core\Logo.ico `
+                      --add-data "Translation/*.qm;Translation" `
+                      --uac-admin --uac-uiaccess `
+                      --name PYCM-Client -w -D .\ClientMain.py
+      - name: Zip files
+        uses: papeloto/action-zip@v1
+        with:
+          files: Client/dist/PYCM-Console
+          dest: PYCM-Client-Windows.zip
+      - name: Upload to release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: PYCM-Client-Windows.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
