@@ -1,4 +1,4 @@
-name: Build Linux
+name: Build Mac
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   Build-Console:
-    runs-on: ubuntu-18.04
+    runs-on: macos-10.15
     steps:
       - name: Extract tag name
         id: tag
@@ -30,26 +30,27 @@ jobs:
       - name: Add build info
         working-directory: Console
         run: |
-          echo "BUILD_INFO = 'Linux v"+${{ steps.tag.outputs.result }}+" (64-bit)'" > BuildInfo.py
+          echo "BUILD_INFO = 'macOS v"+${{ steps.tag.outputs.result }}+" (64-bit)'" > BuildInfo.py
       - name: Build
         working-directory: Console
         run: |
           pyinstaller --key PYCM --noupx -i ./Resources/Core/Logo.ico \
                       --add-data "Translation/*.qm:Translation" \
+                      --osx-bundle-identifier org.hcc.pycm \
                       --name PYCM-Console -w -D ./ConsoleMain.py
       - name: Zip files
         uses: papeloto/action-zip@v1
         with:
           files: Console/dist/
-          dest: PYCM-Console-Linux.zip
+          dest: PYCM-Console-macOS.zip
       - name: Upload to release
         uses: softprops/action-gh-release@v1
         with:
-          files: PYCM-Console-Linux.zip
+          files: PYCM-Console-macOS.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   Build-Client:
-    runs-on: ubuntu-18.04
+    runs-on: macos-10.15
     steps:
       - name: Extract tag name
         id: tag
@@ -71,24 +72,23 @@ jobs:
           pip install pyinstaller tinyaes sip
       - name: Add build info
         working-directory: Client
-        env:
-          RELEASE_TAG: ${{ steps.tag.outputs.result }}
         run: |
-          echo "BUILD_INFO = 'Linux v"+${{ steps.tag.outputs.result }}+" (64-bit)'" > BuildInfo.py
+          echo "BUILD_INFO = 'macOS v"+${{ steps.tag.outputs.result }}+" (64-bit)'" > BuildInfo.py
       - name: Build
         working-directory: Client
         run: |
           pyinstaller --key PYCM --noupx -i ./Resources/Core/Logo.ico \
                       --add-data "Translation/*.qm:Translation" \
+                      --osx-bundle-identifier org.hcc.pycm \
                       --name PYCM-Client -w -D ./ClientMain.py
       - name: Zip files
         uses: papeloto/action-zip@v1
         with:
           files: Client/dist/
-          dest: PYCM-Client-Linux.zip
+          dest: PYCM-Client-macOS.zip
       - name: Upload to release
         uses: softprops/action-gh-release@v1
         with:
-          files: PYCM-Client-Linux.zip
+          files: PYCM-Client-macOS.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
