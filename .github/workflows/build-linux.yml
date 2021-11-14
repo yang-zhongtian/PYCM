@@ -1,4 +1,4 @@
-name: Build Windows
+name: Build Linux
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   Build-Console:
-    runs-on: windows-2016
+    runs-on: ubuntu-18.04
     steps:
       - name: Extract tag name
         id: tag
@@ -30,27 +30,26 @@ jobs:
       - name: Add build info
         working-directory: Console
         run: |
-          "BUILD_INFO = 'Windows v"+${{ steps.tag.outputs.result }}+" (64-bit)'" | Out-File -FilePath BuildInfo.py -Encoding UTF8
+          echo "BUILD_INFO = 'Linux v"+${{ steps.tag.outputs.result }}+" (64-bit)'" > BuildInfo.py
       - name: Build
         working-directory: Console
         run: |
-          pyinstaller --key PYCM --noupx -i .\Resources\Core\Logo.ico `
-                      --add-data "Translation/*.qm;Translation" `
-                      --uac-admin --uac-uiaccess `
-                      --name PYCM-Console -w -D .\ConsoleMain.py
+          pyinstaller --key PYCM --noupx -i ./Resources/Core/Logo.ico \
+                      --add-data "Translation/*.qm;Translation" \
+                      --name PYCM-Console -w -D ./ConsoleMain.py
       - name: Zip files
         uses: papeloto/action-zip@v1
         with:
           files: Console/dist/
-          dest: PYCM-Console-Windows.zip
+          dest: PYCM-Console-Linux.zip
       - name: Upload to release
         uses: softprops/action-gh-release@v1
         with:
-          files: PYCM-Console-Windows.zip
+          files: PYCM-Console-Linux.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   Build-Client:
-    runs-on: windows-2016
+    runs-on: ubuntu-18.04
     steps:
       - name: Extract tag name
         id: tag
@@ -75,22 +74,21 @@ jobs:
         env:
           RELEASE_TAG: ${{ steps.tag.outputs.result }}
         run: |
-          "BUILD_INFO = 'Windows v"+${{ steps.tag.outputs.result }}+" (64-bit)'" | Out-File -FilePath BuildInfo.py -Encoding UTF8
+          echo "BUILD_INFO = 'Linux v"+${{ steps.tag.outputs.result }}+" (64-bit)'" > BuildInfo.py
       - name: Build
         working-directory: Client
         run: |
-          pyinstaller --key PYCM --noupx -i .\Resources\Core\Logo.ico `
-                      --add-data "Translation/*.qm;Translation" `
-                      --uac-admin --uac-uiaccess `
+          pyinstaller --key PYCM --noupx -i .\Resources\Core\Logo.ico \
+                      --add-data "Translation/*.qm;Translation" \
                       --name PYCM-Client -w -D .\ClientMain.py
       - name: Zip files
         uses: papeloto/action-zip@v1
         with:
           files: Client/dist/
-          dest: PYCM-Client-Windows.zip
+          dest: PYCM-Client-Linux.zip
       - name: Upload to release
         uses: softprops/action-gh-release@v1
         with:
-          files: PYCM-Client-Windows.zip
+          files: PYCM-Client-Linux.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
