@@ -43,6 +43,7 @@ jobs:
         with:
           files: Console/dist/PYCM-Console
           dest: PYCM-Console-Windows.zip
+          recursive: false
       - name: Upload to release
         uses: softprops/action-gh-release@v1
         with:
@@ -88,6 +89,7 @@ jobs:
         with:
           files: Client/dist/PYCM-Client
           dest: PYCM-Client-Windows.zip
+          recursive: false
       - name: Upload to release
         uses: softprops/action-gh-release@v1
         with:
