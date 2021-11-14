@@ -72,7 +72,7 @@ class DashboardForm(QMainWindow):
         self.tray_icon_menu.addAction(QAction(self._translate('DashboardForm', 'About'),
                                               self, triggered=self.show_about))
         self.tray_icon_menu.addAction(QAction(self._translate('DashboardForm', 'Exit'), self, triggered=self.close))
-        self.tray_icon.setIcon(QIcon(':/Core/Resources/Logo.png'))
+        self.tray_icon.setIcon(QIcon(':/Core/Core/Logo.png'))
         self.tray_icon.setContextMenu(self.tray_icon_menu)
         self.tray_icon.activated[QSystemTrayIcon.ActivationReason].connect(self.show_window)
         self.__update_tray_tooltip()
@@ -107,7 +107,7 @@ class DashboardForm(QMainWindow):
         if client_ip in self.clients.keys():
             return
         desktop = QListWidgetItem(self.get_client_label_by_ip(client_ip))
-        desktop.setIcon(QIcon(':/Core/Resources/ClientBlank.png'))
+        desktop.setIcon(QIcon(':/Core/Core/ClientBlank.png'))
         desktop.setTextAlignment(Qt.AlignHCenter)
         desktop.setFlags(Qt.ItemIsSelectable | Qt.ItemIsEnabled)
         desktop.setData(Qt.UserRole, client_ip)

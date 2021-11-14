@@ -19,7 +19,7 @@ class Ui_LoginForm(object):
         LoginForm.setMinimumSize(QtCore.QSize(331, 211))
         LoginForm.setMaximumSize(QtCore.QSize(331, 211))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/Core/Resources/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/Core/Core/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         LoginForm.setWindowIcon(icon)
         self.username = QtWidgets.QLineEdit(LoginForm)
         self.username.setGeometry(QtCore.QRect(120, 61, 181, 31))
@@ -78,4 +78,4 @@ class Ui_LoginForm(object):
         self.label_password.setText(_translate("LoginForm", "Password:"))
         self.login_button.setText(_translate("LoginForm", "Login"))
         self.login_button.setShortcut(_translate("LoginForm", "Return"))
-import Resources_rc
+from Resources import Resources

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>487</width>
-    <height>362</height>
+    <height>369</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -26,8 +26,8 @@
    <string>About</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Resources.qrc">
-    <normaloff>:/Core/Resources/Logo.png</normaloff>:/Core/Resources/Logo.png</iconset>
+   <iconset resource="../Resources/Resources.qrc">
+    <normaloff>:/Core/Core/Logo.png</normaloff>:/Core/Core/Logo.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="main_layout" stretch="0,0,0">
    <property name="leftMargin">
@@ -158,7 +158,7 @@ p, li { white-space: pre-wrap; }
   </layout>
  </widget>
  <resources>
-  <include location="../Resources.qrc"/>
+  <include location="../Resources/Resources.qrc"/>
  </resources>
  <connections>
   <connection>

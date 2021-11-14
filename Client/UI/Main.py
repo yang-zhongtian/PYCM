@@ -90,7 +90,7 @@ class MainForm(QWidget):
                                               self, triggered=self.show_about))
         self.tray_icon_menu.addAction(QAction(self._translate('MainForm', 'Exit'), self, triggered=self.close))
         self.tray_icon = QSystemTrayIcon(self)
-        self.tray_icon.setIcon(QIcon(':/Core/Resources/Logo.png'))
+        self.tray_icon.setIcon(QIcon(':/Core/Core/Logo.png'))
         self.tray_icon.setContextMenu(self.tray_icon_menu)
         self.tray_icon.activated[QSystemTrayIcon.ActivationReason].connect(self.iconActivated)
         self.update_tray_tooltip()

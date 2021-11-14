@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_FileServerForm(object):
     def setupUi(self, FileServerForm):
         FileServerForm.setObjectName("FileServerForm")
-        FileServerForm.resize(330, 108)
+        FileServerForm.resize(422, 130)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -22,7 +22,7 @@ class Ui_FileServerForm(object):
         FileServerForm.setSizePolicy(sizePolicy)
         FileServerForm.setMinimumSize(QtCore.QSize(0, 0))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/Core/Resources/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/Core/Core/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         FileServerForm.setWindowIcon(icon)
         self.main_layout = QtWidgets.QVBoxLayout(FileServerForm)
         self.main_layout.setObjectName("main_layout")
@@ -83,4 +83,4 @@ class Ui_FileServerForm(object):
         self.server_info.setText(_translate("FileServerForm", "Server Status: Stopped"))
         self.toggle_working.setText(_translate("FileServerForm", "Start"))
         self.no_folder_notice.setText(_translate("FileServerForm", "<html><head/><body><p>Folder download is not supported,please consider compressing folders to zipped files.</p></body></html>"))
-import Resources_rc
+from Resources import Resources

@@ -18,7 +18,7 @@ class Ui_NetworkDeviceSelectDialog(object):
         NetworkDeviceSelectDialog.setMinimumSize(QtCore.QSize(391, 111))
         NetworkDeviceSelectDialog.setMaximumSize(QtCore.QSize(391, 111))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/Core/Resources/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/Core/Core/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         NetworkDeviceSelectDialog.setWindowIcon(icon)
         self.operation_buttons = QtWidgets.QDialogButtonBox(NetworkDeviceSelectDialog)
         self.operation_buttons.setGeometry(QtCore.QRect(10, 60, 371, 41))
@@ -41,4 +41,4 @@ class Ui_NetworkDeviceSelectDialog(object):
     def retranslateUi(self, NetworkDeviceSelectDialog):
         _translate = QtCore.QCoreApplication.translate
         NetworkDeviceSelectDialog.setWindowTitle(_translate("NetworkDeviceSelectDialog", "Network Settings"))
-import Resources_rc
+from Resources import Resources

@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_SendMessageGroupDialog(object):
     def setupUi(self, SendMessageGroupDialog):
         SendMessageGroupDialog.setObjectName("SendMessageGroupDialog")
-        SendMessageGroupDialog.resize(349, 269)
+        SendMessageGroupDialog.resize(349, 282)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -22,7 +22,7 @@ class Ui_SendMessageGroupDialog(object):
         SendMessageGroupDialog.setSizePolicy(sizePolicy)
         SendMessageGroupDialog.setMinimumSize(QtCore.QSize(0, 0))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/Core/Resources/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/Core/Core/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         SendMessageGroupDialog.setWindowIcon(icon)
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(SendMessageGroupDialog)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
@@ -56,4 +56,4 @@ class Ui_SendMessageGroupDialog(object):
         _translate = QtCore.QCoreApplication.translate
         SendMessageGroupDialog.setWindowTitle(_translate("SendMessageGroupDialog", "Messaging"))
         self.send_message_group.setTitle(_translate("SendMessageGroupDialog", "Message Input"))
-import Resources_rc
+from Resources import Resources

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>498</width>
+    <width>530</width>
     <height>311</height>
    </rect>
   </property>
@@ -26,8 +26,8 @@
    <string>File Receive</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Resources.qrc">
-    <normaloff>:/Core/Resources/Logo.png</normaloff>:/Core/Resources/Logo.png</iconset>
+   <iconset resource="../Resources/Resources.qrc">
+    <normaloff>:/Core/Core/Logo.png</normaloff>:/Core/Core/Logo.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="main_layout" stretch="0,0,0">
    <item>
@@ -138,7 +138,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../Resources.qrc"/>
+  <include location="../Resources/Resources.qrc"/>
  </resources>
  <connections>
   <connection>

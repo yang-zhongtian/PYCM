@@ -14,9 +14,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainForm(object):
     def setupUi(self, MainForm):
         MainForm.setObjectName("MainForm")
-        MainForm.resize(330, 54)
+        MainForm.resize(397, 54)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/Core/Resources/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/Core/Core/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainForm.setWindowIcon(icon)
         self.main_layout = QtWidgets.QVBoxLayout(MainForm)
         self.main_layout.setContentsMargins(0, 0, 0, 0)
@@ -116,4 +116,4 @@ class Ui_MainForm(object):
         self.hide_button.setText(_translate("MainForm", "Hide"))
         self.action_send_file.setText(_translate("MainForm", "Send File"))
         self.action_file_client.setText(_translate("MainForm", "File Client"))
-import Resources_rc
+from Resources import Resources

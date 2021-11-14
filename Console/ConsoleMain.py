@@ -17,7 +17,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from PyQtPatch import *
+from Utils import LoadTranslation
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import Qt, QTranslator
 import sys
@@ -26,9 +26,8 @@ import logging
 
 from Module.LoadConfig import Config
 
-import Resources_rc
-import Theme
-from Translation import LoadTranslation
+from Resources import Resources
+from Module import Theme
 
 from UI.Login import LoginForm
 from UI.Dashboard import DashboardForm

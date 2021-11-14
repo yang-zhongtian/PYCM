@@ -26,8 +26,8 @@
    <string>Network Settings</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Resources.qrc">
-    <normaloff>:/Core/Resources/Logo.png</normaloff>:/Core/Resources/Logo.png</iconset>
+   <iconset resource="../Resources/Resources.qrc">
+    <normaloff>:/Core/Core/Logo.png</normaloff>:/Core/Core/Logo.png</iconset>
   </property>
   <widget class="QDialogButtonBox" name="operation_buttons">
    <property name="geometry">
@@ -65,7 +65,7 @@
   </widget>
  </widget>
  <resources>
-  <include location="../Resources.qrc"/>
+  <include location="../Resources/Resources.qrc"/>
  </resources>
  <connections>
   <connection>

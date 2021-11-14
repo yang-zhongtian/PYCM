@@ -17,7 +17,7 @@ class Ui_FileClient(object):
         FileClient.setWindowModality(QtCore.Qt.ApplicationModal)
         FileClient.resize(492, 336)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/Core/Resources/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/Core/Core/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         FileClient.setWindowIcon(icon)
         self.main_layout = QtWidgets.QVBoxLayout(FileClient)
         self.main_layout.setObjectName("main_layout")
@@ -55,4 +55,4 @@ class Ui_FileClient(object):
         _translate = QtCore.QCoreApplication.translate
         FileClient.setWindowTitle(_translate("FileClient", "File Client"))
         self.download_button.setText(_translate("FileClient", "Download"))
-import Resources_rc
+from Resources import Resources

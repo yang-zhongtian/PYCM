@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>349</width>
-    <height>269</height>
+    <height>282</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -26,8 +26,8 @@
    <string>Messaging</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Resources.qrc">
-    <normaloff>:/Core/Resources/Logo.png</normaloff>:/Core/Resources/Logo.png</iconset>
+   <iconset resource="../Resources/Resources.qrc">
+    <normaloff>:/Core/Core/Logo.png</normaloff>:/Core/Core/Logo.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3" stretch="3,0">
    <item>
@@ -77,7 +77,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../Resources.qrc"/>
+  <include location="../Resources/Resources.qrc"/>
  </resources>
  <connections>
   <connection>

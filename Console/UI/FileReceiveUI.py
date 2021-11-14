@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_FileReceiveDialog(object):
     def setupUi(self, FileReceiveDialog):
         FileReceiveDialog.setObjectName("FileReceiveDialog")
-        FileReceiveDialog.resize(498, 311)
+        FileReceiveDialog.resize(530, 311)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -22,7 +22,7 @@ class Ui_FileReceiveDialog(object):
         FileReceiveDialog.setSizePolicy(sizePolicy)
         FileReceiveDialog.setMinimumSize(QtCore.QSize(0, 0))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/Core/Resources/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/Core/Core/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         FileReceiveDialog.setWindowIcon(icon)
         self.main_layout = QtWidgets.QVBoxLayout(FileReceiveDialog)
         self.main_layout.setObjectName("main_layout")
@@ -101,4 +101,4 @@ class Ui_FileReceiveDialog(object):
         item = self.received_files.horizontalHeaderItem(1)
         item.setText(_translate("FileReceiveDialog", "From"))
         self.show_selected_file_guide.setText(_translate("FileReceiveDialog", "Double click the row to open file"))
-import Resources_rc
+from Resources import Resources

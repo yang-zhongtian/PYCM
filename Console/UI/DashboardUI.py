@@ -14,9 +14,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_DashboardForm(object):
     def setupUi(self, DashboardForm):
         DashboardForm.setObjectName("DashboardForm")
-        DashboardForm.resize(927, 547)
+        DashboardForm.resize(937, 635)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/Core/Resources/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/Core/Core/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         DashboardForm.setWindowIcon(icon)
         self.central_widget = QtWidgets.QWidget(DashboardForm)
         self.central_widget.setObjectName("central_widget")
@@ -278,4 +278,4 @@ class Ui_DashboardForm(object):
         self.client_scroll_out.setText(_translate("DashboardForm", "Zoom Out"))
         self.client_rename.setText(_translate("DashboardForm", "Rename"))
         self.about.setText(_translate("DashboardForm", "About"))
-import Resources_rc
+from Resources import Resources

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>330</width>
+    <width>397</width>
     <height>54</height>
    </rect>
   </property>
@@ -14,8 +14,8 @@
    <string>Client</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../Resources.qrc">
-    <normaloff>:/Core/Resources/Logo.png</normaloff>:/Core/Resources/Logo.png</iconset>
+   <iconset resource="../Resources/Resources.qrc">
+    <normaloff>:/Core/Core/Logo.png</normaloff>:/Core/Core/Logo.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="main_layout">
    <property name="spacing">
@@ -188,7 +188,7 @@ color: rgb(255, 255, 255);</string>
   </action>
  </widget>
  <resources>
-  <include location="../Resources.qrc"/>
+  <include location="../Resources/Resources.qrc"/>
  </resources>
  <connections>
   <connection>

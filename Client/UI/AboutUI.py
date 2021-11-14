@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_AboutDialog(object):
     def setupUi(self, AboutDialog):
         AboutDialog.setObjectName("AboutDialog")
-        AboutDialog.resize(487, 362)
+        AboutDialog.resize(487, 369)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -22,7 +22,7 @@ class Ui_AboutDialog(object):
         AboutDialog.setSizePolicy(sizePolicy)
         AboutDialog.setMinimumSize(QtCore.QSize(0, 0))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/Core/Resources/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/Core/Core/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         AboutDialog.setWindowIcon(icon)
         self.main_layout = QtWidgets.QVBoxLayout(AboutDialog)
         self.main_layout.setContentsMargins(25, 20, 25, 20)
@@ -102,4 +102,4 @@ class Ui_AboutDialog(object):
         self.buildInfo.setText(_translate("AboutDialog", "No build info"))
         self.label.setText(_translate("AboutDialog", "<html><head/><body><p>Project Home: <a href=\"https://github.com/yangzhongtian001/PYCM\"><span style=\" text-decoration: underline; color:#0000ff;\">https://github.com/yangzhongtian001/PYCM</span></a></p></body></html>"))
         self.license_group.setTitle(_translate("AboutDialog", "GNU General Public License"))
-import Resources_rc
+from Resources import Resources

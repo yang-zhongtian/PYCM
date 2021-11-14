@@ -21,7 +21,7 @@ class Ui_ScreenBroadcastForm(object):
         sizePolicy.setHeightForWidth(ScreenBroadcastForm.sizePolicy().hasHeightForWidth())
         ScreenBroadcastForm.setSizePolicy(sizePolicy)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/Core/Resources/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/Core/Core/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         ScreenBroadcastForm.setWindowIcon(icon)
         self.main_layout = QtWidgets.QVBoxLayout(ScreenBroadcastForm)
         self.main_layout.setContentsMargins(22, -1, 22, -1)
@@ -104,4 +104,4 @@ class Ui_ScreenBroadcastForm(object):
         self.full_screen.setText(_translate("ScreenBroadcastForm", "Full Screen"))
         self.screen_shot.setText(_translate("ScreenBroadcastForm", "Screen Shot"))
         self.always_on_top.setText(_translate("ScreenBroadcastForm", "Always On Top"))
-import Resources_rc
+from Resources import Resources

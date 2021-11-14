@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_RemoteCommandGroupDialog(object):
     def setupUi(self, RemoteCommandGroupDialog):
         RemoteCommandGroupDialog.setObjectName("RemoteCommandGroupDialog")
-        RemoteCommandGroupDialog.resize(335, 275)
+        RemoteCommandGroupDialog.resize(335, 288)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -22,7 +22,7 @@ class Ui_RemoteCommandGroupDialog(object):
         RemoteCommandGroupDialog.setSizePolicy(sizePolicy)
         RemoteCommandGroupDialog.setMinimumSize(QtCore.QSize(0, 0))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/Core/Resources/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/Core/Core/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         RemoteCommandGroupDialog.setWindowIcon(icon)
         self.main_layout = QtWidgets.QVBoxLayout(RemoteCommandGroupDialog)
         self.main_layout.setObjectName("main_layout")
@@ -56,4 +56,4 @@ class Ui_RemoteCommandGroupDialog(object):
         _translate = QtCore.QCoreApplication.translate
         RemoteCommandGroupDialog.setWindowTitle(_translate("RemoteCommandGroupDialog", "Remote Command"))
         self.command_group.setTitle(_translate("RemoteCommandGroupDialog", "Command Select"))
-import Resources_rc
+from Resources import Resources
