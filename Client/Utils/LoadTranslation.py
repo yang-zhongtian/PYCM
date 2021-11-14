@@ -18,6 +18,8 @@
 """
 
 from PyQt5.QtCore import QLocale
+import os
+import sys
 
 SUPPORTED_TRANSLATION = ['zh_CN']
 

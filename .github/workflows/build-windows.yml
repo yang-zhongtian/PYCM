@@ -41,9 +41,8 @@ jobs:
       - name: Zip files
         uses: papeloto/action-zip@v1
         with:
-          files: Console/dist/PYCM-Console
+          files: Console/dist/
           dest: PYCM-Console-Windows.zip
-          recursive: false
       - name: Upload to release
         uses: softprops/action-gh-release@v1
         with:
@@ -87,9 +86,8 @@ jobs:
       - name: Zip files
         uses: papeloto/action-zip@v1
         with:
-          files: Client/dist/PYCM-Client
+          files: Client/dist/
           dest: PYCM-Client-Windows.zip
-          recursive: false
       - name: Upload to release
         uses: softprops/action-gh-release@v1
         with:
