@@ -26,7 +26,7 @@ jobs:
         run: |
           pip install wheel
           pip install -r requirements.txt
-          pip install pyinstaller tinyaes
+          pip install pyinstaller tinyaes sip
       - name: Add build info
         working-directory: Console
         run: |
@@ -69,7 +69,7 @@ jobs:
         run: |
           pip install wheel
           pip install -r requirements.txt
-          pip install pyinstaller tinyaes
+          pip install pyinstaller tinyaes sip
       - name: Add build info
         working-directory: Client
         env:
@@ -86,7 +86,7 @@ jobs:
       - name: Zip files
         uses: papeloto/action-zip@v1
         with:
-          files: Client/dist/PYCM-Console
+          files: Client/dist/PYCM-Client
           dest: PYCM-Client-Windows.zip
       - name: Upload to release
         uses: softprops/action-gh-release@v1
