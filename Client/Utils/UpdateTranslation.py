@@ -32,8 +32,9 @@ def generate(file, target='zh_CN'):
 
 def auto_generate(args):
     translate_files = []
+    base_dir = os.path.dirname(os.path.abspath(__file__))
     for path in SEARCH_DIRS:
-        translate_files.extend(glob.glob(f'{path}/[!__]*.py'))
+        translate_files.extend(glob.glob(f'{os.path.join(base_dir, path)}/[!__]*.py'))
     generate(translate_files, args.lang)
 
 

@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="zh_CN" sourcelanguage="en_US">
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN" sourcelanguage="en_US">
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../UI/AboutUI.py" line="99"/>
+        <location filename="../UI/AboutUI.py" line="107"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../UI/AboutUI.py" line="100"/>
+        <location filename="../UI/AboutUI.py" line="108"/>
         <source>PYCM Client</source>
         <translation>PYCM 客户端</translation>
     </message>
     <message>
-        <location filename="../UI/AboutUI.py" line="101"/>
+        <location filename="../UI/AboutUI.py" line="109"/>
         <source>No build info</source>
         <translation>无编译信息</translation>
     </message>
     <message>
-        <location filename="../UI/AboutUI.py" line="102"/>
+        <location filename="../UI/AboutUI.py" line="108"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Project Home: &lt;a href=&quot;https://github.com/yangzhongtian001/PYCM&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/yangzhongtian001/PYCM&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;项目主页：&lt;a href=&quot;https://github.com/yangzhongtian001/PYCM&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/yangzhongtian001/PYCM&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;项目主页：&amp;lt;a href=&amp;quot;https://github.com/yangzhongtian001/PYCM&amp;quot;&amp;gt;&amp;lt;span style=&amp;quot; text-decoration: underline; color:#0000ff;&amp;quot;&amp;gt;https://github.com/yangzhongtian001/PYCM&amp;lt;/span&amp;gt;&amp;lt;/a&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;</translation>
     </message>
     <message>
         <location filename="../UI/About.py" line="41"/>
@@ -28,53 +29,58 @@
         <translation>编译信息：%s</translation>
     </message>
     <message>
-        <location filename="../UI/AboutUI.py" line="103"/>
+        <location filename="../UI/AboutUI.py" line="110"/>
         <source>GNU General Public License</source>
         <translation>GNU 通用公共许可证</translation>
+    </message>
+    <message>
+        <location filename="../UI/AboutUI.py" line="109"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Author: RichardYangZT(&lt;a href=&quot;www.52pojie.cn&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;www.52pojie.cn&lt;/span&gt;&lt;/a&gt;)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;作者: RichardYangZT(&amp;lt;a href=&amp;quot;www.52pojie.cn&amp;quot;&amp;gt;&amp;lt;span style=&amp;quot; text-decoration: underline; color:#0000ff;&amp;quot;&amp;gt;www.52pojie.cn&amp;lt;/span&amp;gt;&amp;lt;/a&amp;gt;)&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;</translation>
     </message>
 </context>
 <context>
     <name>FileClient</name>
     <message>
-        <location filename="../UI/FileClientUI.py" line="85"/>
+        <location filename="../UI/FileClientUI.py" line="56"/>
         <source>File Client</source>
         <translation>文件客户端</translation>
     </message>
     <message>
-        <location filename="../UI/FileClientUI.py" line="86"/>
+        <location filename="../UI/FileClientUI.py" line="57"/>
         <source>Download</source>
         <translation>下载</translation>
     </message>
     <message>
         <location filename="../UI/FileClientUI.py" line="87"/>
         <source>Folder download is not supported</source>
-        <translation>不支持文件夹下载</translation>
+        <translation type="obsolete">不支持文件夹下载</translation>
     </message>
 </context>
 <context>
     <name>FileClientDialog</name>
     <message>
-        <location filename="../UI/FileClient.py" line="106"/>
+        <location filename="../UI/FileClient.py" line="105"/>
         <source>Select Path To Save</source>
         <translation>选择保存目录</translation>
     </message>
     <message>
-        <location filename="../UI/FileClient.py" line="109"/>
+        <location filename="../UI/FileClient.py" line="108"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../UI/FileClient.py" line="109"/>
+        <location filename="../UI/FileClient.py" line="108"/>
         <source>Please select path to save!</source>
         <translation>请选择保存的目录！</translation>
     </message>
     <message>
-        <location filename="../UI/FileClient.py" line="123"/>
+        <location filename="../UI/FileClient.py" line="122"/>
         <source>Info</source>
         <translation>信息</translation>
     </message>
     <message>
-        <location filename="../UI/FileClient.py" line="123"/>
+        <location filename="../UI/FileClient.py" line="122"/>
         <source>File download finished</source>
         <translation>文件下载完成</translation>
     </message>
@@ -82,27 +88,27 @@
 <context>
     <name>FileSendForm</name>
     <message>
-        <location filename="../UI/FileSendUI.py" line="80"/>
+        <location filename="../UI/FileSendUI.py" line="93"/>
         <source>Submit Files</source>
         <translation>提交文件</translation>
     </message>
     <message>
-        <location filename="../UI/FileSendUI.py" line="81"/>
+        <location filename="../UI/FileSendUI.py" line="94"/>
         <source>Add Files</source>
         <translation>添加文件</translation>
     </message>
     <message>
-        <location filename="../UI/FileSendUI.py" line="82"/>
+        <location filename="../UI/FileSendUI.py" line="95"/>
         <source>Remove Selected Files</source>
         <translation>移除所选文件</translation>
     </message>
     <message>
-        <location filename="../UI/FileSendUI.py" line="83"/>
+        <location filename="../UI/FileSendUI.py" line="96"/>
         <source>Submit All Files</source>
         <translation>提交所有文件</translation>
     </message>
     <message>
-        <location filename="../UI/FileSendUI.py" line="84"/>
+        <location filename="../UI/FileSendUI.py" line="97"/>
         <source>Ready</source>
         <translation>就绪</translation>
     </message>
@@ -170,27 +176,27 @@
 <context>
     <name>MainForm</name>
     <message>
-        <location filename="../UI/MainUI.py" line="104"/>
+        <location filename="../UI/MainUI.py" line="112"/>
         <source>PYCM Client - Offline</source>
         <translation>PYCM 客户端 - 离线</translation>
     </message>
     <message>
-        <location filename="../UI/MainUI.py" line="105"/>
+        <location filename="../UI/MainUI.py" line="113"/>
         <source>Hands Up</source>
         <translation>举手</translation>
     </message>
     <message>
-        <location filename="../UI/MainUI.py" line="106"/>
+        <location filename="../UI/MainUI.py" line="114"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../UI/MainUI.py" line="107"/>
+        <location filename="../UI/MainUI.py" line="115"/>
         <source>Messaging</source>
         <translation>消息</translation>
     </message>
     <message>
-        <location filename="../UI/MainUI.py" line="108"/>
+        <location filename="../UI/MainUI.py" line="116"/>
         <source>Hide</source>
         <translation>隐藏</translation>
     </message>
@@ -279,17 +285,17 @@
         <translation>你是否确定要退出？</translation>
     </message>
     <message>
-        <location filename="../UI/MainUI.py" line="103"/>
+        <location filename="../UI/MainUI.py" line="111"/>
         <source>Client</source>
         <translation>客户端</translation>
     </message>
     <message>
-        <location filename="../UI/MainUI.py" line="109"/>
+        <location filename="../UI/MainUI.py" line="117"/>
         <source>Send File</source>
         <translation>发送文件</translation>
     </message>
     <message>
-        <location filename="../UI/MainUI.py" line="110"/>
+        <location filename="../UI/MainUI.py" line="118"/>
         <source>File Client</source>
         <translation>文件客户端</translation>
     </message>
@@ -297,7 +303,7 @@
 <context>
     <name>NetworkDeviceSelectDialog</name>
     <message>
-        <location filename="../UI/NetworkDeviceSelectUI.py" line="40"/>
+        <location filename="../UI/NetworkDeviceSelectUI.py" line="43"/>
         <source>Network Settings</source>
         <translation>网络设置</translation>
     </message>
@@ -315,27 +321,27 @@
         <translation>JPEG 图片(*.jpg)</translation>
     </message>
     <message>
-        <location filename="../UI/ScreenBroadcastUI.py" line="89"/>
+        <location filename="../UI/ScreenBroadcastUI.py" line="102"/>
         <source>Screen Broadcast</source>
         <translation>屏幕广播</translation>
     </message>
     <message>
-        <location filename="../UI/ScreenBroadcastUI.py" line="90"/>
+        <location filename="../UI/ScreenBroadcastUI.py" line="103"/>
         <source>Freeze Screen</source>
         <translation>冻结屏幕</translation>
     </message>
     <message>
-        <location filename="../UI/ScreenBroadcastUI.py" line="91"/>
+        <location filename="../UI/ScreenBroadcastUI.py" line="104"/>
         <source>Full Screen</source>
         <translation>全屏</translation>
     </message>
     <message>
-        <location filename="../UI/ScreenBroadcastUI.py" line="92"/>
+        <location filename="../UI/ScreenBroadcastUI.py" line="105"/>
         <source>Screen Shot</source>
         <translation>截屏</translation>
     </message>
     <message>
-        <location filename="../UI/ScreenBroadcastUI.py" line="93"/>
+        <location filename="../UI/ScreenBroadcastUI.py" line="106"/>
         <source>Always On Top</source>
         <translation>置顶</translation>
     </message>

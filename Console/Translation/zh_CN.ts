@@ -4,19 +4,19 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../UI/AboutUI.py" line="99"/>
+        <location filename="../UI/AboutUI.py" line="107"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../UI/AboutUI.py" line="101"/>
+        <location filename="../UI/AboutUI.py" line="109"/>
         <source>No build info</source>
         <translation>无编译信息</translation>
     </message>
     <message>
-        <location filename="../UI/AboutUI.py" line="102"/>
+        <location filename="../UI/AboutUI.py" line="108"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Project Home: &lt;a href=&quot;https://github.com/yangzhongtian001/PYCM&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/yangzhongtian001/PYCM&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;项目主页：&lt;a href=&quot;https://github.com/yangzhongtian001/PYCM&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/yangzhongtian001/PYCM&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;项目主页：&amp;lt;a href=&amp;quot;https://github.com/yangzhongtian001/PYCM&amp;quot;&amp;gt;&amp;lt;span style=&amp;quot; text-decoration: underline; color:#0000ff;&amp;quot;&amp;gt;https://github.com/yangzhongtian001/PYCM&amp;lt;/span&amp;gt;&amp;lt;/a&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;</translation>
     </message>
     <message>
         <location filename="../UI/About.py" line="41"/>
@@ -24,95 +24,100 @@
         <translation>编译信息：%s</translation>
     </message>
     <message>
-        <location filename="../UI/AboutUI.py" line="100"/>
+        <location filename="../UI/AboutUI.py" line="108"/>
         <source>PYCM Console</source>
         <translation>PYCM 服务端</translation>
     </message>
     <message>
-        <location filename="../UI/AboutUI.py" line="103"/>
+        <location filename="../UI/AboutUI.py" line="110"/>
         <source>GNU General Public License</source>
         <translation>GNU 通用公共许可证</translation>
+    </message>
+    <message>
+        <location filename="../UI/AboutUI.py" line="109"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Author: RichardYangZT(&lt;a href=&quot;www.52pojie.cn&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;www.52pojie.cn&lt;/span&gt;&lt;/a&gt;)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;作者：RichardYangZT(&amp;lt;a href=&amp;quot;www.52pojie.cn&amp;quot;&amp;gt;&amp;lt;span style=&amp;quot; text-decoration: underline; color:#0000ff;&amp;quot;&amp;gt;www.52pojie.cn&amp;lt;/span&amp;gt;&amp;lt;/a&amp;gt;)&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;</translation>
     </message>
 </context>
 <context>
     <name>DashboardForm</name>
     <message>
-        <location filename="../UI/DashboardUI.py" line="262"/>
+        <location filename="../UI/DashboardUI.py" line="265"/>
         <source>PYCM Dashboard</source>
         <translation>PYCM 控制台</translation>
     </message>
     <message>
-        <location filename="../UI/DashboardUI.py" line="263"/>
+        <location filename="../UI/DashboardUI.py" line="266"/>
         <source>Python Classroom Management System</source>
         <translation>PYCM 电子教室管理系统</translation>
     </message>
     <message>
-        <location filename="../UI/DashboardUI.py" line="264"/>
+        <location filename="../UI/DashboardUI.py" line="267"/>
         <source>Screen Broadcast</source>
         <translation>屏幕广播</translation>
     </message>
     <message>
-        <location filename="../UI/DashboardUI.py" line="265"/>
+        <location filename="../UI/DashboardUI.py" line="268"/>
         <source>Remote View</source>
         <translation>屏幕监控</translation>
     </message>
     <message>
-        <location filename="../UI/DashboardUI.py" line="266"/>
+        <location filename="../UI/DashboardUI.py" line="269"/>
         <source>Remote Command</source>
         <translation>远程命令</translation>
     </message>
     <message>
-        <location filename="../UI/DashboardUI.py" line="268"/>
+        <location filename="../UI/DashboardUI.py" line="271"/>
         <source>File Receive</source>
         <translation>文件接收</translation>
     </message>
     <message>
-        <location filename="../UI/DashboardUI.py" line="269"/>
+        <location filename="../UI/DashboardUI.py" line="272"/>
         <source>Quit Client</source>
         <translation>退出客户端</translation>
     </message>
     <message>
-        <location filename="../UI/DashboardUI.py" line="270"/>
+        <location filename="../UI/DashboardUI.py" line="273"/>
         <source>Messaging</source>
         <translation>发送消息</translation>
     </message>
     <message>
-        <location filename="../UI/DashboardUI.py" line="271"/>
+        <location filename="../UI/DashboardUI.py" line="274"/>
         <source>Clear Log</source>
         <translation>清除日志</translation>
     </message>
     <message>
-        <location filename="../UI/DashboardUI.py" line="272"/>
+        <location filename="../UI/DashboardUI.py" line="275"/>
         <source>Arrange Client</source>
         <translation>自动布局</translation>
     </message>
     <message>
-        <location filename="../UI/DashboardUI.py" line="273"/>
+        <location filename="../UI/DashboardUI.py" line="276"/>
         <source>Select All</source>
         <translation>选择全部</translation>
     </message>
     <message>
-        <location filename="../UI/DashboardUI.py" line="274"/>
+        <location filename="../UI/DashboardUI.py" line="277"/>
         <source>Zoom In</source>
         <translation>放大视图</translation>
     </message>
     <message>
-        <location filename="../UI/DashboardUI.py" line="275"/>
+        <location filename="../UI/DashboardUI.py" line="278"/>
         <source>Zoom Out</source>
         <translation>缩小视图</translation>
     </message>
     <message>
-        <location filename="../UI/DashboardUI.py" line="276"/>
+        <location filename="../UI/DashboardUI.py" line="279"/>
         <source>Rename</source>
         <translation>重命名</translation>
     </message>
     <message>
-        <location filename="../UI/DashboardUI.py" line="277"/>
+        <location filename="../UI/DashboardUI.py" line="280"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../UI/DashboardUI.py" line="267"/>
+        <location filename="../UI/DashboardUI.py" line="270"/>
         <source>File Share</source>
         <translation>文件共享</translation>
     </message>
@@ -129,7 +134,7 @@
     <message>
         <location filename="../UI/Dashboard.py" line="96"/>
         <source>File received: %s, &lt;a href=&quot;%s&quot;&gt;Detail&lt;/a&gt;</source>
-        <translation>收到文件：%s，&lt;a href=&quot;%s&quot;&gt;详细信息&lt;/a&gt;</translation>
+        <translation>收到文件：%s，&amp;lt;a href=&amp;quot;%s&amp;quot;&amp;gt;详细信息&amp;lt;/a&amp;gt;</translation>
     </message>
     <message>
         <location filename="../UI/Dashboard.py" line="101"/>
@@ -251,37 +256,37 @@
 <context>
     <name>FileReceiveDialog</name>
     <message>
-        <location filename="../UI/FileReceiveUI.py" line="94"/>
+        <location filename="../UI/FileReceiveUI.py" line="95"/>
         <source>File Receive</source>
         <translation>文件接收</translation>
     </message>
     <message>
-        <location filename="../UI/FileReceiveUI.py" line="95"/>
+        <location filename="../UI/FileReceiveUI.py" line="96"/>
         <source>Receive Folder: </source>
         <translation>接收目录： </translation>
     </message>
     <message>
-        <location filename="../UI/FileReceiveUI.py" line="96"/>
+        <location filename="../UI/FileReceiveUI.py" line="97"/>
         <source>Change</source>
         <translation>修改</translation>
     </message>
     <message>
-        <location filename="../UI/FileReceiveUI.py" line="97"/>
+        <location filename="../UI/FileReceiveUI.py" line="98"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../UI/FileReceiveUI.py" line="99"/>
+        <location filename="../UI/FileReceiveUI.py" line="100"/>
         <source>File Name</source>
         <translation>文件名</translation>
     </message>
     <message>
-        <location filename="../UI/FileReceiveUI.py" line="101"/>
+        <location filename="../UI/FileReceiveUI.py" line="102"/>
         <source>From</source>
         <translation>来自</translation>
     </message>
     <message>
-        <location filename="../UI/FileReceiveUI.py" line="102"/>
+        <location filename="../UI/FileReceiveUI.py" line="103"/>
         <source>Double click the row to open file</source>
         <translation>双击对应行以打开文件</translation>
     </message>
@@ -312,70 +317,70 @@
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../UI/FileServerUI.py" line="82"/>
+        <location filename="../UI/FileServerUI.py" line="83"/>
         <source>Server Status: Stopped</source>
         <translation>状态：已停止</translation>
     </message>
     <message>
-        <location filename="../UI/FileServerUI.py" line="83"/>
+        <location filename="../UI/FileServerUI.py" line="84"/>
         <source>Start</source>
         <translation>启动</translation>
     </message>
     <message>
-        <location filename="../UI/FileServerUI.py" line="79"/>
+        <location filename="../UI/FileServerUI.py" line="80"/>
         <source>File Server</source>
         <translation>文件服务器</translation>
     </message>
     <message>
-        <location filename="../UI/FileServerUI.py" line="80"/>
+        <location filename="../UI/FileServerUI.py" line="81"/>
         <source>Target Folder: </source>
         <translation>工作目录： </translation>
     </message>
     <message>
-        <location filename="../UI/FileServerUI.py" line="81"/>
+        <location filename="../UI/FileServerUI.py" line="82"/>
         <source>Change</source>
         <translation>修改</translation>
     </message>
     <message>
-        <location filename="../UI/FileServerUI.py" line="84"/>
+        <location filename="../UI/FileServerUI.py" line="85"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Folder download is not supported,please consider compressing folders to zipped files.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;不支持下载文件夹，请考虑将文件夹压缩为压缩文件。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;不支持下载文件夹，请考虑将文件夹压缩为压缩文件。&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;</translation>
     </message>
 </context>
 <context>
     <name>LoginForm</name>
     <message>
-        <location filename="../UI/LoginUI.py" line="69"/>
+        <location filename="../UI/LoginUI.py" line="82"/>
         <source>PYCM Login</source>
         <translation>PYCM 登录</translation>
     </message>
     <message>
-        <location filename="../UI/LoginUI.py" line="67"/>
+        <location filename="../UI/LoginUI.py" line="80"/>
         <source>Default: admin</source>
         <translation>默认：admin</translation>
     </message>
     <message>
-        <location filename="../UI/LoginUI.py" line="68"/>
+        <location filename="../UI/LoginUI.py" line="81"/>
         <source>Default: 123456</source>
         <translation>默认：123456</translation>
     </message>
     <message>
-        <location filename="../UI/LoginUI.py" line="70"/>
+        <location filename="../UI/LoginUI.py" line="83"/>
         <source>Username:</source>
         <translation>用户名：</translation>
     </message>
     <message>
-        <location filename="../UI/LoginUI.py" line="71"/>
+        <location filename="../UI/LoginUI.py" line="84"/>
         <source>Password:</source>
-        <translation>密&#x3000;码：</translation>
+        <translation>密　码：</translation>
     </message>
     <message>
-        <location filename="../UI/LoginUI.py" line="72"/>
+        <location filename="../UI/LoginUI.py" line="85"/>
         <source>Login</source>
         <translation>登录</translation>
     </message>
     <message>
-        <location filename="../UI/LoginUI.py" line="73"/>
+        <location filename="../UI/LoginUI.py" line="86"/>
         <source>Return</source>
         <translation>回车</translation>
     </message>
@@ -403,7 +408,7 @@
 <context>
     <name>NetworkDeviceSelectDialog</name>
     <message>
-        <location filename="../UI/NetworkDeviceSelectUI.py" line="40"/>
+        <location filename="../UI/NetworkDeviceSelectUI.py" line="43"/>
         <source>Network Settings</source>
         <translation>网络设置</translation>
     </message>
@@ -411,12 +416,12 @@
 <context>
     <name>RemoteCommandGroupDialog</name>
     <message>
-        <location filename="../UI/RemoteCommandGroupUI.py" line="56"/>
+        <location filename="../UI/RemoteCommandGroupUI.py" line="57"/>
         <source>Remote Command</source>
         <translation>远程命令</translation>
     </message>
     <message>
-        <location filename="../UI/RemoteCommandGroupUI.py" line="57"/>
+        <location filename="../UI/RemoteCommandGroupUI.py" line="58"/>
         <source>Command Select</source>
         <translation>选择命令</translation>
     </message>
@@ -424,7 +429,7 @@
 <context>
     <name>RemoteSpy</name>
     <message>
-        <location filename="../UI/RemoteSpyUI.py" line="38"/>
+        <location filename="../UI/RemoteSpyUI.py" line="39"/>
         <source>Remote View</source>
         <translation>屏幕监控</translation>
     </message>
@@ -432,12 +437,12 @@
 <context>
     <name>SendMessageGroupDialog</name>
     <message>
-        <location filename="../UI/SendMessageGroupUI.py" line="56"/>
+        <location filename="../UI/SendMessageGroupUI.py" line="57"/>
         <source>Messaging</source>
         <translation>发送消息</translation>
     </message>
     <message>
-        <location filename="../UI/SendMessageGroupUI.py" line="57"/>
+        <location filename="../UI/SendMessageGroupUI.py" line="58"/>
         <source>Message Input</source>
         <translation>消息编辑</translation>
     </message>
