@@ -35,7 +35,7 @@ jobs:
         working-directory: Console
         run: |
           pyinstaller --key PYCM --noupx -i ./Resources/Core/Logo.ico \
-                      --add-data "Translation/*.qm;Translation" \
+                      --add-data "Translation/*.qm:Translation" \
                       --name PYCM-Console -w -D ./ConsoleMain.py
       - name: Zip files
         uses: papeloto/action-zip@v1
@@ -79,7 +79,7 @@ jobs:
         working-directory: Client
         run: |
           pyinstaller --key PYCM --noupx -i .\Resources\Core\Logo.ico \
-                      --add-data "Translation/*.qm;Translation" \
+                      --add-data "Translation/*.qm:Translation" \
                       --name PYCM-Client -w -D .\ClientMain.py
       - name: Zip files
         uses: papeloto/action-zip@v1
