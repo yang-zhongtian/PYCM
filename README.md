@@ -71,7 +71,6 @@ It contains both `client(student side)` and `console(teacher side)`. GUI written
 ## Contact
 
 * Author: Richard Yang
-* Email: zhongtian.yang@qq.com
 * School: China Beijing National Day School
 * Club: HCC Computer Community
 

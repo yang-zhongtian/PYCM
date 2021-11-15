@@ -70,7 +70,6 @@
 ## 联系
 
 * 作者：Richard Yang
-* 邮箱：zhongtian.yang@qq.com
 * 学校：北京十一学校
 * 社团：HCC Computer Community
 
