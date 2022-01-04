@@ -17,109 +17,43 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from PyQt5.QtWidgets import QFileIconProvider
-from PyQt5.QtCore import QDir, QFile, QFileInfo
-import socket
-import struct
-import select
-import pickle
-import base64
-import zlib
-import os
+from Module.FTPLib.authorizers import DummyAuthorizer
+from Module.FTPLib.handlers import FTPHandler
+from Module.FTPLib.servers import FTPServer
 import logging
-from Module.Packages import FileClientFlag, FileServerFlag
 
 
 class FileServer(object):
-    socket_port = None
-    socket_obj = None
-    socket_inputs = []
     working = False
     working_path = '.'
+    current_ip = None
+    ftp_port = None
+    ftp_password = None
+    authorizer = None
+    handler = None
+    server = None
 
-    def __init__(self, parent, socket_port):
+    def __init__(self, parent, current_ip, ftp_port):
         self.parent = parent
-        self.socket_port = socket_port
+        self.current_ip = current_ip
+        self.ftp_port = ftp_port
 
-    def __init_socket_obj(self):
-        self.socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket_obj.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.socket_obj.bind(('', self.socket_port))
-        self.socket_obj.listen(100)
-        self.socket_inputs.append(self.socket_obj)
-        self.dir_filter = QDir.Files | QDir.NoDotAndDotDot | QDir.NoSymLinks
+    def __init_ftp_server(self):
+        self.authorizer = DummyAuthorizer()
+        print(self.ftp_password)
+        self.authorizer.add_user('pycm', self.ftp_password, self.working_path, perm='elr')
+        self.handler = FTPHandler
+        self.handler.authorizer = self.authorizer
+        self.handler.encoding = 'gbk'
+        self.server = FTPServer((self.current_ip, self.ftp_port), self.handler)
 
     def start(self):
-        self.__init_socket_obj()
-        recv_header_size = struct.calcsize('!2iL')
-        while self.working:
-            readable, writable, exceptionable = select.select(self.socket_inputs, [], [])
-            for sock in readable:
-                if sock == self.socket_obj:
-                    try:
-                        socket_conn, socket_addr = sock.accept()
-                        self.socket_inputs.append(socket_conn)
-                    except OSError:
-                        continue
-                else:
-                    try:
-                        socket_data = sock.recv(recv_header_size)
-                    except ConnectionResetError:
-                        self.socket_inputs.remove(sock)
-                        sock.close()
-                        continue
-                    except OSError:
-                        continue
-                    if socket_data:
-                        self.handle_socket(sock, socket_data)
-                    else:
-                        self.socket_inputs.remove(sock)
-                        sock.close()
-
-    def handle_socket(self, sock, socket_data):
-        socket_flag, path_len, cksum = struct.unpack('!2iL', socket_data)
-        path = struct.unpack(f'!{path_len}s', sock.recv(path_len))[0]
-        if zlib.crc32(path) != cksum:
-            return
-        real_path = QDir(self.working_path)
-        if socket_flag == FileClientFlag.ListDir:
-            path = base64.b64decode(path).decode('utf-8').lstrip('/')
-            real_path.cd(path)
-            list_dir = []
-            for file in real_path.entryList(self.dir_filter):
-                info = QFileInfo(real_path.filePath(file))
-                if info.isFile():
-                    file_type = 0
-                elif info.isDir():
-                    file_type = 1
-                else:
-                    file_type = -1
-                list_dir.append({'name': info.fileName(), 'type': file_type})
-            list_data = pickle.dumps(list_dir)
-            cksum = zlib.crc32(list_data)
-            sock.send(struct.pack('!2iL', FileServerFlag.ListDir, len(list_data), cksum))
-            sock.sendall(list_data)
-        elif socket_flag == FileClientFlag.DownloadFile:
-            path = pickle.loads(path)
-            files = []
-            for file_path in path:
-                file = QFileInfo(real_path.absoluteFilePath(file_path.lstrip('/')))
-                if file.isFile():
-                    files.append([file_path, file.absoluteFilePath(), file.size()])
-            sock.send(struct.pack('!2i', FileServerFlag.FileDownloadStart, len(files)))
-            for file_label, file_path, file_size in files:
-                sock.send(struct.pack('!i200si', FileServerFlag.FileInfo,
-                                      file_label.encode(), file_size))
-                file_handle = open(file_path, 'rb')
-                while True:
-                    file_chuck = file_handle.read(4096)
-                    if not file_chuck:
-                        break
-                    sock.send(struct.pack('!i4096s', FileServerFlag.FileData, file_chuck))
-            sock.send(struct.pack('!2i', FileServerFlag.FileDownloadEnd, len(files)))
+        self.__init_ftp_server()
+        self.server.serve_forever()
 
     def close(self):
-        if self.socket_obj is not None:
-            self.socket_obj.close()
-            self.socket_inputs.clear()
-            self.socket_obj = None
+        if self.server is not None:
+            self.server.close_all()
+        self.authorizer = None
+        self.handler = None
+        self.server = None

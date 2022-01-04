@@ -13,8 +13,6 @@
 
 * [Github(Master)](https://github.com/yangzhongtian001/PYCM)
 * [Gitee(Mirror)](https://gitee.com/yangzhongtian/PYCM)
-* [Gitlab(Mirror)](https://gitlab.com/yangzhongtian/PYCM)
-* [Coding(Mirror)](https://yangzhongtian.coding.net/public/PYCM/PYCM/git/files)
 
 ## Introduction
 
@@ -29,8 +27,8 @@ It contains both `client(student side)` and `console(teacher side)`. GUI written
 * [X] Console side file share
 * [x] Client side file submitting
 * [x] Console side message sending
-* [ ] Client side message sending
-* [x] Nuitka packaging
+* [x] Client side message sending
+* [x] `PyInstaller` packaging
 
 ## Programs
 

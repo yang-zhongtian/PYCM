@@ -96,13 +96,17 @@ class Config(object):
             return True
         return False
 
-    def init_all(self):
-        if not self.first_run():
-            return False
+    @staticmethod
+    def force_get_network_device(only_name=True):
         network_device_select_form = NetworkDeviceSelectForm()
         while network_device_select_form.exec_() != network_device_select_form.Accepted:
             QMessageBox.critical(None, 'Warning', 'Please select a network device!')
-        self.__default_config['Network']['Local']['Device'] = network_device_select_form.get_selected_device()
+        return network_device_select_form.get_selected_device(only_name)
+
+    def init_all(self):
+        if not self.first_run():
+            return False
+        self.__default_config['Network']['Local']['Device'] = self.force_get_network_device()
         self.__default_tree.clear()
         self.__generate_default_tree(self.__default_config)
         for key, value in self.__default_tree:

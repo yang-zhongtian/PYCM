@@ -25,14 +25,13 @@ class NetworkDiscoverFlag(object):
 
 class ClassBroadcastFlag(object):
     Message = 1
-    StartScreenBroadcast = 2
-    StopScreenBroadcast = 3
-    ConsoleQuit = 4
-    Command = 5
-    RemoteSpyStart = 6
-    RemoteQuit = 7
-    ClientFileRecieved = 8
-    ToggleFileServer = 9
+    ToggleScreenBroadcast = 2
+    ConsoleQuit = 3
+    Command = 4
+    RemoteSpyStart = 5
+    RemoteQuit = 6
+    ClientFileReceived = 7
+    ToggleFileServer = 8
 
 
 class PrivateMessageFlag(object):
@@ -53,16 +52,3 @@ class RemoteSpyFlag(object):
 class ScreenBroadcastFlag(object):
     PackInfo = 1
     PackData = 2
-
-
-class FileServerFlag(object):
-    ListDir = 1
-    FileDownloadStart = 2
-    FileInfo = 3
-    FileData = 4
-    FileDownloadEnd = 5
-
-
-class FileClientFlag(object):
-    ListDir = 1
-    DownloadFile = 2

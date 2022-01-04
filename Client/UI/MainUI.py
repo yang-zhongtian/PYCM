@@ -104,6 +104,7 @@ class Ui_MainForm(object):
         self.retranslateUi(MainForm)
         self.notify_button.clicked.connect(MainForm.notify_console) # type: ignore
         self.hide_button.clicked.connect(MainForm.hide) # type: ignore
+        self.private_message_button.clicked.connect(MainForm.show_messaging_window) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainForm)
 
     def retranslateUi(self, MainForm):

@@ -13,8 +13,6 @@
 
 * [Github(主要)](https://github.com/yangzhongtian001/PYCM)
 * [Gitee(镜像)](https://gitee.com/yangzhongtian/PYCM)
-* [Gitlab(镜像)](https://gitlab.com/yangzhongtian/PYCM)
-* [Coding(镜像)](https://yangzhongtian.coding.net/public/PYCM/PYCM/git/files)
 
 ## 简介
 
@@ -28,8 +26,8 @@
 * [X] 教师端文件共享
 * [x] 学生端文件提交
 * [x] 教师端消息发送
-* [ ] 学生端消息发送
-* [x] `Nuitka` 编译发布
+* [x] 学生端消息发送
+* [x] `PyInstaller` 编译发布
 
 ## 程序
 

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>422</width>
-    <height>130</height>
+    <height>91</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,7 +29,7 @@
    <iconset resource="../Resources/Resources.qrc">
     <normaloff>:/Core/Core/Logo.png</normaloff>:/Core/Core/Logo.png</iconset>
   </property>
-  <layout class="QVBoxLayout" name="main_layout" stretch="0,0,0">
+  <layout class="QVBoxLayout" name="main_layout" stretch="0,0">
    <item>
     <layout class="QHBoxLayout" name="working_folder_layout">
      <item>
@@ -93,19 +93,6 @@
       </widget>
      </item>
     </layout>
-   </item>
-   <item>
-    <widget class="QLabel" name="no_folder_notice">
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Folder download is not supported,please consider compressing folders to zipped files.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
    </item>
   </layout>
  </widget>

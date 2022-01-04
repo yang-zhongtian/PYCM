@@ -86,14 +86,14 @@ class ClassBroadcast(QObject):
                         ClassBroadcastFlag.Command,
                         ClassBroadcastFlag.RemoteSpyStart,
                         ClassBroadcastFlag.RemoteQuit,
-                        ClassBroadcastFlag.ClientFileRecieved
+                        ClassBroadcastFlag.ClientFileReceived
                 ):
                     data = self.batch_send_decode(unpacked_data)
                     if data is None:
                         continue
                     if unpacked_flag == ClassBroadcastFlag.Message:
                         message = base64.b64decode(data).decode('utf-8')
-                        self.parent.message_recieved.emit(str(message))
+                        self.parent.message_received.emit(str(message))
                     elif unpacked_flag == ClassBroadcastFlag.Command:
                         message = base64.b64decode(data).decode('utf-8')
                         self.execute_remote_command(str(message))
@@ -102,19 +102,20 @@ class ClassBroadcast(QObject):
                     elif unpacked_flag == ClassBroadcastFlag.RemoteQuit:
                         self.parent.quit_self.emit()
                         return
-                    elif unpacked_flag == ClassBroadcastFlag.ClientFileRecieved:
-                        self.parent.client_file_recieved.emit()
-                elif unpacked_flag == ClassBroadcastFlag.StartScreenBroadcast:
-                    self.parent.toggle_screen_broadcats.emit(True)
-                elif unpacked_flag == ClassBroadcastFlag.StopScreenBroadcast:
-                    self.parent.toggle_screen_broadcats.emit(False)
+                    elif unpacked_flag == ClassBroadcastFlag.ClientFileReceived:
+                        self.parent.client_file_received.emit()
+                elif unpacked_flag == ClassBroadcastFlag.ToggleScreenBroadcast:
+                    if unpacked_data[0] == ord('1'):
+                        self.parent.toggle_screen_broadcats.emit(True)
+                    elif unpacked_data[0] == ord('0'):
+                        self.parent.toggle_screen_broadcats.emit(False)
                 elif unpacked_flag == ClassBroadcastFlag.ConsoleQuit:
                     self.parent.reset_all.emit()
                     return
                 elif unpacked_flag == ClassBroadcastFlag.ToggleFileServer:
-                    if unpacked_data == b'1':
-                        self.parent.toggle_file_server.emit(True)
-                    else:
-                        self.parent.toggle_file_server.emit(False)
+                    if unpacked_data[0] == ord('1'):
+                        self.parent.toggle_file_server.emit(True, unpacked_data[1:].decode())
+                    elif unpacked_data[0] == ord('0'):
+                        self.parent.toggle_file_server.emit(False, None)
             except Exception as e:
                 logging.warning(f'Failed to decode socket data: {e}')

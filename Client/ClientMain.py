@@ -18,7 +18,7 @@
 """
 
 from Utils import LoadTranslation
-from PyQt5.QtWidgets import QWidget, QApplication
+from PyQt5.QtWidgets import QWidget, QApplication, QMessageBox
 from PyQt5.QtCore import Qt, QCoreApplication, QTranslator
 import sys
 import os
@@ -71,9 +71,13 @@ class MainWindow(MainForm):
         super(MainWindow, self).__init__(self)
         network_device = self.load_network_device()
         if not network_device:
-            logging.critical('Local network device not found')
-            sys.exit(0)
-        self.init_network_device(network_device)
+            QMessageBox.critical(self, self._translate('MainForm', 'Error'),
+                                 self._translate('MainForm', 'Network device error, please select another device!'))
+            device = config.force_get_network_device(only_name=False)
+            config.save('Network/Local/Device', device['NAME'])
+            self.init_network_device(device)
+        else:
+            self.init_network_device(network_device)
         self.init_threadings()
 
     def init_threadings(self):

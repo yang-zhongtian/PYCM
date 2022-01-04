@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_FileServerForm(object):
     def setupUi(self, FileServerForm):
         FileServerForm.setObjectName("FileServerForm")
-        FileServerForm.resize(422, 130)
+        FileServerForm.resize(422, 91)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -64,11 +64,6 @@ class Ui_FileServerForm(object):
         self.toggle_working.setObjectName("toggle_working")
         self.server_info_layout.addWidget(self.toggle_working)
         self.main_layout.addLayout(self.server_info_layout)
-        self.no_folder_notice = QtWidgets.QLabel(FileServerForm)
-        self.no_folder_notice.setAlignment(QtCore.Qt.AlignCenter)
-        self.no_folder_notice.setWordWrap(True)
-        self.no_folder_notice.setObjectName("no_folder_notice")
-        self.main_layout.addWidget(self.no_folder_notice)
 
         self.retranslateUi(FileServerForm)
         self.working_folder_change.clicked.connect(FileServerForm.change_working_folder) # type: ignore
@@ -82,5 +77,4 @@ class Ui_FileServerForm(object):
         self.working_folder_change.setText(_translate("FileServerForm", "Change"))
         self.server_info.setText(_translate("FileServerForm", "Server Status: Stopped"))
         self.toggle_working.setText(_translate("FileServerForm", "Start"))
-        self.no_folder_notice.setText(_translate("FileServerForm", "<html><head/><body><p>Folder download is not supported,please consider compressing folders to zipped files.</p></body></html>"))
 from Resources import Resources

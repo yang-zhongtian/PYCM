@@ -26,13 +26,13 @@ from Module.RemoteSpy import RemoteSpy
 
 
 class ClassBroadcastThread(QThread):
-    message_recieved = pyqtSignal(str)
+    message_received = pyqtSignal(str)
     reset_all = pyqtSignal()
     toggle_screen_broadcats = pyqtSignal(bool)
     start_remote_spy = pyqtSignal()
     quit_self = pyqtSignal()
-    client_file_recieved = pyqtSignal()
-    toggle_file_server = pyqtSignal(bool)
+    client_file_received = pyqtSignal()
+    toggle_file_server = pyqtSignal(bool, str)
 
     def __init__(self, config):
         super(ClassBroadcastThread, self).__init__()
@@ -62,7 +62,7 @@ class NetworkDiscoverThread(QThread):
 
 
 class ScreenBroadcastThread(QThread):
-    frame_recieved = pyqtSignal(QPixmap)
+    frame_received = pyqtSignal(QPixmap)
 
     def __init__(self, config):
         super(ScreenBroadcastThread, self).__init__()
@@ -73,6 +73,7 @@ class ScreenBroadcastThread(QThread):
         self.socket = ScreenBroadcast(self, self.current_ip, self.socket_ip, self.socket_port, self.socket_buffer)
 
     def run(self):
+        self.socket.working = True
         self.socket.start()
 
     def safe_stop(self):

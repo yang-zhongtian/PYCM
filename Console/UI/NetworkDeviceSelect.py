@@ -19,7 +19,7 @@
 
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import Qt
-import psutil
+from PyQt5.QtNetwork import QNetworkInterface, QAbstractSocket
 import socket
 from .NetworkDeviceSelectUI import Ui_NetworkDeviceSelectDialog
 
@@ -40,26 +40,24 @@ class NetworkDeviceSelectForm(QDialog):
         for idx, device in enumerate(self.devices):
             device_name, device_info = device
             self.ui.network_device_list.addItem(device_name, device_info)
-            if device_name == self.default_device:
+            if device_info['NAME'] == self.default_device:
                 self.ui.network_device_list.setCurrentIndex(idx)
 
     def load_network_devices(self):
-        network_devices = psutil.net_if_addrs()
+        devices_list = QNetworkInterface.allInterfaces()
         self.devices.clear()
-        for device in network_devices.keys():
-            af_inet4 = []
-            af_link = []
-            for item in network_devices[device]:
-                if item.family == socket.AF_INET:
-                    af_inet4.append(item.address)
-                elif item.family == psutil.AF_LINK:
-                    af_link.append(item.address)
-            if len(af_inet4) == 1 and len(af_link) == 1:
-                self.devices.append((device, {'IP': af_inet4[0], 'MAC': af_link[0]}))
+        for device in devices_list:
+            for address in device.addressEntries():
+                ip = address.ip()
+                if ip.protocol() == QAbstractSocket.IPv4Protocol:
+                    self.devices.append((device.humanReadableName(),
+                                         {'IP': ip.toString(),
+                                          'MAC': device.hardwareAddress(),
+                                          'NAME': device.name()}))
+                    break
         self.sync_network_devices()
 
     def get_selected_device(self):
         obj_data = self.ui.network_device_list.currentData()
-        obj_tag = self.ui.network_device_list.currentText()
-        self.parent().config.save('Network/Local/Device', obj_tag)
+        self.parent().config.save('Network/Local/Device', obj_data['NAME'])
         return obj_data

@@ -41,9 +41,10 @@ class NetworkDiscoverThread(QThread):
 
 class PrivateMessageThread(QThread):
     client_login_logout = pyqtSignal(str, str, str)
-    client_desktop_recieved = pyqtSignal(str, object)
-    client_notify_recieved = pyqtSignal(str)
-    client_file_recieved = pyqtSignal(str, str)
+    client_desktop_received = pyqtSignal(str, object)
+    client_notify_received = pyqtSignal(str)
+    client_file_received = pyqtSignal(str, str)
+    client_message_received = pyqtSignal(str, str)
 
     def __init__(self, config: object, parent: object = None):
         super(PrivateMessageThread, self).__init__()
@@ -77,7 +78,7 @@ class ScreenBroadcastThread(QThread):
 
 
 class RemoteSpyThread(QThread):
-    frame_recieved = pyqtSignal(QPixmap)
+    frame_received = pyqtSignal(QPixmap)
 
     def __init__(self, config: object):
         super(RemoteSpyThread, self).__init__()
@@ -94,16 +95,18 @@ class RemoteSpyThread(QThread):
 class FileServerThread(QThread):
     def __init__(self, config: object):
         super(FileServerThread, self).__init__()
+        self.current_ip = config.get_item('Network/Local/IP')
         self.socket_port = config.get_item('Network/FileServer/Port')
-        self.socket = FileServer(self, self.socket_port)
+        self.socket = FileServer(self, self.current_ip, self.socket_port)
 
     def safe_stop(self):
-        self.socket.working = False
         self.socket.close()
+
+    def set_password(self, password):
+        self.socket.ftp_password = password
 
     def set_working_dir(self, path):
         self.socket.working_path = path
 
     def run(self):
-        self.socket.working = True
         self.socket.start()

@@ -56,10 +56,11 @@ class DashboardForm(QMainWindow):
 
     def init_connections(self):
         self.private_message_thread.client_login_logout.connect(self.__logger)
-        self.private_message_thread.client_notify_recieved.connect(partial(self.__logger, 'client_notify'))
-        self.private_message_thread.client_desktop_recieved.connect(self.__update_client_desktop)
-        self.private_message_thread.client_file_recieved.connect(partial(self.__logger, 'file_recieved'))
-        self.remote_spy_thread.frame_recieved.connect(self.remote_spy_window.update_frame)
+        self.private_message_thread.client_notify_received.connect(partial(self.__logger, 'client_notify'))
+        self.private_message_thread.client_desktop_received.connect(self.__update_client_desktop)
+        self.private_message_thread.client_file_received.connect(partial(self.__logger, 'file_received'))
+        self.private_message_thread.client_message_received.connect(partial(self.__logger, 'message_received'))
+        self.remote_spy_thread.frame_received.connect(self.remote_spy_window.update_frame)
 
     def init_network_device(self, device):
         self.config.save('Network/Local/IP', device['IP'])
@@ -91,14 +92,18 @@ class DashboardForm(QMainWindow):
             self.__log_append(self._translate('DashboardForm', '%s logged off') % self.get_client_label_by_ip(ip))
             self.__remove_client_desktop(ip)
             self.__update_tray_tooltip()
-        elif type_ == 'file_recieved':
+        elif type_ == 'file_received':
             client = self.get_client_label_by_ip(ip)
             self.__log_append(self._translate('DashboardForm',
                                               'File received: %s, <a href="%s">Detail</a>') % (client, mac))
             self.file_receive_window.add_received_file(mac, client)
-            self.class_broadcast_object.client_file_recieved_notify(ip)
+            self.class_broadcast_object.client_file_received_notify(ip)
         elif type_ == 'client_notify':
             self.__log_append(self._translate('DashboardForm', 'Hands up: %s') % self.get_client_label_by_ip(ip))
+        elif type_ == 'message_received':
+            client = self.get_client_label_by_ip(ip)
+            self.__log_append(self._translate('DashboardForm',
+                                              'Messsage received from %s: %s') % (client, mac))
 
     def __log_append(self, message):
         self.ui.log_area.append(f'[{time.strftime("%H:%M", time.localtime(time.time()))}] <b>{message}</b>')
@@ -137,8 +142,8 @@ class DashboardForm(QMainWindow):
         if not target:
             return
         if len(target) > 1:
-            QMessageBox.warning(self, self._translate('DashboardForm', 'Warning'),
-                                self._translate('DashboardForm', 'Only support to rename one client each time'))
+            QMessageBox.critical(self, self._translate('DashboardForm', 'Error'),
+                                 self._translate('DashboardForm', 'Only support to rename one client each time'))
             return
         target = target[0]
         client = self.clients[target['ip']]
@@ -230,7 +235,7 @@ class DashboardForm(QMainWindow):
         if result == remote_command_group_dialog.Accepted:
             command = remote_command_group_dialog.ui.command_select.selectedItems()
             if len(command) == 0:
-                QMessageBox.critical(self, self._translate('DashboardForm', 'Warning'),
+                QMessageBox.critical(self, self._translate('DashboardForm', 'Error'),
                                      self._translate('DashboardForm', 'No command selected'))
                 return
             command = command[0]

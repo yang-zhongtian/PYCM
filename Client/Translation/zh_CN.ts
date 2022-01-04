@@ -19,11 +19,6 @@
         <translation>无编译信息</translation>
     </message>
     <message>
-        <location filename="../UI/AboutUI.py" line="108"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Project Home: &lt;a href=&quot;https://github.com/yangzhongtian001/PYCM&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/yangzhongtian001/PYCM&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;项目主页：&amp;lt;a href=&amp;quot;https://github.com/yangzhongtian001/PYCM&amp;quot;&amp;gt;&amp;lt;span style=&amp;quot; text-decoration: underline; color:#0000ff;&amp;quot;&amp;gt;https://github.com/yangzhongtian001/PYCM&amp;lt;/span&amp;gt;&amp;lt;/a&amp;gt;&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;</translation>
-    </message>
-    <message>
         <location filename="../UI/About.py" line="41"/>
         <source>Build Info: %s</source>
         <translation>编译信息：%s</translation>
@@ -32,57 +27,6 @@
         <location filename="../UI/AboutUI.py" line="110"/>
         <source>GNU General Public License</source>
         <translation>GNU 通用公共许可证</translation>
-    </message>
-    <message>
-        <location filename="../UI/AboutUI.py" line="109"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Author: RichardYangZT(&lt;a href=&quot;www.52pojie.cn&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;www.52pojie.cn&lt;/span&gt;&lt;/a&gt;)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&amp;lt;html&amp;gt;&amp;lt;head/&amp;gt;&amp;lt;body&amp;gt;&amp;lt;p&amp;gt;作者: RichardYangZT(&amp;lt;a href=&amp;quot;www.52pojie.cn&amp;quot;&amp;gt;&amp;lt;span style=&amp;quot; text-decoration: underline; color:#0000ff;&amp;quot;&amp;gt;www.52pojie.cn&amp;lt;/span&amp;gt;&amp;lt;/a&amp;gt;)&amp;lt;/p&amp;gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;</translation>
-    </message>
-</context>
-<context>
-    <name>FileClient</name>
-    <message>
-        <location filename="../UI/FileClientUI.py" line="56"/>
-        <source>File Client</source>
-        <translation>文件客户端</translation>
-    </message>
-    <message>
-        <location filename="../UI/FileClientUI.py" line="57"/>
-        <source>Download</source>
-        <translation>下载</translation>
-    </message>
-    <message>
-        <location filename="../UI/FileClientUI.py" line="87"/>
-        <source>Folder download is not supported</source>
-        <translation type="obsolete">不支持文件夹下载</translation>
-    </message>
-</context>
-<context>
-    <name>FileClientDialog</name>
-    <message>
-        <location filename="../UI/FileClient.py" line="105"/>
-        <source>Select Path To Save</source>
-        <translation>选择保存目录</translation>
-    </message>
-    <message>
-        <location filename="../UI/FileClient.py" line="108"/>
-        <source>Warning</source>
-        <translation>警告</translation>
-    </message>
-    <message>
-        <location filename="../UI/FileClient.py" line="108"/>
-        <source>Please select path to save!</source>
-        <translation>请选择保存的目录！</translation>
-    </message>
-    <message>
-        <location filename="../UI/FileClient.py" line="122"/>
-        <source>Info</source>
-        <translation>信息</translation>
-    </message>
-    <message>
-        <location filename="../UI/FileClient.py" line="122"/>
-        <source>File download finished</source>
-        <translation>文件下载完成</translation>
     </message>
 </context>
 <context>
@@ -176,27 +120,27 @@
 <context>
     <name>MainForm</name>
     <message>
-        <location filename="../UI/MainUI.py" line="112"/>
+        <location filename="../UI/MainUI.py" line="113"/>
         <source>PYCM Client - Offline</source>
         <translation>PYCM 客户端 - 离线</translation>
     </message>
     <message>
-        <location filename="../UI/MainUI.py" line="113"/>
+        <location filename="../UI/MainUI.py" line="114"/>
         <source>Hands Up</source>
         <translation>举手</translation>
     </message>
     <message>
-        <location filename="../UI/MainUI.py" line="114"/>
+        <location filename="../UI/MainUI.py" line="115"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location filename="../UI/MainUI.py" line="115"/>
+        <location filename="../UI/MainUI.py" line="116"/>
         <source>Messaging</source>
         <translation>消息</translation>
     </message>
     <message>
-        <location filename="../UI/MainUI.py" line="116"/>
+        <location filename="../UI/MainUI.py" line="117"/>
         <source>Hide</source>
         <translation>隐藏</translation>
     </message>
@@ -221,7 +165,7 @@
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="214"/>
+        <location filename="../UI/Main.py" line="226"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
@@ -241,61 +185,61 @@
         <translation>修改配置成功！请重启客户端以生效</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="141"/>
+        <location filename="../UI/Main.py" line="151"/>
         <source>Message</source>
         <translation>消息</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="152"/>
+        <location filename="../UI/Main.py" line="163"/>
         <source>PYCM Client - Online</source>
         <translation>PYCM 客户端 - 在线</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="175"/>
+        <location filename="../UI/Main.py" line="186"/>
         <source>Online</source>
         <translation>在线</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="177"/>
+        <location filename="../UI/Main.py" line="188"/>
         <source>Offline</source>
         <translation>离线</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="178"/>
+        <location filename="../UI/Main.py" line="189"/>
         <source>PYCM Client
 </source>
         <translation>PYCM 客户端
 </translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="178"/>
+        <location filename="../UI/Main.py" line="189"/>
         <source>Local IP: %s
 </source>
         <translation>本机IP：%s
 </translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="178"/>
+        <location filename="../UI/Main.py" line="189"/>
         <source>Status: %s</source>
         <translation>状态：%s</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="214"/>
+        <location filename="../UI/Main.py" line="226"/>
         <source>Are you sure to exit?</source>
         <translation>你是否确定要退出？</translation>
     </message>
     <message>
-        <location filename="../UI/MainUI.py" line="111"/>
+        <location filename="../UI/MainUI.py" line="112"/>
         <source>Client</source>
         <translation>客户端</translation>
     </message>
     <message>
-        <location filename="../UI/MainUI.py" line="117"/>
+        <location filename="../UI/MainUI.py" line="118"/>
         <source>Send File</source>
         <translation>发送文件</translation>
     </message>
     <message>
-        <location filename="../UI/MainUI.py" line="118"/>
+        <location filename="../UI/MainUI.py" line="119"/>
         <source>File Client</source>
         <translation>文件客户端</translation>
     </message>
@@ -344,6 +288,29 @@
         <location filename="../UI/ScreenBroadcastUI.py" line="106"/>
         <source>Always On Top</source>
         <translation>置顶</translation>
+    </message>
+</context>
+<context>
+    <name>SendMessageForm</name>
+    <message>
+        <location filename="../UI/SendMessageUI.py" line="63"/>
+        <source>Send</source>
+        <translation>发送</translation>
+    </message>
+    <message>
+        <location filename="../UI/SendMessageUI.py" line="62"/>
+        <source>Messaging</source>
+        <translation>消息</translation>
+    </message>
+    <message>
+        <location filename="../UI/SendMessageUI.py" line="64"/>
+        <source>Return</source>
+        <translation>回车</translation>
+    </message>
+    <message>
+        <location filename="../UI/SendMessage.py" line="38"/>
+        <source>Received</source>
+        <translation>收到</translation>
     </message>
 </context>
 </TS>

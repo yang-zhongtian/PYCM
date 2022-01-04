@@ -20,12 +20,15 @@
 from PyQt5.QtWidgets import QWidget, QSystemTrayIcon, QAction, QMenu, QMessageBox, QApplication
 from PyQt5.QtCore import Qt, QPoint, QTimer, pyqtSignal, QCoreApplication
 from PyQt5.QtGui import QMouseEvent, QIcon
-import psutil
 import socket
+import platform
+import subprocess
 from .MainUI import Ui_MainForm
 from .FileSend import FileSendForm
-from .FileClient import FileClientDialog
 from .ScreenBroadcast import ScreenBroadcastForm
+from .SendMessage import SendMessageForm
+from .ClientLabelDisplay import ClientLabelDisplayForm
+from .NetworkDeviceSelect import NetworkDeviceSelectForm
 from .About import AboutDialog
 
 
@@ -33,6 +36,7 @@ from .About import AboutDialog
 class MainForm(QWidget):
     server_ip = None
     screen_spy_timer = QTimer()
+    file_client_password = ''
     _start_pos = None
     _end_pos = None
     _is_tracking = False
@@ -51,33 +55,28 @@ class MainForm(QWidget):
         self.move(int(desktop.width() - 422), 65)
         self.screen_broadcast_window = ScreenBroadcastForm(parent)
         self.file_send_window = FileSendForm(self.parent)
+        self.messaging_window = SendMessageForm(self.parent)
+        self.client_label_display_window = ClientLabelDisplayForm()
         self.init_tray()
         self.init_file_button()
+        self.client_label_display_window.show()
 
     def load_network_device(self):
-        network_devices = psutil.net_if_addrs()
-        devices = {}
-        for device in network_devices.keys():
-            af_inet4 = []
-            af_link = []
-            for item in network_devices[device]:
-                if item.family == socket.AF_INET:
-                    af_inet4.append(item.address)
-                elif item.family == psutil.AF_LINK:
-                    af_link.append(item.address)
-            if len(af_inet4) == 1 and len(af_link) == 1:
-                devices[device] = {'IP': af_inet4[0], 'MAC': af_link[0]}
-        return devices.get(self.parent.config.get_item('Network/Local/Device'))
+        devices = NetworkDeviceSelectForm.get_devices()
+        default_device = self.parent.config.get_item('Network/Local/Device')
+        for device in devices:
+            if device[1]['NAME'] == default_device:
+                return device[1]
 
     def init_connections(self):
         self.net_discover_thread.server_info.connect(self.server_found)
-        self.class_broadcast_thread.message_recieved.connect(self.message_recieved)
+        self.class_broadcast_thread.message_received.connect(self.message_received)
         self.class_broadcast_thread.reset_all.connect(self.reset_all_threadings)
         self.class_broadcast_thread.toggle_screen_broadcats.connect(self.__toggle_screen_broadcast)
         self.class_broadcast_thread.quit_self.connect(self.quit_self)
         self.class_broadcast_thread.start_remote_spy.connect(self.start_remote_spy)
         self.class_broadcast_thread.toggle_file_server.connect(self.toggle_file_client)
-        self.screen_broadcast_thread.frame_recieved.connect(self.screen_broadcast_window.update_frame)
+        self.screen_broadcast_thread.frame_received.connect(self.screen_broadcast_window.update_frame)
         self.screen_spy_timer.timeout.connect(self.private_message_object.screen_spy_send)
 
     # noinspection PyArgumentList
@@ -123,12 +122,22 @@ class MainForm(QWidget):
 
     def show_file_send_window(self):
         self.file_send_window = FileSendForm(self.parent)
-        self.class_broadcast_thread.client_file_recieved.connect(self.file_send_window.file_recieved)
+        self.class_broadcast_thread.client_file_received.connect(self.file_send_window.file_received)
         self.file_send_window.show()
 
     def show_file_client_window(self):
-        file_client = FileClientDialog(self.parent)
-        file_client.exec_()
+        file_client_port = self.parent.config.get_item('Network/FileServer/Port')
+        ftp_url = f'ftp://pycm:{self.file_client_password}@{self.server_ip}:{file_client_port}'
+        system = platform.system().lower()
+        if system == 'windows':
+            subprocess.call(['explorer.exe', ftp_url], shell=False)
+        elif system == 'darwin':
+            subprocess.call(['open', ftp_url], shell=False)
+        elif system == 'linux':
+            subprocess.call(['xdg-open', ftp_url], shell=False)
+
+    def show_messaging_window(self):
+        self.messaging_window.show()
 
     def show_about(self):
         AboutDialog(self).exec_()
@@ -136,9 +145,10 @@ class MainForm(QWidget):
     def start_remote_spy(self):
         self.remote_spy_thread.start()
 
-    def message_recieved(self, message):
+    def message_received(self, message):
         icon = QSystemTrayIcon.MessageIcon()
         self.tray_icon.showMessage(self._translate('MainForm', 'Message'), message, icon, 1000)
+        self.messaging_window.add_message(True, message)
 
     def notify_console(self):
         self.private_message_object.notify_console()
@@ -183,8 +193,9 @@ class MainForm(QWidget):
         self._force_quit = True
         self.close()
 
-    def toggle_file_client(self, working):
+    def toggle_file_client(self, working, password):
         if working:
+            self.file_client_password = password
             self.file_client_action.setEnabled(True)
         else:
             self.file_client_action.setEnabled(False)

@@ -78,18 +78,18 @@ class ClassBroadcast(QObject):
 
     def screen_broadcast_nodity(self, working):
         if working:
-            self.send_data(ClassBroadcastFlag.StartScreenBroadcast, b'')
+            self.send_data(ClassBroadcastFlag.ToggleScreenBroadcast, b'1')
         else:
-            self.send_data(ClassBroadcastFlag.StopScreenBroadcast, b'')
+            self.send_data(ClassBroadcastFlag.ToggleScreenBroadcast, b'0')
 
     def remote_quit_notify(self, clients):
         self.batch_send(ClassBroadcastFlag.RemoteQuit, clients, b'')
 
-    def client_file_recieved_notify(self, client):
-        self.batch_send(ClassBroadcastFlag.ClientFileRecieved, [client], b'')
+    def client_file_received_notify(self, client):
+        self.batch_send(ClassBroadcastFlag.ClientFileReceived, [client], b'')
 
-    def file_server_status_notify(self, working):
+    def file_server_status_notify(self, working, password=''):
         if working:
-            self.send_data(ClassBroadcastFlag.ToggleFileServer, b'1')
+            self.send_data(ClassBroadcastFlag.ToggleFileServer, b'1' + password.encode())
         else:
             self.send_data(ClassBroadcastFlag.ToggleFileServer, b'0')

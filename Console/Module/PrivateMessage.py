@@ -23,6 +23,7 @@ import struct
 import zlib
 import time
 import os
+import base64
 import logging
 from Module.Packages import PrivateMessageFlag
 
@@ -93,9 +94,9 @@ class PrivateMessage(object):
                 elif unpacked_flag == PrivateMessageFlag.ClientScreen:
                     unpacked_data = zlib.decompress(unpacked_data)
                     image = QImage.fromData(unpacked_data)
-                    self.parent.client_desktop_recieved.emit(socket_addr[0], QPixmap.fromImage(image))
+                    self.parent.client_desktop_received.emit(socket_addr[0], QPixmap.fromImage(image))
                 elif unpacked_flag == PrivateMessageFlag.ClientNotify:
-                    self.parent.client_notify_recieved.emit(socket_addr[0])
+                    self.parent.client_notify_received.emit(socket_addr[0])
                 elif unpacked_flag == PrivateMessageFlag.ClientFileData:
                     file_index, file_buffer_length, file_amount, file_buffer = struct.unpack(f'!3i{chuck_size}s',
                                                                                              unpacked_data)
@@ -104,6 +105,9 @@ class PrivateMessage(object):
                     file_cksum = struct.unpack('!L', unpacked_data)[0]
                     status = file_merger.write_file(socket_addr[0], file_cksum)
                     if status is not None:
-                        self.parent.client_file_recieved.emit(socket_addr[0], status)
+                        self.parent.client_file_received.emit(socket_addr[0], status)
+                elif unpacked_flag == PrivateMessageFlag.ClientMessage:
+                    message = base64.b64decode(unpacked_data).decode('utf-8')
+                    self.parent.client_message_received.emit(socket_addr[0], message)
             except Exception as e:
                 logging.warning(f'Failed to decode socket data: {e}')

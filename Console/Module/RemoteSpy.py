@@ -75,7 +75,7 @@ class RemoteSpy(object):
                             frame += payload_part
                         frame = zlib.decompress(frame)
                         frame = QImage.fromData(frame)
-                        self.parent.frame_recieved.emit(QPixmap.fromImage(frame))
+                        self.parent.frame_received.emit(QPixmap.fromImage(frame))
                 self.socket_conn.close()
                 self.socket_conn = None
             except ConnectionResetError:

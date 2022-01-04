@@ -52,7 +52,7 @@ class ScreenBroadcast(QObject):
             socket.inet_aton(self.socket_ip) + socket.inet_aton(self.current_ip)
         )
 
-    def __recieve_thread(self):
+    def __receive_thread(self):
         header_size = struct.calcsize('!4i')
         payload_size = self.socket_buffer - struct.calcsize('!2i')
         frame_data = b''
@@ -92,8 +92,8 @@ class ScreenBroadcast(QObject):
                 logging.warning(f'Failed to handle frame: {e}')
 
     def start(self):
-        Thread(target=self.__recieve_thread, daemon=True).start()
+        Thread(target=self.__receive_thread, daemon=True).start()
         while self.working:
             frame_raw = self.frames_queue.get()
             frame_qimage = QImage.fromData(frame_raw)
-            self.parent.frame_recieved.emit(QPixmap.fromImage(frame_qimage))
+            self.parent.frame_received.emit(QPixmap.fromImage(frame_qimage))

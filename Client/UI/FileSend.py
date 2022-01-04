@@ -197,7 +197,7 @@ class FileSendForm(QWidget):
             self.ui.file_send_progress_bar.setMaximum(0)
             self.ui.file_send_progress_label.setText(self._translate('FileSendForm', 'Processing'))
 
-    def file_recieved(self):
+    def file_received(self):
         self.ui.file_send_progress_bar.setMaximum(100)
         self.ui.file_send_progress_bar.setValue(100)
         self.ui.file_send_progress_label.setText(self._translate('FileSendForm', 'Finished'))

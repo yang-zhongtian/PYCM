@@ -18,14 +18,15 @@
 """
 
 from PyQt5.QtCore import pyqtSignal, QObject, QBuffer, QIODevice, Qt
+from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QImage
 import socket
 import struct
 from threading import Thread
-from mss import mss
 import zlib
 from math import ceil
 import time
+import base64
 from Module.Packages import NetworkDiscoverFlag, PrivateMessageFlag
 
 
@@ -68,16 +69,14 @@ class PrivateMessage(QObject):
         self.send_data(PrivateMessageFlag.ClientNotify, b'')
 
     def screen_spy_send(self):
-        with mss() as sct:
-            sct_img = sct.grab(sct.monitors[1])
-            img = QImage(sct_img.rgb, sct_img.width, sct_img.height, QImage.Format_RGB888)
-            img = img.scaled(360, 203, Qt.KeepAspectRatio)
-            buffer = QBuffer()
-            buffer.open(QIODevice.ReadWrite)
-            img.save(buffer, 'JPEG', quality=75)
-            img_compressed = zlib.compress(buffer.data())
-            buffer.close()
-            self.send_data(PrivateMessageFlag.ClientScreen, img_compressed)
+        img = QApplication.primaryScreen().grabWindow(QApplication.desktop().winId())
+        img = img.scaled(360, 203, Qt.KeepAspectRatio)
+        buffer = QBuffer()
+        buffer.open(QIODevice.ReadWrite)
+        img.save(buffer, 'JPEG', quality=75)
+        img_compressed = zlib.compress(buffer.data())
+        buffer.close()
+        self.send_data(PrivateMessageFlag.ClientScreen, img_compressed)
 
     def send_file(self, file_buffer):
         chuck_size = self.socket_buffer_size - struct.calcsize('!5i')  # 包标志，包载荷长度，当前块编号，当前块实际载荷长度，总包数
@@ -93,3 +92,7 @@ class PrivateMessage(QObject):
             time.sleep(0.01)
         cksum_pack = struct.pack('!L', zlib.crc32(file_buffer))
         self.send_data(PrivateMessageFlag.ClientFileInfo, cksum_pack)
+
+    def send_message(self, message):
+        text = base64.b64encode(str(message).encode('utf-8'))
+        self.send_data(PrivateMessageFlag.ClientMessage, text)

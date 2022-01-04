@@ -27,7 +27,7 @@ SEARCH_DIRS = ['../UI', '../Module']
 def generate(file, target='zh_CN'):
     if type(file) == list:
         file = ' '.join(file)
-    os.system(f'pylupdate5 {file} -ts Translation/{target}.ts')
+    os.system(f'pylupdate5 {file} -ts Translation/{target}.ts -noobsolete')
 
 
 def auto_generate(args):

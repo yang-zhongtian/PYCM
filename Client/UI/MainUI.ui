@@ -198,8 +198,8 @@ color: rgb(255, 255, 255);</string>
    <slot>notify_console()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>42</x>
-     <y>50</y>
+     <x>47</x>
+     <y>48</y>
     </hint>
     <hint type="destinationlabel">
      <x>161</x>
@@ -214,8 +214,8 @@ color: rgb(255, 255, 255);</string>
    <slot>hide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>281</x>
-     <y>50</y>
+     <x>391</x>
+     <y>48</y>
     </hint>
     <hint type="destinationlabel">
      <x>161</x>
@@ -223,9 +223,26 @@ color: rgb(255, 255, 255);</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>private_message_button</sender>
+   <signal>clicked()</signal>
+   <receiver>MainForm</receiver>
+   <slot>show_messaging_window()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>239</x>
+     <y>28</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>206</x>
+     <y>17</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>show_file_send_window()</slot>
   <slot>notify_console()</slot>
+  <slot>show_messaging_window()</slot>
  </slots>
 </ui>
