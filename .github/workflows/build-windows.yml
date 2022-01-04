@@ -39,7 +39,7 @@ jobs:
                       --uac-admin --uac-uiaccess `
                       --name PYCM-Console -w -D .\ConsoleMain.py
       - name: Zip files
-        uses: papeloto/action-zip@v1
+        uses: vimtor/action-zip@v1
         with:
           files: Console/dist/
           dest: PYCM-Console-Windows.zip
@@ -84,7 +84,7 @@ jobs:
                       --uac-admin --uac-uiaccess `
                       --name PYCM-Client -w -D .\ClientMain.py
       - name: Zip files
-        uses: papeloto/action-zip@v1
+        uses: vimtor/action-zip@v1
         with:
           files: Client/dist/
           dest: PYCM-Client-Windows.zip

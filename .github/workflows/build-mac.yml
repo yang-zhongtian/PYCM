@@ -39,7 +39,7 @@ jobs:
                       --osx-bundle-identifier org.hcc.pycm \
                       --name PYCM-Console -w -D ./ConsoleMain.py
       - name: Zip files
-        uses: papeloto/action-zip@v1
+        uses: vimtor/action-zip@v1
         with:
           files: Console/dist/
           dest: PYCM-Console-macOS.zip
@@ -82,7 +82,7 @@ jobs:
                       --osx-bundle-identifier org.hcc.pycm \
                       --name PYCM-Client -w -D ./ClientMain.py
       - name: Zip files
-        uses: papeloto/action-zip@v1
+        uses: vimtor/action-zip@v1
         with:
           files: Client/dist/
           dest: PYCM-Client-macOS.zip

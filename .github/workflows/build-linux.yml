@@ -38,7 +38,7 @@ jobs:
                       --add-data "Translation/*.qm:Translation" \
                       --name PYCM-Console -w -D ./ConsoleMain.py
       - name: Zip files
-        uses: papeloto/action-zip@v1
+        uses: vimtor/action-zip@v1
         with:
           files: Console/dist/
           dest: PYCM-Console-Linux.zip
@@ -82,7 +82,7 @@ jobs:
                       --add-data "Translation/*.qm:Translation" \
                       --name PYCM-Client -w -D ./ClientMain.py
       - name: Zip files
-        uses: papeloto/action-zip@v1
+        uses: vimtor/action-zip@v1
         with:
           files: Client/dist/
           dest: PYCM-Client-Linux.zip
