@@ -74,6 +74,21 @@ class ClassBroadcast(QObject):
             return data
         return None
 
+    def batch_data_handler(self, unpacked_flag, data):
+        if unpacked_flag == ClassBroadcastFlag.Message:
+            message = base64.b64decode(data).decode('utf-8')
+            self.parent.message_received.emit(str(message))
+        elif unpacked_flag == ClassBroadcastFlag.Command:
+            message = base64.b64decode(data).decode('utf-8')
+            self.execute_remote_command(str(message))
+        elif unpacked_flag == ClassBroadcastFlag.RemoteSpyStart:
+            self.parent.start_remote_spy.emit()
+        elif unpacked_flag == ClassBroadcastFlag.RemoteQuit:
+            self.parent.quit_self.emit()
+            return
+        elif unpacked_flag == ClassBroadcastFlag.ClientFileReceived:
+            self.parent.client_file_received.emit()
+
     def start(self):
         payload_size = self.socket_buffer_size - struct.calcsize('!2i')
         while True:
@@ -91,19 +106,7 @@ class ClassBroadcast(QObject):
                     data = self.batch_send_decode(unpacked_data)
                     if data is None:
                         continue
-                    if unpacked_flag == ClassBroadcastFlag.Message:
-                        message = base64.b64decode(data).decode('utf-8')
-                        self.parent.message_received.emit(str(message))
-                    elif unpacked_flag == ClassBroadcastFlag.Command:
-                        message = base64.b64decode(data).decode('utf-8')
-                        self.execute_remote_command(str(message))
-                    elif unpacked_flag == ClassBroadcastFlag.RemoteSpyStart:
-                        self.parent.start_remote_spy.emit()
-                    elif unpacked_flag == ClassBroadcastFlag.RemoteQuit:
-                        self.parent.quit_self.emit()
-                        return
-                    elif unpacked_flag == ClassBroadcastFlag.ClientFileReceived:
-                        self.parent.client_file_received.emit()
+                    self.batch_data_handler(unpacked_flag, data)
                 elif unpacked_flag == ClassBroadcastFlag.ToggleScreenBroadcast:
                     if unpacked_data[0] == ord('1'):
                         self.parent.toggle_screen_broadcats.emit(True)
