@@ -104,9 +104,8 @@ class ClassBroadcast(QObject):
                         ClassBroadcastFlag.ClientFileReceived
                 ):
                     data = self.batch_send_decode(unpacked_data)
-                    if data is None:
-                        continue
-                    self.batch_data_handler(unpacked_flag, data)
+                    if data is not None:
+                        self.batch_data_handler(unpacked_flag, data)
                 elif unpacked_flag == ClassBroadcastFlag.ToggleScreenBroadcast:
                     if unpacked_data[0] == ord('1'):
                         self.parent.toggle_screen_broadcats.emit(True)
