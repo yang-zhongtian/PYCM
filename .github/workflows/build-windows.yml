@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.7'
-          architecture: 'x64'
+          architecture: 'x32'
       - name: Install requirements
         run: |
           pip install wheel
@@ -30,13 +30,13 @@ jobs:
       - name: Add build info
         working-directory: Console
         run: |
-          "BUILD_INFO = 'Windows v"+${{ steps.tag.outputs.result }}+" (64-bit)'" | Out-File -FilePath BuildInfo.py -Encoding UTF8
+          "BUILD_INFO = 'Windows v"+${{ steps.tag.outputs.result }}+" (32-bit)'" | Out-File -FilePath BuildInfo.py -Encoding UTF8
       - name: Build
         working-directory: Console
         run: |
           pyinstaller --key PYCM --noupx -i .\Resources\Core\Logo.ico `
                       --add-data "Translation/*.qm;Translation" `
-                      --uac-admin --uac-uiaccess `
+                      --uac-admin `
                       --name PYCM-Console -w -D .\ConsoleMain.py
       - name: Zip files
         uses: vimtor/action-zip@v1
@@ -64,7 +64,7 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.7'
-          architecture: 'x64'
+          architecture: 'x32'
       - name: Install requirements
         run: |
           pip install wheel
@@ -75,13 +75,13 @@ jobs:
         env:
           RELEASE_TAG: ${{ steps.tag.outputs.result }}
         run: |
-          "BUILD_INFO = 'Windows v"+${{ steps.tag.outputs.result }}+" (64-bit)'" | Out-File -FilePath BuildInfo.py -Encoding UTF8
+          "BUILD_INFO = 'Windows v"+${{ steps.tag.outputs.result }}+" (32-bit)'" | Out-File -FilePath BuildInfo.py -Encoding UTF8
       - name: Build
         working-directory: Client
         run: |
           pyinstaller --key PYCM --noupx -i .\Resources\Core\Logo.ico `
                       --add-data "Translation/*.qm;Translation" `
-                      --uac-admin --uac-uiaccess `
+                      --uac-admin `
                       --name PYCM-Client -w -D .\ClientMain.py
       - name: Zip files
         uses: vimtor/action-zip@v1
