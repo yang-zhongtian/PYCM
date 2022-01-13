@@ -5,7 +5,9 @@
 [![GitHub stars](https://img.shields.io/github/stars/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/stargazers)
 [![GitHub license](https://img.shields.io/github/license/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM)
 [![Code Factor](https://www.codefactor.io/repository/github/yangzhongtian001/pycm/badge/master)](https://www.codefactor.io/repository/github/yangzhongtian001/pycm/overview/master)
-![Build windows](https://github.com/yangzhongtian001/PYCM/actions/workflows/build-windows.yml/badge.svg)
+![Build Windows](https://github.com/yangzhongtian001/PYCM/actions/workflows/build-windows.yml/badge.svg)
+![Build MacOS](https://github.com/yangzhongtian001/PYCM/actions/workflows/build-mac.yml/badge.svg)
+![Build Linux](https://github.com/yangzhongtian001/PYCM/actions/workflows/build-linux.yml/badge.svg)
 
 [English](README.md) [简体中文](README.zh-CN.md)
 
@@ -60,10 +62,6 @@
 ![主程序](Images/Client/Main.zh-CN.png)
 
 ![文件发送](Images/Client/FileTransfer.zh-CN.png)
-
-## 已知问题
-1. 由于某些编译问题，目前仅提供 Windows 版二进制文件。如果你想要在 macOS 或 Linux 上使用，请考虑 [源码安装](#源码版安装指南)。
-2. 屏幕捕获功能在某些分辨率下会有异常。
 
 ## 联系
 

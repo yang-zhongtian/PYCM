@@ -20,7 +20,7 @@
 from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication, QDialog, QListWidgetItem, QLabel, QMessageBox, \
     QInputDialog, QLineEdit, QSystemTrayIcon, QAction, QMenu
 from PyQt5.QtCore import Qt, QSize, QEvent, QUrl, QCoreApplication
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon, QCloseEvent
 import time
 from functools import partial
 from .DashboardUI import Ui_DashboardForm
@@ -298,13 +298,13 @@ class DashboardForm(QMainWindow):
         self.activateWindow()
         self.showNormal()
 
-    def changeEvent(self, event):
+    def changeEvent(self, event: QEvent):
         if event.type() == QEvent.WindowStateChange:
             if self.windowState() == Qt.WindowMinimized:
                 event.ignore()
                 self.hide()
 
-    def closeEvent(self, event):
+    def closeEvent(self, event: QCloseEvent):
         reply = QMessageBox.question(self, self._translate('DashboardForm', 'Warning'),
                                      self._translate('DashboardForm', 'Are you sure to exit?'),
                                      QMessageBox.Yes | QMessageBox.No, QMessageBox.No)

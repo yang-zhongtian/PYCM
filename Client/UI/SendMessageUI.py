@@ -55,11 +55,11 @@ class Ui_SendMessageForm(object):
         self.retranslateUi(SendMessageForm)
         self.send.clicked.connect(SendMessageForm.send_message) # type: ignore
         self.message_input.textChanged['QString'].connect(SendMessageForm.update_input_text) # type: ignore
+        self.message_input.returnPressed.connect(self.send.click) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(SendMessageForm)
 
     def retranslateUi(self, SendMessageForm):
         _translate = QtCore.QCoreApplication.translate
         SendMessageForm.setWindowTitle(_translate("SendMessageForm", "Messaging"))
         self.send.setText(_translate("SendMessageForm", "Send"))
-        self.send.setShortcut(_translate("SendMessageForm", "Return"))
 from Resources import Resources

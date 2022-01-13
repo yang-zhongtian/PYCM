@@ -18,12 +18,11 @@
 """
 
 from PyQt5.QtWidgets import QWidget
+from PyQt5.QtGui import QResizeEvent, QCloseEvent
 from .RemoteSpyUI import Ui_RemoteSpy
 
 
 class RemoteSpyForm(QWidget):
-    parent = None
-
     def __init__(self, parent=None):
         super(RemoteSpyForm, self).__init__()
         self.parent = parent
@@ -36,7 +35,7 @@ class RemoteSpyForm(QWidget):
         screen_display_object = self.ui.screen_display
         screen_display_object.setPixmap(frame)
 
-    def paintEvent(self, event):
+    def resizeEvent(self, event: QResizeEvent):
         container_size = self.size()
         container_height = container_size.height()
         container_width = container_size.width()
@@ -50,5 +49,5 @@ class RemoteSpyForm(QWidget):
         self.ui.screen_display.resize(container_width, container_height)
         self.resize(container_width, container_height)
 
-    def closeEvent(self, event):
+    def closeEvent(self, event: QCloseEvent):
         self.parent.toggle_remote_spy(False)

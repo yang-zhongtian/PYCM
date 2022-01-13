@@ -19,7 +19,7 @@
 
 from PyQt5.QtWidgets import QWidget, QSystemTrayIcon, QAction, QMenu, QMessageBox, QApplication
 from PyQt5.QtCore import Qt, QPoint, QTimer, pyqtSignal, QCoreApplication
-from PyQt5.QtGui import QMouseEvent, QIcon
+from PyQt5.QtGui import QMouseEvent, QIcon, QCloseEvent
 import socket
 import platform
 import subprocess
@@ -27,7 +27,6 @@ from .MainUI import Ui_MainForm
 from .FileSend import FileSendForm
 from .ScreenBroadcast import ScreenBroadcastForm
 from .SendMessage import SendMessageForm
-from .ClientLabelDisplay import ClientLabelDisplayForm
 from .NetworkDeviceSelect import NetworkDeviceSelectForm
 from .About import AboutDialog
 
@@ -56,10 +55,8 @@ class MainForm(QWidget):
         self.screen_broadcast_window = ScreenBroadcastForm(parent)
         self.file_send_window = FileSendForm(self.parent)
         self.messaging_window = SendMessageForm(self.parent)
-        self.client_label_display_window = ClientLabelDisplayForm()
         self.init_tray()
         self.init_file_button()
-        self.client_label_display_window.show()
 
     def load_network_device(self):
         devices = NetworkDeviceSelectForm.get_devices()
@@ -220,7 +217,7 @@ class MainForm(QWidget):
         if reason == QSystemTrayIcon.DoubleClick:
             self.show()
 
-    def closeEvent(self, event):
+    def closeEvent(self, event: QCloseEvent):
         if not self._force_quit:
             reply = QMessageBox.question(self, self._translate('MainForm', 'Warning'),
                                          self._translate('MainForm', 'Are you sure to exit?'),

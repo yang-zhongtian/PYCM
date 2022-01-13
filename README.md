@@ -5,7 +5,10 @@
 [![GitHub stars](https://img.shields.io/github/stars/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM/stargazers)
 [![GitHub license](https://img.shields.io/github/license/yangzhongtian001/PYCM)](https://github.com/yangzhongtian001/PYCM)
 [![Code Factor](https://www.codefactor.io/repository/github/yangzhongtian001/pycm/badge/master)](https://www.codefactor.io/repository/github/yangzhongtian001/pycm/overview/master)
-![Build windows](https://github.com/yangzhongtian001/PYCM/actions/workflows/build-windows.yml/badge.svg)
+![Build Windows](https://github.com/yangzhongtian001/PYCM/actions/workflows/build-windows.yml/badge.svg)
+![Build MacOS](https://github.com/yangzhongtian001/PYCM/actions/workflows/build-mac.yml/badge.svg)
+![Build Linux](https://github.com/yangzhongtian001/PYCM/actions/workflows/build-linux.yml/badge.svg)
+
 
 [English](README.md) [简体中文](README.zh-CN.md)
 
@@ -17,13 +20,13 @@
 ## Introduction
 
 This program is an e-classroom management system written by python.
-It contains both `client(student side)` and `console(teacher side)`. GUI written by `PyQt5`, supporting all platforms.
+It contains both `Client(student side)` and `Console(teacher side)`. GUI written by `PyQt5`, supporting all platforms.
 
 ## Features
 
 * [x] Auto LAN discover
 * [x] Console screen broadcasting
-* [x] Cient screen spyby Console
+* [x] Cient screen spy on Console side
 * [X] Console side file share
 * [x] Client side file submitting
 * [x] Console side message sending
@@ -32,7 +35,7 @@ It contains both `client(student side)` and `console(teacher side)`. GUI written
 
 ## Programs
 
-* **Client:** Used for muti users, ex: students, visitors.
+* **Client:** Used for multiple users, ex: students, visitors.
 * **Console:** Used for one host user, ex: teacher, host.
 
 ## Release Install Guide
@@ -61,10 +64,6 @@ It contains both `client(student side)` and `console(teacher side)`. GUI written
 ![Main](Images/Client/Main.png)
 
 ![File transfer](Images/Client/FileTransfer.png)
-
-## Known Issues
-1. Due to some compiling issues, currently only Windows version of binary file is available. If you want to use it on macOS or Linux, consider following the [Dev Guide](#Dev Install Guide).
-2. The screen capturing module can have some problem under low screen resolution.
 
 ## Contact
 

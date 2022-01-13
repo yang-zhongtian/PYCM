@@ -20,7 +20,7 @@
 from PyQt5.QtWidgets import QWidget, QTableWidget, QTableWidgetItem, QAbstractItemView, QHeaderView, \
     QFileIconProvider, QApplication, QFileDialog, QMessageBox
 from PyQt5.QtCore import Qt, QFileInfo, QThread, pyqtSignal, QCoreApplication
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon, QDragEnterEvent, QDragMoveEvent, QDropEvent, QCloseEvent
 import os
 import zipfile
 from io import BytesIO
@@ -111,19 +111,19 @@ class DraggableQListWidget(QTableWidget):
             self.setItem(current_row, 1, QTableWidgetItem(self.parse_file_size(file_info.size())))
             self.setItem(current_row, 2, QTableWidgetItem(self._translate('FileSendForm', 'Ready')))
 
-    def dragEnterEvent(self, event):
+    def dragEnterEvent(self, event: QDragEnterEvent):
         if event.mimeData().hasUrls():
             event.accept()
         else:
             event.ignore()
 
-    def dragMoveEvent(self, event):
+    def dragMoveEvent(self, event: QDragMoveEvent):
         if event.mimeData().hasUrls():
             event.accept()
         else:
             event.ignore()
 
-    def dropEvent(self, event):
+    def dropEvent(self, event: QDropEvent):
         if event.mimeData().hasUrls:
             event.accept()
             files = [QFileInfo(url.toLocalFile()) for url in event.mimeData().urls()]
@@ -206,13 +206,13 @@ class FileSendForm(QWidget):
         self.is_sent = False
         self.close()
 
-    def dragEnterEvent(self, event):
+    def dragEnterEvent(self, event: QDragEnterEvent):
         if event.mimeData().hasUrls:
             event.accept()
         else:
             event.ignore()
 
-    def closeEvent(self, event):
+    def closeEvent(self, event: QCloseEvent):
         if self.is_sending:
             event.ignore()
         else:

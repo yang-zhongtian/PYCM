@@ -26,7 +26,7 @@ jobs:
         run: |
           pip install wheel
           pip install -r requirements.txt
-          pip install pyinstaller tinyaes sip
+          pip install pyinstaller sip
       - name: Add build info
         working-directory: Console
         run: |
@@ -34,7 +34,7 @@ jobs:
       - name: Build
         working-directory: Console
         run: |
-          pyinstaller --key PYCM --noupx -i ./Resources/Core/Logo.ico \
+          pyinstaller --noupx -i ./Resources/Core/Logo.ico \
                       --add-data "Translation/*.qm:Translation" \
                       --name PYCM-Console -w -D ./ConsoleMain.py
       - name: Zip files
@@ -68,7 +68,7 @@ jobs:
         run: |
           pip install wheel
           pip install -r requirements.txt
-          pip install pyinstaller tinyaes sip
+          pip install pyinstaller sip
       - name: Add build info
         working-directory: Client
         env:
@@ -78,7 +78,7 @@ jobs:
       - name: Build
         working-directory: Client
         run: |
-          pyinstaller --key PYCM --noupx -i ./Resources/Core/Logo.ico \
+          pyinstaller --noupx -i ./Resources/Core/Logo.ico \
                       --add-data "Translation/*.qm:Translation" \
                       --name PYCM-Client -w -D ./ClientMain.py
       - name: Zip files

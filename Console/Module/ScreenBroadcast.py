@@ -17,7 +17,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from PyQt5.QtCore import QObject, QBuffer, QIODevice, Qt
+from PyQt5.QtCore import QObject, QBuffer, QIODevice
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QImage, QPainter, QCursor
 from Module.Packages import ScreenBroadcastFlag
@@ -55,15 +55,16 @@ class ScreenBroadcast(QObject):
         payload_size = self.socket_buffer - struct.calcsize('!2i')
         target = (self.socket_ip, self.socket_port)
         cursor = QCursor()
+        cursor_icon = QImage(':/Core/Core/Pointer.png')
+        painter = QPainter()
+        screen = QApplication.primaryScreen()
         win_id = QApplication.desktop().winId()
         while self.working:
             try:
                 cursor_pos = cursor.pos()
-                img = QApplication.primaryScreen().grabWindow(win_id)
-                painter = QPainter()
+                img = screen.grabWindow(win_id)
                 painter.begin(img)
-                painter.setBrush(Qt.red)
-                painter.drawEllipse(cursor_pos, 5, 5)
+                painter.drawImage(cursor_pos, cursor_icon)
                 painter.end()
                 buffer = QBuffer()
                 buffer.open(QIODevice.ReadWrite)

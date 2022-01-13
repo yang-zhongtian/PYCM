@@ -67,9 +67,6 @@
        <property name="text">
         <string>Send</string>
        </property>
-       <property name="shortcut">
-        <string>Return</string>
-       </property>
       </widget>
      </item>
     </layout>
@@ -109,6 +106,22 @@
     <hint type="destinationlabel">
      <x>192</x>
      <y>395</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>message_input</sender>
+   <signal>returnPressed()</signal>
+   <receiver>send</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>164</x>
+     <y>393</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>363</x>
+     <y>393</y>
     </hint>
    </hints>
   </connection>

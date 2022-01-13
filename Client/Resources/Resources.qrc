@@ -3,6 +3,7 @@
     <file>Style.qss</file>
     <file>Core/Logo.ico</file>
     <file>Core/Logo.png</file>
+    <file>Core/Pointer.png</file>
     <file>Fonts/Alibaba-PuHuiTi-Bold.ttf</file>
     <file>Fonts/Alibaba-PuHuiTi-Regular.ttf</file>
   </qresource>

@@ -17,7 +17,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from PyQt5.QtCore import QObject, QBuffer, QIODevice, Qt
+from PyQt5.QtCore import QObject, QBuffer, QIODevice
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QImage, QPainter, QCursor
 import socket
@@ -49,15 +49,16 @@ class RemoteSpy(QObject):
 
     def screen_send(self):
         cursor = QCursor()
+        cursor_icon = QImage(':/Core/Core/Pointer.png')
+        painter = QPainter()
+        screen = QApplication.primaryScreen()
         win_id = QApplication.desktop().winId()
         while self.working:
             try:
                 cursor_pos = cursor.pos()
-                img = QApplication.primaryScreen().grabWindow(win_id)
-                painter = QPainter()
+                img = screen.grabWindow(win_id)
                 painter.begin(img)
-                painter.setBrush(Qt.red)
-                painter.drawEllipse(cursor_pos, 5, 5)
+                painter.drawImage(cursor_pos, cursor_icon)
                 painter.end()
                 buffer = QBuffer()
                 buffer.open(QIODevice.ReadWrite)
@@ -69,6 +70,9 @@ class RemoteSpy(QObject):
                 self.socket_obj.sendall(img_encoded)
             except ConnectionResetError:
                 break
+            except OSError as e:
+                if e.errno == 10053:
+                    break
             except Exception as e:
                 logging.warning(f'Screen send thread unexpected error: {e}')
 

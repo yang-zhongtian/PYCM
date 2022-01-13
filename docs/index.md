@@ -5,22 +5,22 @@
 ## Introduction
 
 This program is an e-classroom management system written by python.
-It contains both `client(student side)` and `console(teacher side)`. GUI written by `PyQt5`, supporting all platforms.
+It contains both `Client(student side)` and `Console(teacher side)`. GUI written by `PyQt5`, supporting all platforms.
 
 ## Features
 
 * [x] Auto LAN discover
 * [x] Console screen broadcasting
-* [x] Cient screen spyby Console
+* [x] Cient screen spy on Console side
 * [X] Console side file share
 * [x] Client side file submitting
 * [x] Console side message sending
-* [ ] Client side message sending
-* [x] Nuitka packaging
+* [x] Client side message sending
+* [x] `PyInstaller` packaging
 
 ## Programs
 
-* **Client:** Used for muti users, ex: students, visitors.
+* **Client:** Used for multiple users, ex: students, visitors.
 * **Console:** Used for one host user, ex: teacher, host.
 
 ## Release Install Guide

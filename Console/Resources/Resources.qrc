@@ -6,6 +6,7 @@
     <file>Core/ClientBlank.png</file>
     <file>Core/Logo.ico</file>
     <file>Core/Logo.png</file>
+    <file>Core/Pointer.png</file>
   </qresource>
   <qresource prefix="Icons">
     <file>Icons/arrow_down.png</file>

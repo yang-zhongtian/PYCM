@@ -19,6 +19,7 @@
 
 from PyQt5.QtWidgets import QWidget, QFileDialog
 from PyQt5.QtCore import Qt, QCoreApplication, QDir
+from PyQt5.QtGui import QPaintEvent, QCloseEvent
 from .ScreenBroadcastUI import Ui_ScreenBroadcastForm
 
 
@@ -66,7 +67,7 @@ class ScreenBroadcastForm(QWidget):
     def toggle_always_on_top(self, on_top):
         self.windowHandle().setFlag(Qt.WindowStaysOnTopHint, on_top)
 
-    def paintEvent(self, event):
+    def paintEvent(self, event: QPaintEvent):
         container_size = self.ui.screen_widget.size()
         container_height = container_size.height()
         container_width = container_size.width()
@@ -83,5 +84,5 @@ class ScreenBroadcastForm(QWidget):
             self.ui.screen_display.move(delta_width // 2, 0)
         self.ui.screen_display.resize(screen_width, screen_height)
 
-    def closeEvent(self, event):
+    def closeEvent(self, event: QCloseEvent):
         event.ignore()
