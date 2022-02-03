@@ -46,7 +46,7 @@ jobs:
         working-directory: Console
         run: |
           if(!(Test-Path Build/ConsoleMain.dist/ConsoleMain.exe)){ exit 1 }
-          Rename-Item Build/ConsoleMain.dist Build/Console
+          Rename-Item Build/ConsoleMain.dist Console
       - name: Zip files
         uses: vimtor/action-zip@v1
         with:
@@ -100,7 +100,7 @@ jobs:
         working-directory: Client
         run: |
           if(!(Test-Path Build/ClientMain.dist/ClientMain.exe)){ exit 1 }
-          Rename-Item Build/ClientMain.dist Build/Client
+          Rename-Item Build/ClientMain.dist Client
       - name: Zip files
         uses: vimtor/action-zip@v1
         with:
