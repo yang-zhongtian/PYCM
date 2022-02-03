@@ -23,6 +23,7 @@ from PyQt5.QtGui import QMouseEvent, QIcon, QCloseEvent
 import socket
 import platform
 import subprocess
+
 from .MainUI import Ui_MainForm
 from .FileSend import FileSendForm
 from .ScreenBroadcast import ScreenBroadcastForm
@@ -30,9 +31,18 @@ from .SendMessage import SendMessageForm
 from .NetworkDeviceSelect import NetworkDeviceSelectForm
 from .About import AboutDialog
 
+from Module.Threadings import NetworkDiscoverThread, ClassBroadcastThread, ScreenBroadcastThread, RemoteSpyThread
+from Module.PrivateMessage import PrivateMessage
+
 
 # noinspection PyAttributeOutsideInit
 class MainForm(QWidget):
+    config = None
+    net_discover_thread = None
+    class_broadcast_thread = None
+    screen_broadcast_thread = None
+    remote_spy_thread = None
+    private_message_object = None
     server_ip = None
     screen_spy_timer = QTimer()
     file_client_password = ''
@@ -65,6 +75,15 @@ class MainForm(QWidget):
             if device[1]['NAME'] == default_device:
                 return device[1]
 
+    def init_threadings(self):
+        self.net_discover_thread = NetworkDiscoverThread(self.config)
+        self.class_broadcast_thread = ClassBroadcastThread(self.config)
+        self.screen_broadcast_thread = ScreenBroadcastThread(self.config)
+        self.remote_spy_thread = RemoteSpyThread(self.config)
+        self.private_message_object = PrivateMessage(self.config)
+        self.init_connections()
+        self.net_discover_thread.start()
+
     def init_connections(self):
         self.net_discover_thread.server_info.connect(self.server_found)
         self.class_broadcast_thread.message_received.connect(self.message_received)
@@ -75,6 +94,25 @@ class MainForm(QWidget):
         self.class_broadcast_thread.toggle_file_server.connect(self.toggle_file_client)
         self.screen_broadcast_thread.frame_received.connect(self.screen_broadcast_window.update_frame)
         self.screen_spy_timer.timeout.connect(self.private_message_object.screen_spy_send)
+
+    def reset_all_threadings(self):
+        self.screen_spy_timer.stop()
+        self.class_broadcast_thread.quit()
+        self.remote_spy_thread.safe_stop()
+        self.class_broadcast_thread.wait()
+        self.remote_spy_thread.wait()
+        self.net_discover_thread = NetworkDiscoverThread(self.config)
+        self.class_broadcast_thread = ClassBroadcastThread(self.config)
+        self.remote_spy_thread = RemoteSpyThread(self.config)
+        self.private_message_object = PrivateMessage(self.config)
+        self.init_connections()
+        self.ui.title_label.setText(self._translate('MainForm', 'PYCM Client - Offline'))
+        self.update_tray_tooltip()
+        self.ui.notify_button.setEnabled(False)
+        self.ui.file_button.setEnabled(False)
+        self.ui.private_message_button.setEnabled(False)
+        self.server_ip = None
+        self.net_discover_thread.start()
 
     # noinspection PyArgumentList
     def init_tray(self):
@@ -150,7 +188,7 @@ class MainForm(QWidget):
     def notify_console(self):
         self.private_message_object.notify_console()
 
-    def server_found(self, server_ip):
+    def server_found(self, server_ip, screen_broadcast_status, file_server_status, file_server_password):
         self.server_ip = server_ip
         self.private_message_object.set_socket_ip(self.server_ip)
         self.remote_spy_thread.set_socket_ip(self.server_ip)
@@ -162,6 +200,10 @@ class MainForm(QWidget):
         self.ui.file_button.setEnabled(True)
         self.ui.private_message_button.setEnabled(True)
         self.screen_spy_timer.start(3000)
+        if screen_broadcast_status:
+            self.__toggle_screen_broadcast(True)
+        if file_server_status:
+            self.toggle_file_client(True, file_server_password)
 
     def init_network_device(self, device):
         self.config.save('Network/Local/IP', device['IP'])

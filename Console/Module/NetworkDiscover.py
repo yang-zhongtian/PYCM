@@ -31,11 +31,12 @@ class NetworkDiscover(object):
     socket_obj = None
     discover_interval = None
 
-    def __init__(self, current_ip, socket_ip, socket_port, discover_interval=5):
+    def __init__(self, current_ip, socket_ip, socket_port, discover_interval=5, parent=None):
         self.current_ip = current_ip
         self.socket_ip = socket_ip
         self.socket_port = socket_port
         self.discover_interval = discover_interval
+        self.parent = parent
         self.__init_socket_obj()
 
     def __init_socket_obj(self):
@@ -48,9 +49,11 @@ class NetworkDiscover(object):
         )
 
     def start(self):
-        socket_packet = struct.pack('!i', NetworkDiscoverFlag.ConsoleFlag)
         while True:
             try:
+                status = self.parent.get_threadings_status()
+                socket_packet = struct.pack('!i2?16s', NetworkDiscoverFlag.ConsoleFlag, status['screen_broadcast'],
+                                            status['file_server'], status['file_server_password'].encode())
                 self.socket_obj.sendto(socket_packet, (self.socket_ip, self.socket_port))
                 time.sleep(self.discover_interval)
             except Exception as e:

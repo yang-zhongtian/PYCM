@@ -49,7 +49,7 @@ class NetworkDeviceSelectForm(QDialog):
         for device in devices_list:
             for address in device.addressEntries():
                 ip = address.ip()
-                if ip.protocol() == QAbstractSocket.IPv4Protocol:
+                if ip.protocol() == QAbstractSocket.IPv4Protocol and not ip.isNull():
                     self.devices.append((device.humanReadableName(),
                                          {'IP': ip.toString(),
                                           'MAC': device.hardwareAddress(),

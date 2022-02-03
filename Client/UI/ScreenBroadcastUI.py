@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_ScreenBroadcastForm(object):
     def setupUi(self, ScreenBroadcastForm):
         ScreenBroadcastForm.setObjectName("ScreenBroadcastForm")
-        ScreenBroadcastForm.resize(776, 532)
+        ScreenBroadcastForm.resize(1244, 827)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -24,7 +24,7 @@ class Ui_ScreenBroadcastForm(object):
         icon.addPixmap(QtGui.QPixmap(":/Core/Core/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         ScreenBroadcastForm.setWindowIcon(icon)
         self.main_layout = QtWidgets.QVBoxLayout(ScreenBroadcastForm)
-        self.main_layout.setContentsMargins(22, -1, 22, -1)
+        self.main_layout.setContentsMargins(18, -1, 18, -1)
         self.main_layout.setObjectName("main_layout")
         self.control_box_layout = QtWidgets.QHBoxLayout()
         self.control_box_layout.setObjectName("control_box_layout")

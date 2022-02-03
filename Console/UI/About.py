@@ -38,4 +38,4 @@ class AboutDialog(QDialog):
         build_info = BUILD_INFO
         if build_info is None:
             build_info = self._translate('AboutDialog', 'No build info')
-        self.ui.buildInfo.setText(self._translate('AboutDialog', 'Build Info: %s') % BUILD_INFO)
+        self.ui.buildInfo.setText(self._translate('AboutDialog', 'Build Info: %s') % build_info)

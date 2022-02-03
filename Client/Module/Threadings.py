@@ -47,7 +47,7 @@ class ClassBroadcastThread(QThread):
 
 
 class NetworkDiscoverThread(QThread):
-    server_info = pyqtSignal(str)
+    server_info = pyqtSignal(str, bool, bool, str)
 
     def __init__(self, config):
         super(NetworkDiscoverThread, self).__init__()
@@ -57,8 +57,8 @@ class NetworkDiscoverThread(QThread):
         self.socket = NetworkDiscover(self.current_ip, self.socket_ip, self.socket_port)
 
     def run(self):
-        server_ip = self.socket.wait_for_console()
-        self.server_info.emit(server_ip)
+        server_ip, screen_broadcast, file_server, file_server_password = self.socket.wait_for_console()
+        self.server_info.emit(server_ip, screen_broadcast, file_server, file_server_password)
 
 
 class ScreenBroadcastThread(QThread):
@@ -78,7 +78,7 @@ class ScreenBroadcastThread(QThread):
 
     def safe_stop(self):
         self.socket.working = False
-        self.quit()
+        self.terminate()
 
 
 class RemoteSpyThread(QThread):
@@ -94,6 +94,7 @@ class RemoteSpyThread(QThread):
 
     def safe_stop(self):
         self.socket.stop()
+        self.wait()
 
     def run(self):
         if self.socket_ip is not None:

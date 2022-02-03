@@ -23,6 +23,7 @@ from PyQt5.QtCore import Qt, QSize, QEvent, QUrl, QCoreApplication
 from PyQt5.QtGui import QIcon, QCloseEvent
 import time
 from functools import partial
+
 from .DashboardUI import Ui_DashboardForm
 from .SendMessageGroup import SendMessageGroupForm
 from .RemoteCommandGroup import RemoteCommandGroupForm
@@ -31,16 +32,32 @@ from .FileReceive import FileReceiveForm
 from .FileServer import FileServerForm
 from .About import AboutDialog
 
+from Module.Threadings import NetworkDiscoverThread, PrivateMessageThread, ScreenBroadcastThread, RemoteSpyThread, \
+    FileServerThread
+from Module.ClassBroadcast import ClassBroadcast
+
 
 class DashboardForm(QMainWindow):
+    config = None
+    net_discover_thread = None
+    class_broadcast_object = None
+    private_message_thread = None
+    screen_broadcast_thread = None
+    remote_spy_thread = None
+    file_server_thread = None
+    send_message_group_dialog = None
+    network_devices_select_dialog = None
     _translate = QCoreApplication.translate
 
     def __init__(self, parent=None):
-        super(DashboardForm, self).__init__(parent)
+        super(DashboardForm, self).__init__()
         self.ui = Ui_DashboardForm()
         self.threadings = {'net_discover_thread': False,
                            'private_message_thread': False,
-                           'remote_spy_thread': False}
+                           'screen_broadcast_thread': False,
+                           'remote_spy_thread': False,
+                           'file_server_thread': False
+                           }
         self.clients = {}
         self.mac_binding = {}
         self.ui.setupUi(self)
@@ -54,7 +71,20 @@ class DashboardForm(QMainWindow):
         self.file_receive_window = FileReceiveForm(self)
         self.file_server_window = FileServerForm(self)
 
+    def init_threads(self):
+        self.net_discover_thread = NetworkDiscoverThread(self.config, self)
+        self.class_broadcast_object = ClassBroadcast(self.config, self)
+        self.private_message_thread = PrivateMessageThread(self.config, self)
+        self.screen_broadcast_thread = ScreenBroadcastThread(self.config, self)
+        self.remote_spy_thread = RemoteSpyThread(self.config, self)
+        self.file_server_thread = FileServerThread(self.config, self)
+        self.init_connections()
+
     def init_connections(self):
+        for thread_name in self.threadings.keys():
+            thread = getattr(self, thread_name)
+            thread.started.connect(partial(self.__mark_status, thread_name, True))
+            thread.finished.connect(partial(self.__mark_status, thread_name, False))
         self.private_message_thread.client_login_logout.connect(self.__logger)
         self.private_message_thread.client_notify_received.connect(partial(self.__logger, 'client_notify'))
         self.private_message_thread.client_desktop_received.connect(self.__update_client_desktop)
@@ -208,13 +238,6 @@ class DashboardForm(QMainWindow):
         size = self.ui.desktop_layout.iconSize()
         self.ui.desktop_layout.setIconSize(QSize(size.width() - 32, size.height() - 18))
 
-    def start_all_threadings(self):
-        for thread_name in self.threadings.keys():
-            thread = getattr(self, thread_name)
-            thread.started.connect(partial(self.__mark_status, thread_name, 'online'))
-            thread.finished.connect(partial(self.__mark_status, thread_name, 'offline'))
-            thread.start()
-
     def send_message(self):
         targets = self.get_all_selected_clients(ip_only=True)
         if not targets:
@@ -262,6 +285,7 @@ class DashboardForm(QMainWindow):
                                     self._translate('DashboardForm', 'Only support to view one client each time'))
                 self.ui.remote_spy.setChecked(False)
                 return
+            self.remote_spy_thread.start()
             self.class_broadcast_object.remote_spy_start_notify(targets[0])
             self.remote_spy_window.show()
         else:
@@ -272,10 +296,10 @@ class DashboardForm(QMainWindow):
     def toggle_broadcast(self, working):
         if working:
             self.screen_broadcast_thread.start()
-            self.class_broadcast_object.screen_broadcast_nodity(True)
+            self.class_broadcast_object.screen_broadcast_notify(True)
         else:
+            self.class_broadcast_object.screen_broadcast_notify(False)
             self.screen_broadcast_thread.safe_stop()
-            self.class_broadcast_object.screen_broadcast_nodity(False)
 
     def show_file_receive(self, file_url: QUrl = None):
         if file_url is not None and type(file_url) != bool:
@@ -311,11 +335,12 @@ class DashboardForm(QMainWindow):
         if reply != QMessageBox.Yes:
             event.ignore()
             return
-        self.toggle_broadcast(False)
-        self.remote_spy_thread.safe_stop()
-        self.file_server_thread.safe_stop()
+        self.class_broadcast_object.screen_broadcast_notify(False)
         self.class_broadcast_object.file_server_status_notify(False)
         self.class_broadcast_object.console_quit_notify()
+        for thread_name in self.threadings.keys():
+            thread = getattr(self, thread_name)
+            thread.safe_stop()
         if self.tray_icon.isVisible():
             self.tray_icon.hide()
         self.tray_icon = None

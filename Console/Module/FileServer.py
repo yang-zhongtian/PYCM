@@ -40,7 +40,6 @@ class FileServer(object):
 
     def __init_ftp_server(self):
         self.authorizer = DummyAuthorizer()
-        print(self.ftp_password)
         self.authorizer.add_user('pycm', self.ftp_password, self.working_path, perm='elr')
         self.handler = FTPHandler
         self.handler.authorizer = self.authorizer
@@ -51,7 +50,7 @@ class FileServer(object):
         self.__init_ftp_server()
         self.server.serve_forever()
 
-    def close(self):
+    def stop(self):
         if self.server is not None:
             self.server.close_all()
         self.authorizer = None

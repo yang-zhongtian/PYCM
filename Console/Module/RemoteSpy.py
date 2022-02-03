@@ -36,6 +36,7 @@ class RemoteSpy(object):
         self.parent = parent
         self.socket_port = socket_port
         self.command_queue = Queue()
+        self.working = False
         self.__init_socket_obj()
 
     def __init_socket_obj(self):
@@ -57,10 +58,10 @@ class RemoteSpy(object):
 
     def start(self):
         recv_header_size = struct.calcsize('!2i')
-        while True:
+        while self.working:
             try:
                 self.socket_conn, socket_addr = self.socket_obj.accept()
-                while True:
+                while self.working:
                     socket_data = self.socket_conn.recv(recv_header_size)
                     if not socket_data:
                         break

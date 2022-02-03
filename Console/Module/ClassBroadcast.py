@@ -33,8 +33,8 @@ class ClassBroadcast(QObject):
     socket_buffer_size = None
     socket_obj = None
 
-    def __init__(self, config):
-        super(ClassBroadcast, self).__init__()
+    def __init__(self, config, parent=None):
+        super(ClassBroadcast, self).__init__(parent)
         self.current_ip = config.get_item('Network/Local/IP')
         self.socket_ip = config.get_item('Network/ClassBroadcast/IP')
         self.socket_port = config.get_item('Network/ClassBroadcast/Port')
@@ -76,7 +76,7 @@ class ClassBroadcast(QObject):
     def console_quit_notify(self):
         self.send_data(ClassBroadcastFlag.ConsoleQuit, b'')
 
-    def screen_broadcast_nodity(self, working):
+    def screen_broadcast_notify(self, working):
         if working:
             self.send_data(ClassBroadcastFlag.ToggleScreenBroadcast, b'1')
         else:

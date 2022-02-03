@@ -18,6 +18,7 @@
 """
 
 from Utils import LoadTranslation
+import PyQt5.sip
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import Qt, QTranslator
 import sys
@@ -32,10 +33,6 @@ from Module import Theme
 from UI.Login import LoginForm
 from UI.Dashboard import DashboardForm
 from UI.NetworkDeviceSelect import NetworkDeviceSelectForm
-
-from Module.Threadings import NetworkDiscoverThread, PrivateMessageThread, ScreenBroadcastThread, RemoteSpyThread, \
-    FileServerThread
-from Module.ClassBroadcast import ClassBroadcast
 
 QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
 QApplication.setAttribute(Qt.AA_DisableWindowContextHelpButton)
@@ -64,17 +61,9 @@ logging.basicConfig(level=logging.DEBUG if is_debug else logging.CRITICAL,
 
 class DashboardWindow(DashboardForm):
     config = config
-    net_discover_thread = None
-    class_broadcast_object = None
-    private_message_thread = None
-    screen_broadcast_thread = None
-    remote_spy_thread = None
-    file_server_thread = None
-    send_message_group_dialog = None
-    network_devices_select_dialog = None
 
     def __init__(self):
-        super(DashboardWindow, self).__init__()
+        super(DashboardWindow, self).__init__(self)
         login = LoginForm(self)
         if is_debug:
             login.ui.username.setText('admin')
@@ -87,18 +76,10 @@ class DashboardWindow(DashboardForm):
         network_device = network_devices_select_dialog.get_selected_device()
         self.init_network_device(network_device)
         self.init_threads()
+        self.net_discover_thread.start()
+        self.private_message_thread.start()
         self.init_tray()
         self.show()
-        self.start_all_threadings()
-
-    def init_threads(self):
-        self.net_discover_thread = NetworkDiscoverThread(self.config)
-        self.class_broadcast_object = ClassBroadcast(self.config)
-        self.private_message_thread = PrivateMessageThread(self.config, self)
-        self.screen_broadcast_thread = ScreenBroadcastThread(self.config)
-        self.remote_spy_thread = RemoteSpyThread(self.config)
-        self.file_server_thread = FileServerThread(self.config)
-        self.init_connections()
 
 
 dashboard_window = DashboardWindow()

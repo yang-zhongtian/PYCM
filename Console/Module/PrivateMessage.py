@@ -31,11 +31,10 @@ from Module.Packages import PrivateMessageFlag
 class FileMerger(object):
     file_buffer = None
 
-    def __init__(self, config, root_parent=None):
+    def __init__(self, parent):
         self.chuck_count = None
         self.file_buffer = {}
-        self.config = config
-        self.root_parent = root_parent
+        self.parent = parent
 
     def update_chuck(self, ip, index, amount, buffer):
         if ip not in self.file_buffer.keys():
@@ -48,8 +47,9 @@ class FileMerger(object):
             file_data = b''.join(map(lambda x: x[1], file_buffer_sorted))
             if zlib.crc32(file_data) == cksum:
                 file_timestamp = time.strftime("%Y%m%d-%H.%M.%S", time.localtime(time.time()))
-                file_name = f'[{file_timestamp}] {self.root_parent.get_client_label_by_ip(ip)}.zip'
-                open(os.path.join(self.config.get_item('Client/FileUploadPath'), file_name), 'wb').write(file_data)
+                file_name = f'[{file_timestamp}] {self.parent.get_client_label_by_ip(ip)}.zip'
+                with open(os.path.join(self.parent.config.get_item('Client/FileUploadPath'), file_name), 'wb') as file:
+                    file.write(file_data)
                 self.file_buffer.pop(ip)
                 return file_name
         self.file_buffer.pop(ip)
@@ -62,9 +62,8 @@ class PrivateMessage(object):
     socket_buffer_size = None
     socket_obj = None
 
-    def __init__(self, parent, root_parent, socket_ip, socket_port, socket_buffer_size):
+    def __init__(self, parent, socket_ip, socket_port, socket_buffer_size):
         self.parent = parent
-        self.root_parent = root_parent
         self.socket_ip = socket_ip
         self.socket_port = socket_port
         self.socket_buffer_size = socket_buffer_size
@@ -79,7 +78,7 @@ class PrivateMessage(object):
     def start(self):
         payload_size = self.socket_buffer_size - struct.calcsize('!2i')
         chuck_size = self.socket_buffer_size - struct.calcsize('!5i')
-        file_merger = FileMerger(self.parent.config, self.root_parent)
+        file_merger = FileMerger(self.parent)
         while True:
             try:
                 socket_data, socket_addr = self.socket_obj.recvfrom(self.socket_buffer_size)

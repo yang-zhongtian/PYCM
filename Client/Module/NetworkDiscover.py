@@ -49,7 +49,8 @@ class NetworkDiscover(object):
         while True:
             try:
                 socket_data, socket_addr = self.socket_client.recvfrom(1024)
-                if struct.unpack('!i', socket_data)[0] == NetworkDiscoverFlag.ConsoleFlag:
-                    return socket_addr[0]
+                flag, screen_broadcast, file_server, file_server_password = struct.unpack('!i2?16s', socket_data)
+                if flag == NetworkDiscoverFlag.ConsoleFlag:
+                    return socket_addr[0], screen_broadcast, file_server, file_server_password.decode()
             except Exception as e:
                 logging.warning(f'Failed to decode socket data: {e}')
