@@ -30,17 +30,17 @@ jobs:
       - name: Add build info
         working-directory: Console
         run: |
-          "BUILD_INFO = 'Windows v"+${{ steps.tag.outputs.result }}+" (MSVC, 32-bit)'" | Out-File -FilePath BuildInfo.py -Encoding UTF8
+          "BUILD_INFO = 'Windows v"+${{ steps.tag.outputs.result }}+" (32-bit)'" | Out-File -FilePath BuildInfo.py -Encoding UTF8
       - name: Build
         working-directory: Console
         run: |
-          nuitka --standalone --msvc=14.0 --windows-icon-from-ico=Resources/Core/Logo.ico `
-                 --windows-company-name=HCC --windows-uac-admin --windows-disable-console `
+          nuitka --standalone --windows-icon-from-ico=Resources/Core/Logo.ico `
+                 --windows-company-name=HCC --windows-uac-admin `
                  --windows-product-name="PYCM Console" --windows-product-version=${{ steps.tag.outputs.result }} `
                  --windows-file-description="PYCM Console" --windows-file-version=${{ steps.tag.outputs.result }} `
                  --include-data-file=Translation/*.qm=Translation/ `
                  --enable-plugin=pyqt5 --enable-plugin=multiprocessing `
-                 --assume-yes-for-downloads --disable-ccache `
+                 --assume-yes-for-downloads --disable-ccache --remove-output `
                  --output-dir=Build ConsoleMain.py
       - name: Check build
         working-directory: Console
@@ -84,17 +84,17 @@ jobs:
         env:
           RELEASE_TAG: ${{ steps.tag.outputs.result }}
         run: |
-          "BUILD_INFO = 'Windows v"+${{ steps.tag.outputs.result }}+" (MSVC, 32-bit)'" | Out-File -FilePath BuildInfo.py -Encoding UTF8
+          "BUILD_INFO = 'Windows v"+${{ steps.tag.outputs.result }}+" (32-bit)'" | Out-File -FilePath BuildInfo.py -Encoding UTF8
       - name: Build
         working-directory: Client
         run: |
-          nuitka --standalone --msvc=14.0 --windows-icon-from-ico=Resources/Core/Logo.ico `
+          nuitka --standalone --windows-icon-from-ico=Resources/Core/Logo.ico `
                  --windows-company-name=HCC --windows-uac-admin --windows-disable-console `
                  --windows-product-name="PYCM Client" --windows-product-version=${{ steps.tag.outputs.result }} `
                  --windows-file-description="PYCM Client" --windows-file-version=${{ steps.tag.outputs.result }} `
                  --include-data-file=Translation/*.qm=Translation/ `
                  --enable-plugin=pyqt5 `
-                 --assume-yes-for-downloads --disable-ccache `
+                 --assume-yes-for-downloads --disable-ccache  --remove-output `
                  --output-dir=Build ClientMain.py
       - name: Check build
         working-directory: Client
