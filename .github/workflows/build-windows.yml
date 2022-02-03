@@ -39,7 +39,7 @@ jobs:
                  --windows-product-name="PYCM Console" --windows-product-version=${{ steps.tag.outputs.result }} `
                  --windows-file-description="PYCM Console" --windows-file-version=${{ steps.tag.outputs.result }} `
                  --include-data-file=Translation/*.qm=Translation/ `
-                 --enable-plugin==pyqt5 --enable-plugin==multiprocessing `
+                 --enable-plugin=pyqt5 --enable-plugin=multiprocessing `
                  --assume-yes-for-downloads --disable-ccache `
                  --output-dir=Build ConsoleMain.py
       - name: Check build
@@ -91,7 +91,7 @@ jobs:
                  --windows-product-name="PYCM Client" --windows-product-version=${{ steps.tag.outputs.result }} `
                  --windows-file-description="PYCM Client" --windows-file-version=${{ steps.tag.outputs.result }} `
                  --include-data-file=Translation/*.qm=Translation/ `
-                 --enable-plugin==pyqt5 `
+                 --enable-plugin=pyqt5 `
                  --assume-yes-for-downloads --disable-ccache `
                  --output-dir=Build ClientMain.py
       - name: Check build
