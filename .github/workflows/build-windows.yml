@@ -44,11 +44,13 @@ jobs:
                  --output-dir=Build ConsoleMain.py
       - name: Check build
         working-directory: Console
-        run: if(!(Test-Path Build/ConsoleMain.dist/ConsoleMain.exe)){ exit 1 }
+        run: |
+          if(!(Test-Path Build/ConsoleMain.dist/ConsoleMain.exe)){ exit 1 }
+          Rename-Item Build/ConsoleMain.dist Build/Console
       - name: Zip files
         uses: vimtor/action-zip@v1
         with:
-          files: Console/Build/ConsoleMain.dist/
+          files: Console/Build/
           dest: PYCM-Console-Windows.zip
       - name: Upload to release
         uses: softprops/action-gh-release@v1
@@ -96,11 +98,13 @@ jobs:
                  --output-dir=Build ClientMain.py
       - name: Check build
         working-directory: Client
-        run: if(!(Test-Path Build/ClientMain.dist/ClientMain.exe)){ exit 1 }
+        run: |
+          if(!(Test-Path Build/ClientMain.dist/ClientMain.exe)){ exit 1 }
+          Rename-Item Build/ClientMain.dist Build/Client
       - name: Zip files
         uses: vimtor/action-zip@v1
         with:
-          files: Client/Build/ClientMain.dist/
+          files: Client/Build/
           dest: PYCM-Client-Windows.zip
       - name: Upload to release
         uses: softprops/action-gh-release@v1
