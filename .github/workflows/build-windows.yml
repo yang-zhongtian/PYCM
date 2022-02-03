@@ -35,7 +35,7 @@ jobs:
         working-directory: Console
         run: |
           nuitka --standalone --windows-icon-from-ico=Resources/Core/Logo.ico `
-                 --windows-company-name=HCC --windows-uac-admin `
+                 --windows-company-name=HCC --windows-uac-admin --windows-disable-console `
                  --windows-product-name="PYCM Console" --windows-product-version=${{ steps.tag.outputs.result }} `
                  --windows-file-description="PYCM Console" --windows-file-version=${{ steps.tag.outputs.result }} `
                  --include-data-file=Translation/*.qm=Translation/ `

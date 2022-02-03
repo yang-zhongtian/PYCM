@@ -145,86 +145,86 @@
         <translation>隐藏</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="82"/>
+        <location filename="../UI/Main.py" line="120"/>
         <source>Show Tool Bar</source>
         <translation>显示工具栏</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="83"/>
+        <location filename="../UI/Main.py" line="121"/>
         <source>Configure Network</source>
         <translation>修改网络配置</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="85"/>
+        <location filename="../UI/Main.py" line="123"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="87"/>
+        <location filename="../UI/Main.py" line="125"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="222"/>
+        <location filename="../UI/Main.py" line="264"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="107"/>
+        <location filename="../UI/Main.py" line="145"/>
         <source>Are you sure to modify the network configuration? This operation may cause the client to fail to start normally!</source>
         <translation>你是否确定要修改网络配置？此操作可能会导致客户端无法正常启动！</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="115"/>
+        <location filename="../UI/Main.py" line="153"/>
         <source>Info</source>
         <translation>信息</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="115"/>
+        <location filename="../UI/Main.py" line="153"/>
         <source>Configuration success! Please restart the client to take effect</source>
         <translation>修改配置成功！请重启客户端以生效</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="147"/>
+        <location filename="../UI/Main.py" line="185"/>
         <source>Message</source>
         <translation>消息</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="159"/>
+        <location filename="../UI/Main.py" line="197"/>
         <source>PYCM Client - Online</source>
         <translation>PYCM 客户端 - 在线</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="182"/>
+        <location filename="../UI/Main.py" line="224"/>
         <source>Online</source>
         <translation>在线</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="184"/>
+        <location filename="../UI/Main.py" line="226"/>
         <source>Offline</source>
         <translation>离线</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="185"/>
+        <location filename="../UI/Main.py" line="227"/>
         <source>PYCM Client
 </source>
         <translation>PYCM 客户端
 </translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="185"/>
+        <location filename="../UI/Main.py" line="227"/>
         <source>Local IP: %s
 </source>
         <translation>本机IP：%s
 </translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="185"/>
+        <location filename="../UI/Main.py" line="227"/>
         <source>Status: %s</source>
         <translation>状态：%s</translation>
     </message>
     <message>
-        <location filename="../UI/Main.py" line="222"/>
+        <location filename="../UI/Main.py" line="264"/>
         <source>Are you sure to exit?</source>
         <translation>你是否确定要退出？</translation>
     </message>
@@ -250,6 +250,16 @@
         <location filename="../UI/NetworkDeviceSelectUI.py" line="43"/>
         <source>Network Settings</source>
         <translation>网络设置</translation>
+    </message>
+    <message>
+        <location filename="../UI/NetworkDeviceSelect.py" line="75"/>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <location filename="../UI/NetworkDeviceSelect.py" line="75"/>
+        <source>Please select a network device</source>
+        <translation>请选择一个网络设备</translation>
     </message>
 </context>
 <context>

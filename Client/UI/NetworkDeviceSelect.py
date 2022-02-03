@@ -17,21 +17,24 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
-from PyQt5.QtWidgets import QDialog
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QDialog, QMessageBox
+from PyQt5.QtCore import Qt, QCoreApplication
 from PyQt5.QtNetwork import QNetworkInterface, QAbstractSocket
 import socket
 from .NetworkDeviceSelectUI import Ui_NetworkDeviceSelectDialog
 
 
 class NetworkDeviceSelectForm(QDialog):
-    def __init__(self):
+    _translate = QCoreApplication.translate
+
+    def __init__(self, force=False):
         super(NetworkDeviceSelectForm, self).__init__()
         self.devices = []
         self.ui = Ui_NetworkDeviceSelectDialog()
         self.setFixedSize(413, 120)
         self.setWindowModality(Qt.ApplicationModal)
         self.ui.setupUi(self)
+        self.force = force
         self.load_network_devices()
 
     def sync_network_devices(self):
@@ -66,3 +69,10 @@ class NetworkDeviceSelectForm(QDialog):
             return obj_data['NAME']
         else:
             return obj_data
+
+    def reject(self):
+        if self.force:
+            QMessageBox.critical(self, self._translate('NetworkDeviceSelectDialog', 'Error'),
+                                 self._translate('NetworkDeviceSelectDialog', 'Please select a network device'))
+        else:
+            super(NetworkDeviceSelectForm, self).reject()

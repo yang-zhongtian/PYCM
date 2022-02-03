@@ -18,7 +18,6 @@
 """
 
 from PyQt5.QtCore import QSettings
-from PyQt5.QtWidgets import QMessageBox
 from UI.NetworkDeviceSelect import NetworkDeviceSelectForm
 
 
@@ -98,9 +97,8 @@ class Config(object):
 
     @staticmethod
     def force_get_network_device(only_name=True):
-        network_device_select_form = NetworkDeviceSelectForm()
-        while network_device_select_form.exec_() != network_device_select_form.Accepted:
-            QMessageBox.critical(None, 'Warning', 'Please select a network device!')
+        network_device_select_form = NetworkDeviceSelectForm(force=True)
+        network_device_select_form.exec_()
         return network_device_select_form.get_selected_device(only_name)
 
     def init_all(self):

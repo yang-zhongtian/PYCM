@@ -17,6 +17,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 
+import subprocess
 import os
 import glob
 import argparse
@@ -27,14 +28,19 @@ SEARCH_DIRS = ['../UI', '../Module']
 def generate(file, target='zh_CN'):
     if type(file) == list:
         file = ' '.join(file)
-    os.system(f'pylupdate5 {file} -ts Translation/{target}.ts -noobsolete')
+    command = f'pylupdate5 {file} -ts Translation/{target}.ts -noobsolete -verbose'
+    try:
+        result = subprocess.getoutput(command)
+        print(result)
+    except OSError as e:
+        print(e)
 
 
 def auto_generate(args):
     translate_files = []
     base_dir = os.path.dirname(os.path.abspath(__file__))
     for path in SEARCH_DIRS:
-        translate_files.extend(glob.glob(f'{os.path.join(base_dir, path)}/[!__]*.py'))
+        translate_files.extend(list(map(os.path.abspath, glob.glob(f'{os.path.join(base_dir, path)}/[!__]*.py'))))
     generate(translate_files, args.lang)
 
 

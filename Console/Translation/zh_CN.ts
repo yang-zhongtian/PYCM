@@ -112,143 +112,143 @@
         <translation>文件共享</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="88"/>
+        <location filename="../UI/Dashboard.py" line="118"/>
         <source>%s logged on</source>
         <translation>%s 已上线</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="92"/>
+        <location filename="../UI/Dashboard.py" line="122"/>
         <source>%s logged off</source>
         <translation>%s 已下线</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="97"/>
+        <location filename="../UI/Dashboard.py" line="127"/>
         <source>File received: %s, &lt;a href=&quot;%s&quot;&gt;Detail&lt;/a&gt;</source>
         <translation>收到文件：%s，&amp;lt;a href=&amp;quot;%s&amp;quot;&amp;gt;详细信息&amp;lt;/a&amp;gt;</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="102"/>
+        <location filename="../UI/Dashboard.py" line="132"/>
         <source>Hands up: %s</source>
         <translation>%s 举手</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="136"/>
+        <location filename="../UI/Dashboard.py" line="166"/>
         <source>PYCM Console
 </source>
         <translation>PYCM 服务端
 </translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="136"/>
+        <location filename="../UI/Dashboard.py" line="166"/>
         <source>Local IP: %s
 </source>
         <translation>本机IP：%s
 </translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="136"/>
+        <location filename="../UI/Dashboard.py" line="166"/>
         <source>Online: %d Clients</source>
         <translation>%d 客户端在线</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="308"/>
+        <location filename="../UI/Dashboard.py" line="332"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="145"/>
+        <location filename="../UI/Dashboard.py" line="175"/>
         <source>Only support to rename one client each time</source>
         <translation>仅支持每次重命名一个客户端</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="150"/>
+        <location filename="../UI/Dashboard.py" line="180"/>
         <source>Rename client</source>
         <translation>重命名客户端</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="150"/>
+        <location filename="../UI/Dashboard.py" line="180"/>
         <source>Please input the new name, leave blank for restoring to default</source>
         <translation>请输入新名称，留空以恢复默认值</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="244"/>
+        <location filename="../UI/Dashboard.py" line="267"/>
         <source>Confirm</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="167"/>
+        <location filename="../UI/Dashboard.py" line="197"/>
         <source>Are you sure to quit these clients: %s?
 </source>
         <translation>你确定要退出这些客户端：%s？
 </translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="167"/>
+        <location filename="../UI/Dashboard.py" line="197"/>
         <source>This action is irreversible!</source>
         <translation>该操作不可逆！</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="251"/>
+        <location filename="../UI/Dashboard.py" line="274"/>
         <source>Info</source>
         <translation>信息</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="178"/>
+        <location filename="../UI/Dashboard.py" line="208"/>
         <source>Quit client command send successfully</source>
         <translation>退出客户端命令发送成功</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="190"/>
+        <location filename="../UI/Dashboard.py" line="220"/>
         <source>No targets selected</source>
         <translation>未选择任何目标</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="227"/>
+        <location filename="../UI/Dashboard.py" line="250"/>
         <source>Message send: %s</source>
         <translation>发送消息：%s</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="238"/>
+        <location filename="../UI/Dashboard.py" line="261"/>
         <source>No command selected</source>
         <translation>未选择任何命令</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="244"/>
+        <location filename="../UI/Dashboard.py" line="267"/>
         <source>Confirm to send command: %s ?</source>
         <translation>确认发送如下命令：%s？</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="251"/>
+        <location filename="../UI/Dashboard.py" line="274"/>
         <source>Command send successfully</source>
         <translation>命令发送成功</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="308"/>
+        <location filename="../UI/Dashboard.py" line="332"/>
         <source>Are you sure to exit?</source>
         <translation>你确定要退出？</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="261"/>
+        <location filename="../UI/Dashboard.py" line="284"/>
         <source>Only support to view one client each time</source>
         <translation>仅支持每次查看一个客户端</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="71"/>
+        <location filename="../UI/Dashboard.py" line="101"/>
         <source>Show Dashboard</source>
         <translation>显示控制台</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="75"/>
+        <location filename="../UI/Dashboard.py" line="105"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="238"/>
+        <location filename="../UI/Dashboard.py" line="261"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../UI/Dashboard.py" line="105"/>
+        <location filename="../UI/Dashboard.py" line="135"/>
         <source>Messsage received from %s: %s</source>
         <translation>收到来自 %s 的消息：%s</translation>
     </message>
@@ -290,9 +290,6 @@
         <source>Double click the row to open file</source>
         <translation>双击对应行以打开文件</translation>
     </message>
-</context>
-<context>
-    <name>FileReceiveForm</name>
     <message>
         <location filename="../UI/FileReceive.py" line="57"/>
         <source>Select Receive Folder</source>
@@ -377,7 +374,7 @@
     <message>
         <location filename="../UI/LoginUI.py" line="84"/>
         <source>Password:</source>
-        <translation>密&#x3000;码：</translation>
+        <translation>密　码：</translation>
     </message>
     <message>
         <location filename="../UI/LoginUI.py" line="85"/>
@@ -419,16 +416,69 @@
     </message>
 </context>
 <context>
+    <name>RemoteCommandGroupAddDialog</name>
+    <message>
+        <location filename="../UI/RemoteCommandGroupAddUI.py" line="61"/>
+        <source>Add Remote Command</source>
+        <translation>添加远程命令</translation>
+    </message>
+    <message>
+        <location filename="../UI/RemoteCommandGroupAddUI.py" line="62"/>
+        <source>Name</source>
+        <translation>名称</translation>
+    </message>
+    <message>
+        <location filename="../UI/RemoteCommandGroupAddUI.py" line="63"/>
+        <source>Command</source>
+        <translation>命令</translation>
+    </message>
+    <message>
+        <location filename="../UI/RemoteCommandGroupAdd.py" line="43"/>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <location filename="../UI/RemoteCommandGroupAdd.py" line="43"/>
+        <source>Name cannot contain &apos;/&apos;</source>
+        <translation>名称不能包含‘/’</translation>
+    </message>
+    <message>
+        <location filename="../UI/RemoteCommandGroupAdd.py" line="36"/>
+        <source>Please set a name for the command</source>
+        <translation>请为命令设置一个名称</translation>
+    </message>
+    <message>
+        <location filename="../UI/RemoteCommandGroupAdd.py" line="39"/>
+        <source>Please input only one line of command</source>
+        <translation>请仅输入一行命令</translation>
+    </message>
+</context>
+<context>
     <name>RemoteCommandGroupDialog</name>
     <message>
-        <location filename="../UI/RemoteCommandGroupUI.py" line="57"/>
+        <location filename="../UI/RemoteCommandGroupUI.py" line="99"/>
         <source>Remote Command</source>
         <translation>远程命令</translation>
     </message>
     <message>
-        <location filename="../UI/RemoteCommandGroupUI.py" line="58"/>
+        <location filename="../UI/RemoteCommandGroupUI.py" line="100"/>
         <source>Command Select</source>
         <translation>选择命令</translation>
+    </message>
+    <message>
+        <location filename="../UI/RemoteCommandGroup.py" line="61"/>
+        <source>Warning</source>
+        <translation>警告</translation>
+    </message>
+    <message>
+        <location filename="../UI/RemoteCommandGroup.py" line="61"/>
+        <source>Are you sure to remove this command: </source>
+        <translation>你确定要移除这个命令： </translation>
+    </message>
+    <message>
+        <location filename="../UI/RemoteCommandGroup.py" line="57"/>
+        <source>Please select a command to remove</source>
+        <translation>请选择一个命令以删除</translation>
     </message>
 </context>
 <context>

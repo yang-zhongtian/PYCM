@@ -54,6 +54,7 @@ class Ui_RemoteCommandGroupDialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.command_add.setFont(font)
+        self.command_add.setText("+")
         self.command_add.setObjectName("command_add")
         self.command_edit_layout.addWidget(self.command_add)
         self.command_remove = QtWidgets.QPushButton(self.command_group)
@@ -69,6 +70,7 @@ class Ui_RemoteCommandGroupDialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.command_remove.setFont(font)
+        self.command_remove.setText("-")
         self.command_remove.setObjectName("command_remove")
         self.command_edit_layout.addWidget(self.command_remove)
         spacerItem = QtWidgets.QSpacerItem(0, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
@@ -96,6 +98,4 @@ class Ui_RemoteCommandGroupDialog(object):
         _translate = QtCore.QCoreApplication.translate
         RemoteCommandGroupDialog.setWindowTitle(_translate("RemoteCommandGroupDialog", "Remote Command"))
         self.command_group.setTitle(_translate("RemoteCommandGroupDialog", "Command Select"))
-        self.command_add.setText(_translate("RemoteCommandGroupDialog", "+"))
-        self.command_remove.setText(_translate("RemoteCommandGroupDialog", "-"))
 from Resources import Resources
