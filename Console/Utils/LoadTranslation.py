@@ -32,8 +32,5 @@ def load_translation():
 
 
 def load_path(translation):
-    if getattr(sys, 'frozen', False):
-        bundle_dir = sys._MEIPASS
-    else:
-        bundle_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
+    bundle_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
     return os.path.join(bundle_dir, f'Translation/{translation}.qm')
