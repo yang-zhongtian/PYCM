@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainForm(object):
     def setupUi(self, MainForm):
         MainForm.setObjectName("MainForm")
-        MainForm.resize(397, 54)
+        MainForm.resize(397, 65)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/Core/Core/Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainForm.setWindowIcon(icon)
@@ -41,7 +41,7 @@ class Ui_MainForm(object):
         self.main_container_layout.addWidget(self.title_label)
         self.tool_buttons_layout = QtWidgets.QHBoxLayout()
         self.tool_buttons_layout.setContentsMargins(5, 3, 5, 5)
-        self.tool_buttons_layout.setSpacing(5)
+        self.tool_buttons_layout.setSpacing(3)
         self.tool_buttons_layout.setObjectName("tool_buttons_layout")
         self.notify_button = QtWidgets.QPushButton(self.main_container)
         self.notify_button.setEnabled(False)

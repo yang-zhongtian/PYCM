@@ -20,6 +20,7 @@
 from PyQt5.QtCore import QObject, QBuffer, QIODevice
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QImage, QPainter, QCursor
+from PyQt5.sip import voidptr
 from Module.Packages import ScreenBroadcastFlag
 import socket
 import struct
@@ -58,11 +59,11 @@ class ScreenBroadcast(QObject):
         cursor_icon = QImage(':/Core/Core/Pointer.png')
         painter = QPainter()
         screen = QApplication.primaryScreen()
-        win_id = QApplication.desktop().winId()
         while self.working:
             try:
                 cursor_pos = cursor.pos()
-                img = screen.grabWindow(win_id)
+                # noinspection PyTypeChecker
+                img = screen.grabWindow(0)
                 painter.begin(img)
                 painter.drawImage(cursor_pos, cursor_icon)
                 painter.end()

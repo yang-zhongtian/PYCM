@@ -30,7 +30,7 @@ jobs:
       - name: Add build info
         working-directory: Console
         run: |
-          echo "BUILD_INFO = 'Linux v"+${{ steps.tag.outputs.result }}+" (64-bit)'" > BuildInfo.py
+          echo "BUILD_INFO = 'Linux v"${{ steps.tag.outputs.result }}" (64-bit)'" > BuildInfo.py
       - name: Build
         working-directory: Console
         run: |
@@ -76,7 +76,7 @@ jobs:
         env:
           RELEASE_TAG: ${{ steps.tag.outputs.result }}
         run: |
-          echo "BUILD_INFO = 'Linux v"+${{ steps.tag.outputs.result }}+" (64-bit)'" > BuildInfo.py
+          echo "BUILD_INFO = 'Linux v"${{ steps.tag.outputs.result }}" (64-bit)'" > BuildInfo.py
       - name: Build
         working-directory: Client
         run: |

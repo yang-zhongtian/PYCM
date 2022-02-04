@@ -44,7 +44,7 @@ class ClassBroadcast(QObject):
     def __init_socket_obj(self):
         self.socket_obj = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
         self.socket_obj.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 255)
-        self.socket_obj.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, int(self.socket_buffer_size))
+        self.socket_obj.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, self.socket_buffer_size)
         self.socket_obj.setsockopt(
             socket.IPPROTO_IP,
             socket.IP_ADD_MEMBERSHIP,
