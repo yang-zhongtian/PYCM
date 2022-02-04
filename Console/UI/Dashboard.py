@@ -329,9 +329,9 @@ class DashboardForm(QMainWindow):
                 self.hide()
 
     def closeEvent(self, event: QCloseEvent):
-        reply = QMessageBox.warning(self, self._translate('DashboardForm', 'Warning'),
-                                    self._translate('DashboardForm', 'Are you sure to exit?'),
-                                    QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        reply = QMessageBox.question(self, self._translate('DashboardForm', 'Warning'),
+                                     self._translate('DashboardForm', 'Are you sure to exit?'),
+                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if reply != QMessageBox.Yes:
             event.ignore()
             return
