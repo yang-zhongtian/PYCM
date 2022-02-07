@@ -1,0 +1,94 @@
+name: Build Mac
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  Build-Console:
+    runs-on: macos-10.15
+    steps:
+      - name: Extract tag name
+        id: tag
+        uses: actions/github-script@0.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            return context.payload.ref.replace('refs/tags/v', '');
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+          architecture: 'x64'
+      - name: Install requirements
+        run: |
+          pip install wheel
+          pip install -r requirements.txt
+          pip install pyinstaller sip
+      - name: Add build info
+        working-directory: Console
+        run: |
+          echo "BUILD_INFO = 'macOS v"${{ steps.tag.outputs.result }}" (64-bit)'" > BuildInfo.py
+      - name: Build
+        working-directory: Console
+        run: |
+          pyinstaller --noupx -i ./Resources/Core/Logo.ico \
+                      --add-data "Translation/*.qm:Translation" \
+                      --osx-bundle-identifier org.hcc.pycm \
+                      --name PYCM-Console -w -D ./ConsoleMain.py
+      - name: Zip files
+        uses: vimtor/action-zip@v1
+        with:
+          files: Console/dist/
+          dest: PYCM-Console-macOS.zip
+      - name: Upload to release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: PYCM-Console-macOS.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  Build-Client:
+    runs-on: macos-10.15
+    steps:
+      - name: Extract tag name
+        id: tag
+        uses: actions/github-script@0.2.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            return context.payload.ref.replace('refs/tags/v', '');
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+          architecture: 'x64'
+      - name: Install requirements
+        run: |
+          pip install wheel
+          pip install -r requirements.txt
+          pip install pyinstaller sip
+      - name: Add build info
+        working-directory: Client
+        run: |
+          echo "BUILD_INFO = 'macOS v"${{ steps.tag.outputs.result }}" (64-bit)'" > BuildInfo.py
+      - name: Build
+        working-directory: Client
+        run: |
+          pyinstaller --noupx -i ./Resources/Core/Logo.ico \
+                      --add-data "Translation/*.qm:Translation" \
+                      --osx-bundle-identifier org.hcc.pycm \
+                      --name PYCM-Client -w -D ./ClientMain.py
+      - name: Zip files
+        uses: vimtor/action-zip@v1
+        with:
+          files: Client/dist/
+          dest: PYCM-Client-macOS.zip
+      - name: Upload to release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: PYCM-Client-macOS.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
